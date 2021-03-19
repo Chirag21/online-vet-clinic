@@ -1,6 +1,10 @@
 package com.onlinevet.clinic.model;
 
-public class Person {
+public class Person extends BaseEntity {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7297421137508112975L;
 	private String firstName;
 	private String lastname;
 

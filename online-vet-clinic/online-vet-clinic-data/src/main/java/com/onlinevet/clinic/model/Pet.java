@@ -2,7 +2,11 @@ package com.onlinevet.clinic.model;
 
 import java.time.LocalDate;
 
-public class Pet {
+public class Pet extends BaseEntity{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4401687880835935591L;
 	PetType petType;
 	private Owner owner;
 	private LocalDate localDate;
