@@ -6,7 +6,7 @@ public class Person extends BaseEntity {
 	 */
 	private static final long serialVersionUID = -7297421137508112975L;
 	private String firstName;
-	private String lastname;
+	private String lastName;
 
 	public String getFirstName() {
 		return firstName;
@@ -16,12 +16,12 @@ public class Person extends BaseEntity {
 		this.firstName = firstName;
 	}
 
-	public String getLastname() {
-		return lastname;
+	public String getLastName() {
+		return lastName;
 	}
 
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
+	public void setLastName(String lastname) {
+		this.lastName = lastname;
 	}
 
 }

@@ -2,10 +2,13 @@ package com.onlinevet.clinic.map;
 
 import java.util.Set;
 
-import com.onlinevet.clinic.model.Owner;
-import com.onlinevet.clinic.services.CrudService;
+import org.springframework.stereotype.Service;
 
-public class OwnerServiceMapImpl extends AbstractMapService<Owner, Long> implements CrudService<Owner, Long> {
+import com.onlinevet.clinic.model.Owner;
+import com.onlinevet.clinic.services.OwnerSerivce;
+
+@Service
+public class OwnerServiceMapImpl extends AbstractMapService<Owner, Long> implements OwnerSerivce {
 
 	public Owner findById(Long id) {
 		return super.findById(id);
@@ -27,4 +30,17 @@ public class OwnerServiceMapImpl extends AbstractMapService<Owner, Long> impleme
 		super.deleteById(id);
 	}
 
+	@Override
+	public Owner findByFirstName(String firstName) {
+		// TODO Auto-generated method stub
+
+		return null;
+	}
+
+	@Override
+	public Owner findByLastName(String lastName) {
+		// TODO Auto-generated method stub
+
+		return null;
+	}
 }

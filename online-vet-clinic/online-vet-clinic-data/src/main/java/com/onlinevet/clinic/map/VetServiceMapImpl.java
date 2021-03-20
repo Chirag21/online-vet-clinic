@@ -2,10 +2,13 @@ package com.onlinevet.clinic.map;
 
 import java.util.Set;
 
-import com.onlinevet.clinic.model.Vet;
-import com.onlinevet.clinic.services.CrudService;
+import org.springframework.stereotype.Service;
 
-public class VetServiceMapImpl extends AbstractMapService<Vet, Long> implements CrudService<Vet, Long> {
+import com.onlinevet.clinic.model.Vet;
+import com.onlinevet.clinic.services.VetService;
+
+@Service
+public class VetServiceMapImpl extends AbstractMapService<Vet, Long> implements VetService {
 	public Vet findById(Long id) {
 		return super.findById(id);
 	}
@@ -24,5 +27,11 @@ public class VetServiceMapImpl extends AbstractMapService<Vet, Long> implements 
 
 	public void deleteById(Long id) {
 		super.deleteById(id);
+	}
+
+	@Override
+	public Vet findByName(String name) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

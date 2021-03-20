@@ -13,6 +13,7 @@
 	<name>online-vet-clinic-data</name>
 
 	<description>Spring Data JPA</description>
+	
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
