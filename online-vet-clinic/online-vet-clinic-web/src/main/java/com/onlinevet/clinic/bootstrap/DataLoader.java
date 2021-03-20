@@ -3,8 +3,6 @@ package com.onlinevet.clinic.bootstrap;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import com.onlinevet.clinic.map.OwnerServiceMapImpl;
-import com.onlinevet.clinic.map.VetServiceMapImpl;
 import com.onlinevet.clinic.model.Owner;
 import com.onlinevet.clinic.model.Vet;
 import com.onlinevet.clinic.services.OwnerSerivce;
@@ -31,7 +29,7 @@ public class DataLoader implements CommandLineRunner {
 		ownerService.save(shahrukh);
 
 		Owner salman = new Owner();
-		salman.setId(1L);
+		salman.setId(2L);
 		salman.setFirstName("Salman");
 		salman.setLastName("Khan");
 		ownerService.save(salman);
@@ -39,11 +37,13 @@ public class DataLoader implements CommandLineRunner {
 		System.out.println("Loaded owners .......");
 
 		Vet aamir = new Vet();
+		aamir.setId(1L);
 		aamir.setFirstName("Aaamir");
 		aamir.setLastName("Khan");
 		vetService.save(aamir);
 
 		Vet virat = new Vet();
+		virat.setId(2L);
 		virat.setFirstName("Virat");
 		virat.setLastName("Kohli");
 		vetService.save(virat);
