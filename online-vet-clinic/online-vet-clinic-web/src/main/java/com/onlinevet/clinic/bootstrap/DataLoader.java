@@ -4,8 +4,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import com.onlinevet.clinic.model.Owner;
+import com.onlinevet.clinic.model.PetType;
 import com.onlinevet.clinic.model.Vet;
 import com.onlinevet.clinic.services.OwnerSerivce;
+import com.onlinevet.clinic.services.PetTypeService;
 import com.onlinevet.clinic.services.VetService;
 
 @Component
@@ -13,15 +15,26 @@ public class DataLoader implements CommandLineRunner {
 
 	private final OwnerSerivce ownerService;
 	private final VetService vetService;
-	
-	//no need for @Autowired after Spring 4.2 if there is only 1 constructor
-	public DataLoader(OwnerSerivce ownerService,VetService vetService) {
+	private final PetTypeService petTypeService;
+
+	// no need for @Autowired after Spring 4.2 if there is only 1 constructor
+	public DataLoader(OwnerSerivce ownerService, VetService vetService, PetTypeService petTypeService) {
 		this.ownerService = ownerService;
 		this.vetService = vetService;
+		this.petTypeService = petTypeService;
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
+		PetType dog = new PetType();
+		dog.setName("Dog");
+		petTypeService.save(dog);
+
+		PetType cat = new PetType();
+		cat.setName("Cat");
+		petTypeService.save(cat);
+
+		
 		Owner shahrukh = new Owner();
 		shahrukh.setId(1L);
 		shahrukh.setFirstName("Shahrukh");
