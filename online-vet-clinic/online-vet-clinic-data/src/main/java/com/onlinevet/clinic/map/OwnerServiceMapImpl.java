@@ -1,11 +1,8 @@
 package com.onlinevet.clinic.map;
 
 import java.util.Set;
-
 import org.springframework.stereotype.Service;
-
 import com.onlinevet.clinic.model.Owner;
-import com.onlinevet.clinic.model.PetType;
 import com.onlinevet.clinic.services.OwnerSerivce;
 import com.onlinevet.clinic.services.PetTypeService;
 

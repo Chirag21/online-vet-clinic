@@ -2,10 +2,13 @@ package com.onlinevet.clinic.map;
 
 import java.util.Set;
 
-import com.onlinevet.clinic.model.Speciality;
-import com.onlinevet.clinic.services.SpecialitiesService;
+import org.springframework.stereotype.Service;
 
-public class SpecialitiesServiceMapImpl extends AbstractMapService<Speciality, Long> implements SpecialitiesService {
+import com.onlinevet.clinic.model.Speciality;
+import com.onlinevet.clinic.services.SpecialityService;
+
+@Service
+public class SpecialityServiceMapImpl extends AbstractMapService<Speciality, Long> implements SpecialityService {
 
 	@Override
 	public Speciality findById(Long id) {

@@ -8,9 +8,11 @@ import org.springframework.stereotype.Component;
 import com.onlinevet.clinic.model.Owner;
 import com.onlinevet.clinic.model.Pet;
 import com.onlinevet.clinic.model.PetType;
+import com.onlinevet.clinic.model.Speciality;
 import com.onlinevet.clinic.model.Vet;
 import com.onlinevet.clinic.services.OwnerSerivce;
 import com.onlinevet.clinic.services.PetTypeService;
+import com.onlinevet.clinic.services.SpecialityService;
 import com.onlinevet.clinic.services.VetService;
 
 @Component
@@ -19,16 +21,24 @@ public class DataLoader implements CommandLineRunner {
 	private final OwnerSerivce ownerService;
 	private final VetService vetService;
 	private final PetTypeService petTypeService;
+	private final SpecialityService specialityService;
 
 	// no need for @Autowired after Spring 4.2 if there is only 1 constructor
-	public DataLoader(OwnerSerivce ownerService, VetService vetService, PetTypeService petTypeService) {
+	public DataLoader(OwnerSerivce ownerService, VetService vetService, PetTypeService petTypeService,
+			SpecialityService specialityService) {
 		this.ownerService = ownerService;
 		this.vetService = vetService;
 		this.petTypeService = petTypeService;
+		this.specialityService = specialityService;
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
+		if (petTypeService.findAll().isEmpty())
+			loadData();
+	}
+
+	private void loadData() {
 		PetType dog = new PetType();
 		dog.setName("Dog");
 		petTypeService.save(dog);
@@ -36,6 +46,18 @@ public class DataLoader implements CommandLineRunner {
 		PetType cat = new PetType();
 		cat.setName("Cat");
 		petTypeService.save(cat);
+
+		Speciality radiology = new Speciality();
+		radiology.setDescription("Radiology");
+		specialityService.save(radiology);
+
+		Speciality surgery = new Speciality();
+		surgery.setDescription("Surgey");
+		specialityService.save(surgery);
+
+		Speciality dentistry = new Speciality();
+		dentistry.setDescription("Dentistry");
+		specialityService.save(dentistry);
 
 		Owner aquib = new Owner();
 		aquib.setId(1L);
@@ -73,12 +95,15 @@ public class DataLoader implements CommandLineRunner {
 		sagar.setId(1L);
 		sagar.setFirstName("Sagar");
 		sagar.setLastName("Singh");
+		sagar.getSpecialities().add(dentistry);
+		sagar.getSpecialities().add(surgery);
 		vetService.save(sagar);
 
 		Vet gautam = new Vet();
 		gautam.setId(2L);
 		gautam.setFirstName("Gautam");
 		gautam.setLastName("Singh");
+		gautam.getSpecialities().add(radiology);
 		vetService.save(gautam);
 
 		System.out.println("Vets Loaded .......");
