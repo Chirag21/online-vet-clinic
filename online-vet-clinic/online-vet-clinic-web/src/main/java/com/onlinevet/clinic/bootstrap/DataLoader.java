@@ -1,9 +1,12 @@
 package com.onlinevet.clinic.bootstrap;
 
+import java.time.LocalDate;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import com.onlinevet.clinic.model.Owner;
+import com.onlinevet.clinic.model.Pet;
 import com.onlinevet.clinic.model.PetType;
 import com.onlinevet.clinic.model.Vet;
 import com.onlinevet.clinic.services.OwnerSerivce;
@@ -34,32 +37,49 @@ public class DataLoader implements CommandLineRunner {
 		cat.setName("Cat");
 		petTypeService.save(cat);
 
-		
-		Owner shahrukh = new Owner();
-		shahrukh.setId(1L);
-		shahrukh.setFirstName("Shahrukh");
-		shahrukh.setLastName("Khan");
-		ownerService.save(shahrukh);
+		Owner aquib = new Owner();
+		aquib.setId(1L);
+		aquib.setFirstName("Aquib");
+		aquib.setLastName("Haider");
+		aquib.setAddress("Taloja Sector-35");
+		aquib.setCity("Taloja");
+		aquib.setTelephone("9999999999");
+		Pet aquibsPet = new Pet();
+		aquibsPet.setPetType(cat);
+		aquibsPet.setName("Bubble");
+		aquibsPet.setOwner(aquib);
+		aquibsPet.setLocalDate(LocalDate.now());
+		aquib.getPets().add(aquibsPet);
+		ownerService.save(aquib);
 
-		Owner salman = new Owner();
-		salman.setId(2L);
-		salman.setFirstName("Salman");
-		salman.setLastName("Khan");
-		ownerService.save(salman);
+		Owner manas = new Owner();
+		manas.setId(2L);
+		manas.setFirstName("Manas");
+		manas.setLastName("Pawar");
+		manas.setAddress("CBD Sector-5");
+		manas.setCity("CBD Belapur");
+		manas.setTelephone("8888888888");
+		Pet manassPet = new Pet();
+		manassPet.setPetType(dog);
+		manassPet.setName("Max");
+		manassPet.setOwner(aquib);
+		manassPet.setLocalDate(LocalDate.now());
+		aquib.getPets().add(manassPet);
+		ownerService.save(manas);
 
 		System.out.println("Loaded owners .......");
 
-		Vet aamir = new Vet();
-		aamir.setId(1L);
-		aamir.setFirstName("Aaamir");
-		aamir.setLastName("Khan");
-		vetService.save(aamir);
+		Vet sagar = new Vet();
+		sagar.setId(1L);
+		sagar.setFirstName("Sagar");
+		sagar.setLastName("Singh");
+		vetService.save(sagar);
 
-		Vet virat = new Vet();
-		virat.setId(2L);
-		virat.setFirstName("Virat");
-		virat.setLastName("Kohli");
-		vetService.save(virat);
+		Vet gautam = new Vet();
+		gautam.setId(2L);
+		gautam.setFirstName("Gautam");
+		gautam.setLastName("Singh");
+		vetService.save(gautam);
 
 		System.out.println("Vets Loaded .......");
 	}
