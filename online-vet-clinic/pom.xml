@@ -9,25 +9,25 @@
 		<version>2.3.9.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	
+
 	<groupId>com.online.vetclinic</groupId>
 	<artifactId>online-vet-clinic</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	
+
 	<packaging>pom</packaging>
-	
+
 	<name>online-vet-clinic</name>
 
 	<modules>
 		<module>online-vet-clinic-data</module>
 		<module>online-vet-clinic-web</module>
 	</modules>
-	
+
 	<description>Spring Online Vet Clinic Project</description>
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
-	
+
 	<dependencies>
 	</dependencies>
 
@@ -38,12 +38,7 @@
 					<groupId>org.springframework.boot</groupId>
 					<artifactId>spring-boot-maven-plugin</artifactId>
 					<configuration>
-						<excludes>
-							<exclude>
-								<groupId>org.projectlombok</groupId>
-								<artifactId>lombok</artifactId>
-							</exclude>
-						</excludes>
+						<classifier>exec</classifier>
 					</configuration>
 				</plugin>
 				<plugin>
