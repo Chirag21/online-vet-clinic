@@ -3,11 +3,11 @@ package com.onlinevet.clinic.map;
 import java.util.Set;
 import org.springframework.stereotype.Service;
 import com.onlinevet.clinic.model.Owner;
-import com.onlinevet.clinic.services.OwnerSerivce;
+import com.onlinevet.clinic.services.OwnerService;
 import com.onlinevet.clinic.services.PetTypeService;
 
 @Service
-public class OwnerServiceMapImpl extends AbstractMapService<Owner, Long> implements OwnerSerivce {
+public class OwnerServiceMapImpl extends AbstractMapService<Owner, Long> implements OwnerService {
 
 	private final PetTypeService petTypeService;
 

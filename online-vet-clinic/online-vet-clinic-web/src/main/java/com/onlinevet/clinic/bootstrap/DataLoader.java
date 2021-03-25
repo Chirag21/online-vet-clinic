@@ -10,7 +10,7 @@ import com.onlinevet.clinic.model.Pet;
 import com.onlinevet.clinic.model.PetType;
 import com.onlinevet.clinic.model.Speciality;
 import com.onlinevet.clinic.model.Vet;
-import com.onlinevet.clinic.services.OwnerSerivce;
+import com.onlinevet.clinic.services.OwnerService;
 import com.onlinevet.clinic.services.PetTypeService;
 import com.onlinevet.clinic.services.SpecialityService;
 import com.onlinevet.clinic.services.VetService;
@@ -18,13 +18,13 @@ import com.onlinevet.clinic.services.VetService;
 @Component
 public class DataLoader implements CommandLineRunner {
 
-	private final OwnerSerivce ownerService;
+	private final OwnerService ownerService;
 	private final VetService vetService;
 	private final PetTypeService petTypeService;
 	private final SpecialityService specialityService;
 
 	// no need for @Autowired after Spring 4.2 if there is only 1 constructor
-	public DataLoader(OwnerSerivce ownerService, VetService vetService, PetTypeService petTypeService,
+	public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService,
 			SpecialityService specialityService) {
 		this.ownerService = ownerService;
 		this.vetService = vetService;
