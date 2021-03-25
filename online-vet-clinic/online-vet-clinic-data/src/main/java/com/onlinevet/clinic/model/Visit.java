@@ -2,7 +2,10 @@ package com.onlinevet.clinic.model;
 
 import java.time.LocalDate;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -12,8 +15,15 @@ public class Visit extends BaseEntity {
 	 * 
 	 */
 	private static final long serialVersionUID = 6363360173075367566L;
+
+	@Column(name = "date")
 	private LocalDate date;
-	private String descriprtion;
+
+	@Column(name = "description")
+	private String description;
+
+	@ManyToOne
+	@JoinColumn(name = "pet_id")
 	private Pet pet;
 
 	public LocalDate getDate() {
@@ -24,12 +34,12 @@ public class Visit extends BaseEntity {
 		this.date = date;
 	}
 
-	public String getDescriprtion() {
-		return descriprtion;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setDescriprtion(String descriprtion) {
-		this.descriprtion = descriprtion;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public Pet getPet() {

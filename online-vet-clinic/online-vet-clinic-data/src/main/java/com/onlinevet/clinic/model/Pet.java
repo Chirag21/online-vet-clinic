@@ -1,11 +1,15 @@
 package com.onlinevet.clinic.model;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -29,6 +33,9 @@ public class Pet extends BaseEntity {
 	@Column(name="birth_name")
 	private LocalDate birthDate;
 
+	@OneToMany(cascade = CascadeType.ALL,mappedBy = "pet")
+	private Set<Visit> visits = new HashSet<>();
+	
 	public String getName() {
 		return name;
 	}
@@ -59,6 +66,14 @@ public class Pet extends BaseEntity {
 
 	public void setBirthDate(LocalDate birthDate) {
 		this.birthDate = birthDate;
+	}
+
+	public Set<Visit> getVisits() {
+		return visits;
+	}
+
+	public void setVisits(Set<Visit> visits) {
+		this.visits = visits;
 	}
 
 }
