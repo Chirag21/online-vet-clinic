@@ -2,6 +2,11 @@ package com.onlinevet.clinic.model;
 
 import java.time.LocalDate;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "visits")
 public class Visit extends BaseEntity {
 	/**
 	 * 

@@ -2,6 +2,11 @@ package com.onlinevet.clinic.model;
 
 import java.util.Set;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name= "specialities")
 public class Speciality extends BaseEntity {
 
 	/**
