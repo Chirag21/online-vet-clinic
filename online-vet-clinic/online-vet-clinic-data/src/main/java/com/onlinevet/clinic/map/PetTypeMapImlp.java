@@ -2,12 +2,14 @@ package com.onlinevet.clinic.map;
 
 import java.util.Set;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import com.onlinevet.clinic.model.PetType;
 import com.onlinevet.clinic.services.PetTypeService;
 
 @Service
+//@Profile({"default","map"})
 public class PetTypeMapImlp extends AbstractMapService<PetType, Long> implements PetTypeService {
 
 	@Override

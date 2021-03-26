@@ -2,12 +2,14 @@ package com.onlinevet.clinic.map;
 
 import java.util.Set;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import com.onlinevet.clinic.model.Speciality;
 import com.onlinevet.clinic.services.SpecialityService;
 
 @Service
+//@Profile({"default","map"})
 public class SpecialityServiceMapImpl extends AbstractMapService<Speciality, Long> implements SpecialityService {
 
 	@Override

@@ -10,26 +10,31 @@ import com.onlinevet.clinic.model.Pet;
 import com.onlinevet.clinic.model.PetType;
 import com.onlinevet.clinic.model.Speciality;
 import com.onlinevet.clinic.model.Vet;
+import com.onlinevet.clinic.model.Visit;
 import com.onlinevet.clinic.services.OwnerService;
 import com.onlinevet.clinic.services.PetTypeService;
 import com.onlinevet.clinic.services.SpecialityService;
 import com.onlinevet.clinic.services.VetService;
+import com.onlinevet.clinic.services.VisitService;
 
 @Component
 public class DataLoader implements CommandLineRunner {
 
-	private final OwnerService ownerService;
-	private final VetService vetService;
-	private final PetTypeService petTypeService;
-	private final SpecialityService specialityService;
+	private OwnerService ownerService;
+	private VetService vetService;
+	private PetTypeService petTypeService;
+	private SpecialityService specialityService;
+	private VisitService visitService;
 
 	// no need for @Autowired after Spring 4.2 if there is only 1 constructor
 	public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService,
-			SpecialityService specialityService) {
+			SpecialityService specialityService, VisitService visitService) {
+		super();
 		this.ownerService = ownerService;
 		this.vetService = vetService;
 		this.petTypeService = petTypeService;
 		this.specialityService = specialityService;
+		this.visitService = visitService;
 	}
 
 	@Override
@@ -86,8 +91,14 @@ public class DataLoader implements CommandLineRunner {
 		manassPet.setName("Max");
 		manassPet.setOwner(aquib);
 		manassPet.setBirthDate(LocalDate.now());
-		aquib.getPets().add(manassPet);
+		manas.getPets().add(manassPet);
 		ownerService.save(manas);
+
+		Visit catVisit = new Visit();
+		catVisit.setPet(manassPet);
+		catVisit.setDate(LocalDate.now());
+		catVisit.setDescription("Cat Visit Done");
+		visitService.save(catVisit); // pet id is null. need a look into
 
 		System.out.println("Loaded owners .......");
 

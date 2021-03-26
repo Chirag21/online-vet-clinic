@@ -7,8 +7,11 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
+import org.springframework.context.annotation.Profile;
+
 import com.onlinevet.clinic.model.BaseEntity;
 
+@Profile("map")
 public abstract class AbstractMapService<T extends BaseEntity, ID extends Long> {
 	protected Map<Long, T> map = new HashMap<>();
 

@@ -1,19 +1,25 @@
 package com.onlinevet.clinic.map;
 
 import java.util.Set;
+
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import com.onlinevet.clinic.model.Owner;
 import com.onlinevet.clinic.services.OwnerService;
+import com.onlinevet.clinic.services.PetService;
 import com.onlinevet.clinic.services.PetTypeService;
 
 @Service
+//@Profile({"default","map"})
 public class OwnerServiceMapImpl extends AbstractMapService<Owner, Long> implements OwnerService {
 
 	private final PetTypeService petTypeService;
+	private final PetService petService;
 
-	public OwnerServiceMapImpl(PetTypeService petTypeService) {
+	public OwnerServiceMapImpl(PetTypeService petTypeService,PetService petService) {
 		super();
 		this.petTypeService = petTypeService;
+		this.petService = petService;
 	}
 
 	public Owner findById(Long id) {
@@ -25,6 +31,13 @@ public class OwnerServiceMapImpl extends AbstractMapService<Owner, Long> impleme
 	}
 
 	public Owner save(Owner object) {
+		System.out.println("MAP MAP MAP MAP MAP MAP MAP MAP MAP");
+		System.out.println("MAP MAP MAP MAP MAP MAP MAP MAP MAP");
+		System.out.println("MAP MAP MAP MAP MAP MAP MAP MAP MAP");
+		System.out.println("MAP MAP MAP MAP MAP MAP MAP MAP MAP");
+		System.out.println("MAP MAP MAP MAP MAP MAP MAP MAP MAP");
+		System.out.println("MAP MAP MAP MAP MAP MAP MAP MAP MAP");
+		System.out.println("MAP MAP MAP MAP MAP MAP MAP MAP MAP");
 		if (object.getPets() != null) {
 			object.getPets().forEach(pet -> {
 				if (pet.getPetType() != null) {
@@ -33,6 +46,9 @@ public class OwnerServiceMapImpl extends AbstractMapService<Owner, Long> impleme
 					}
 				} else {
 					throw new RuntimeException("Pet Type is required");
+				}
+				if(pet.getId()==null) {
+					pet.setId(petService.save(pet).getId());
 				}
 			});
 			return super.save(object);

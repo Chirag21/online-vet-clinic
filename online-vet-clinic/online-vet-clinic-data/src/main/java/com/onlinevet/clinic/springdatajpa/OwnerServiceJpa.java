@@ -41,6 +41,12 @@ public class OwnerServiceJpa implements OwnerService {
 
 	@Override
 	public Owner save(Owner object) {
+		System.out.println("JPA JPA JPA JPA JPA JPA JPA JPA JPA JPA");
+		System.out.println("JPA JPA JPA JPA JPA JPA JPA JPA JPA JPA");
+		System.out.println("JPA JPA JPA JPA JPA JPA JPA JPA JPA JPA");
+		System.out.println("JPA JPA JPA JPA JPA JPA JPA JPA JPA JPA");
+		System.out.println("JPA JPA JPA JPA JPA JPA JPA JPA JPA JPA");
+		System.out.println("JPA JPA JPA JPA JPA JPA JPA JPA JPA JPA");
 		return ownerRepository.save(object);
 	}
 

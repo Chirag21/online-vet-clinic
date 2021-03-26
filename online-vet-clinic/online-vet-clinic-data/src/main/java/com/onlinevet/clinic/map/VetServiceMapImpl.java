@@ -3,6 +3,7 @@ package com.onlinevet.clinic.map;
 import java.util.Objects;
 import java.util.Set;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import com.onlinevet.clinic.model.Speciality;
@@ -11,6 +12,7 @@ import com.onlinevet.clinic.services.SpecialityService;
 import com.onlinevet.clinic.services.VetService;
 
 @Service
+//@Profile({"default","map"})
 public class VetServiceMapImpl extends AbstractMapService<Vet, Long> implements VetService {
 	private SpecialityService specialityService;
 
@@ -50,8 +52,12 @@ public class VetServiceMapImpl extends AbstractMapService<Vet, Long> implements 
 	}
 
 	@Override
-	public Vet findByName(String name) {
-		// TODO Auto-generated method stub
+	public Vet findByFirstName(String firstName) {
+		return null;
+	}
+
+	@Override
+	public Vet findByLastName(String lastName) {
 		return null;
 	}
 }
