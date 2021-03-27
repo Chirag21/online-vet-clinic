@@ -11,7 +11,7 @@ import com.onlinevet.clinic.model.Vet;
 import com.onlinevet.clinic.services.SpecialityService;
 import com.onlinevet.clinic.services.VetService;
 
-@Service
+//@Service
 //@Profile({"default","map"})
 public class VetServiceMapImpl extends AbstractMapService<Vet, Long> implements VetService {
 	private SpecialityService specialityService;

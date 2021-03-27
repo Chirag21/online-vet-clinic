@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.onlinevet.clinic.model.PetType;
 import com.onlinevet.clinic.services.PetTypeService;
 
-@Service
+//@Service
 //@Profile({"default","map"})
 public class PetTypeMapImlp extends AbstractMapService<PetType, Long> implements PetTypeService {
 

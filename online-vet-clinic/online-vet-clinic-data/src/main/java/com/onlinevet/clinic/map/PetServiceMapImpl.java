@@ -9,7 +9,7 @@ import com.onlinevet.clinic.model.Pet;
 import com.onlinevet.clinic.services.PetService;
 import com.onlinevet.clinic.services.PetTypeService;
 
-@Service
+//@Service
 //@Profile({"default","map"})
 public class PetServiceMapImpl extends AbstractMapService<Pet, Long> implements PetService {
 

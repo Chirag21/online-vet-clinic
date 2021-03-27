@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.onlinevet.clinic.model.Visit;
 import com.onlinevet.clinic.services.VisitService;
 
-@Service
+//@Service
 //@Profile({"default","map"})
 public class VisitServiceMapImpl extends AbstractMapService<Visit, Long> implements VisitService {
 

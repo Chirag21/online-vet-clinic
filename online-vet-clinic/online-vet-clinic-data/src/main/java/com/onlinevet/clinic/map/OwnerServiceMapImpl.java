@@ -9,7 +9,7 @@ import com.onlinevet.clinic.services.OwnerService;
 import com.onlinevet.clinic.services.PetService;
 import com.onlinevet.clinic.services.PetTypeService;
 
-@Service
+//@Service
 //@Profile({"default","map"})
 public class OwnerServiceMapImpl extends AbstractMapService<Owner, Long> implements OwnerService {
 
