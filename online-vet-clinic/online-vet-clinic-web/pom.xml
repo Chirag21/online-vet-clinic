@@ -140,7 +140,9 @@
 						<version>2.18.0</version>
 					</dependency>
 				</dependencies>
-
+			</plugin>
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
 			</plugin>
 		</plugins>
 	</build>
