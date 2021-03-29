@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 import com.onlinevet.clinic.model.Speciality;
 import com.onlinevet.clinic.services.SpecialityService;
 
-//@Service
-//@Profile({"default","map"})
+@Service
+@Profile({"default","map"})
 public class SpecialityServiceMapImpl extends AbstractMapService<Speciality, Long> implements SpecialityService {
 
 	@Override

@@ -7,18 +7,10 @@ import org.springframework.stereotype.Service;
 
 import com.onlinevet.clinic.model.Pet;
 import com.onlinevet.clinic.services.PetService;
-import com.onlinevet.clinic.services.PetTypeService;
 
-//@Service
-//@Profile({"default","map"})
+@Service
+@Profile({ "default", "map" })
 public class PetServiceMapImpl extends AbstractMapService<Pet, Long> implements PetService {
-
-	PetTypeService petTypeService;
-
-	public PetServiceMapImpl(PetTypeService petTypeService) {
-		super();
-		this.petTypeService = petTypeService;
-	}
 
 	@Override
 	public Pet findById(Long id) {
