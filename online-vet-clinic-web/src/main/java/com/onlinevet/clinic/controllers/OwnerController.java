@@ -2,7 +2,10 @@ package com.onlinevet.clinic.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.onlinevet.clinic.services.OwnerService;
 
@@ -26,5 +29,12 @@ public class OwnerController {
 	@RequestMapping("/find")
 	public String findowners() {
 		return "NotImplementedYet";
+	}
+	
+	@GetMapping("/{ownerId}")
+	public ModelAndView showOwner(@PathVariable Long ownerId) {
+		ModelAndView mav = new ModelAndView("owners/ownerDetails");
+		mav.addObject("owner", ownerService.findById(ownerId));		// remove owner if not working
+		return mav;
 	}
 }

@@ -11,9 +11,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.hamcrest.Matchers;
+import org.hamcrest.beans.HasProperty;
+import org.hamcrest.beans.HasPropertyWithValue;
+import org.hamcrest.core.Is;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -69,6 +73,20 @@ class OwnerControllerTest {
 		}
 		
 		verifyNoInteractions(ownerService);
+	}
+	
+	@Test
+	void displayOwnerTest() {
+		when(ownerService.findById(ArgumentMatchers.anyLong())).thenReturn(Owner.builder().id(1L).build());
+		try {
+			mockMvc.perform(get(("/owners/123")))
+				.andExpect(status().isOk())
+				.andExpect(view().name("owners/ownerDetails"))
+				.andExpect(model().attribute("owner", HasPropertyWithValue.hasProperty("id", Is.is(1L))));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
