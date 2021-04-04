@@ -4,17 +4,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@Data
+@EqualsAndHashCode(callSuper=false)
 @Entity
 @Table(name = "types")
 public class PetType extends BaseEntity {
@@ -26,4 +20,8 @@ public class PetType extends BaseEntity {
 	@Column(name = "name")
 	private String name;
 
+	@Override
+	public String toString() {
+		return name;
+	}
 }

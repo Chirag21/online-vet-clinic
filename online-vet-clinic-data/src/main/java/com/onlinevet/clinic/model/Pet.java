@@ -14,6 +14,7 @@ import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Builder.Default;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -43,7 +44,8 @@ public class Pet extends BaseEntity {
 
 	@Column(name = "birth_name")
 	private LocalDate birthDate;
-
+	
+	@Default
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pet")
 	private Set<Visit> visits = new HashSet<>();
 
