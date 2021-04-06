@@ -84,14 +84,14 @@ public class OwnerServiceMapImpl extends AbstractMapService<Owner, Long> impleme
 	}
 
 	@Override
-	public List<Owner> findAllByLastNameLike(String lastName) {
+	public List<Owner> findAllByLastNameLikeIgnoreCase(String lastName) {
 		// TODO Auto-generated method stub
 		//todo - impl
 		return null;
 	}
 
 	@Override
-	public List<Owner> findAllByFirstNameLike(String firstName) {
+	public List<Owner> findAllByFirstNameLikeIgnoreCase(String firstName) {
 		// TODO Auto-generated method stub
 		return null;
 	}

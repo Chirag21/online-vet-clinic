@@ -86,7 +86,7 @@ class OwnerControllerTest {
 	void processFindFormReturnMany() {
 		List<Owner> ownersList = owners.stream().collect(Collectors.toList());
 		System.out.println(ownersList);
-		when(ownerService.findAllByLastNameLike(ArgumentMatchers.anyString())).thenReturn(ownersList);
+		when(ownerService.findAllByLastNameLikeIgnoreCase(ArgumentMatchers.anyString())).thenReturn(ownersList);
 		try {
 			mockMvc.perform(get("/owners")).andExpect(status().isOk()).andExpect(view().name("owners/ownersList"))
 					.andExpect(model().attribute("selections", Matchers.hasSize(2)));
@@ -97,13 +97,13 @@ class OwnerControllerTest {
 
 	@Test
 	void processFindFormReturnOne() {
-		when(ownerService.findAllByFirstNameLike(ArgumentMatchers.anyString()))
+		when(ownerService.findAllByLastNameLikeIgnoreCase(ArgumentMatchers.anyString()))
 				.thenReturn(Arrays.asList(owners.iterator().next()));
 
 		try {
 			mockMvc.perform(get("/owners"))
 				.andExpect(status()
-				.isOk())
+				.is3xxRedirection())
 				.andExpect(view().name("redirect:/owners/1"));
 		} catch (Exception e) {
 			e.printStackTrace();

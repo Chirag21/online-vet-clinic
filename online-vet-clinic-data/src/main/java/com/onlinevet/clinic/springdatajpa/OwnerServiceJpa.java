@@ -70,16 +70,17 @@ public class OwnerServiceJpa implements OwnerService {
 		return ownerRepository.findByLastName(lastName);
 	}
 
+	
 	@Override
-	public List<Owner> findAllByLastNameLike(String lastName) {
-		return ownerRepository.findAllByLastNameLike(lastName);
+	public List<Owner> findAllByLastNameLikeIgnoreCase(String lastName) {
+		return ownerRepository.findAllByLastNameLikeIgnoreCase(lastName);
 	}
 
 	@Override
-	public List<Owner> findAllByFirstNameLike(String firstName) {
-		return ownerRepository.findAllByFirstNameLike(firstName);
+	public List<Owner> findAllByFirstNameLikeIgnoreCase(String firstName) {
+		return ownerRepository.findAllByFirstNameLikeIgnoreCase(firstName);
 	}
-
+	
 	/*
 	 * @Override public List<Owner> findByFirstNameIgnoreCase(String firstName) {
 	 * return ownerRepository.findByFirstnameIgnoreCase(firstName); }

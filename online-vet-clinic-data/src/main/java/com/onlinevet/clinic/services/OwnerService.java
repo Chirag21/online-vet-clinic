@@ -10,11 +10,11 @@ public interface OwnerService extends CrudService<Owner, Long> {
 
 	Owner findByLastName(String lastName);
 
-	List<Owner> findAllByFirstNameLike(String firstName);
+	List<Owner> findAllByFirstNameLikeIgnoreCase(String firstName);
 	
 	//List<Owner> findByFirstNameIgnoreCase(String firstName);
 	
-	List<Owner> findAllByLastNameLike(String lastName);
+	List<Owner> findAllByLastNameLikeIgnoreCase(String lastName);
 	
 	//List<Owner> findByLastNameIgnoreCase(String lastName);
 }
