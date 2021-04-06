@@ -7,11 +7,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.hamcrest.Matchers;
-import org.hamcrest.beans.HasProperty;
 import org.hamcrest.beans.HasPropertyWithValue;
 import org.hamcrest.core.Is;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,7 +24,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.onlinevet.clinic.controllers.OwnerController;
@@ -35,7 +36,7 @@ class OwnerControllerTest {
 	OwnerService ownerService;
 
 	@InjectMocks
-	OwnerController ownerConroller;
+	OwnerController ownerController;
 
 	Set<Owner> owners;
 	MockMvc mockMvc;
@@ -43,50 +44,69 @@ class OwnerControllerTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		owners = new HashSet<>();
-		owners.add(Owner.builder().id(1L).build());
-		owners.add(Owner.builder().id(2L).build());
-		mockMvc = MockMvcBuilders.standaloneSetup(ownerConroller).build();
+		owners.add(Owner.builder().id(1L).firstName("Ajit").lastName("Katkar").build());
+		owners.add(Owner.builder().id(2L).firstName("Nilesh").lastName("Pawar").build());
+		mockMvc = MockMvcBuilders.standaloneSetup(ownerController).build();
 	}
 
-	@Test
-	void testListOwners() {
-		when(ownerService.findAll()).thenReturn(owners);
-
-		try {
-			mockMvc.perform(get("/owners"))
-				.andExpect(status().isOk())
-				.andExpect(view().name("owners/ownerList"))
-				.andExpect(model().attribute("owners", Matchers.hasSize(2)));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+	/*
+	 * @Test void testListOwners() {
+	 * when(ownerService.findAll()).thenReturn(owners);
+	 * 
+	 * try {
+	 * mockMvc.perform(get("/owners")).andExpect(status().isOk()).andExpect(view().
+	 * name("owners/ownerList")) .andExpect(model().attribute("owners",
+	 * Matchers.hasSize(2))); } catch (Exception e) { e.printStackTrace(); } }
+	 */
 
 	@Test
 	void testFindowners() {
 		try {
-			mockMvc.perform(get("/owners/find"))
-				.andExpect(status().isOk())
-				.andExpect(view().name("NotImplementedYet"));
+			mockMvc.perform(get("/owners/find")).andExpect(status().isOk()).andExpect(view().name("owners/findOwners"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		verifyNoInteractions(ownerService);
 	}
-	
+
 	@Test
 	void displayOwnerTest() {
 		when(ownerService.findById(ArgumentMatchers.anyLong())).thenReturn(Owner.builder().id(1L).build());
 		try {
-			mockMvc.perform(get(("/owners/123")))
-				.andExpect(status().isOk())
-				.andExpect(view().name("owners/ownerDetails"))
-				.andExpect(model().attribute("owner", HasPropertyWithValue.hasProperty("id", Is.is(1L))));
+			mockMvc.perform(get(("/owners/123"))).andExpect(status().isOk())
+					.andExpect(view().name("owners/ownerDetails"))
+					.andExpect(model().attribute("owner", HasPropertyWithValue.hasProperty("id", Is.is(1L))));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
+	@Test
+	void processFindFormReturnMany() {
+		List<Owner> ownersList = owners.stream().collect(Collectors.toList());
+		System.out.println(ownersList);
+		when(ownerService.findAllByLastNameLike(ArgumentMatchers.anyString())).thenReturn(ownersList);
+		try {
+			mockMvc.perform(get("/owners")).andExpect(status().isOk()).andExpect(view().name("owners/ownersList"))
+					.andExpect(model().attribute("selections", Matchers.hasSize(2)));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	void processFindFormReturnOne() {
+		when(ownerService.findAllByFirstNameLike(ArgumentMatchers.anyString()))
+				.thenReturn(Arrays.asList(owners.iterator().next()));
+
+		try {
+			mockMvc.perform(get("/owners"))
+				.andExpect(status()
+				.isOk())
+				.andExpect(view().name("redirect:/owners/1"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

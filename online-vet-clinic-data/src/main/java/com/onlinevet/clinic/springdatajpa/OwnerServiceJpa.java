@@ -1,6 +1,7 @@
 package com.onlinevet.clinic.springdatajpa;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.context.annotation.Profile;
@@ -21,7 +22,6 @@ public class OwnerServiceJpa implements OwnerService {
 
 	public OwnerServiceJpa(OwnerRepository ownerRepository, PetRepository petRepository,
 			PetTypeRepository petTypeRepository) {
-		super();
 		this.ownerRepository = ownerRepository;
 		this.petRepository = petRepository;
 		this.petTypeRepository = petTypeRepository;
@@ -69,5 +69,23 @@ public class OwnerServiceJpa implements OwnerService {
 	public Owner findByLastName(String lastName) {
 		return ownerRepository.findByLastName(lastName);
 	}
+
+	@Override
+	public List<Owner> findAllByLastNameLike(String lastName) {
+		return ownerRepository.findAllByLastNameLike(lastName);
+	}
+
+	@Override
+	public List<Owner> findAllByFirstNameLike(String firstName) {
+		return ownerRepository.findAllByFirstNameLike(firstName);
+	}
+
+	/*
+	 * @Override public List<Owner> findByFirstNameIgnoreCase(String firstName) {
+	 * return ownerRepository.findByFirstnameIgnoreCase(firstName); }
+	 * 
+	 * @Override public List<Owner> findByLastNameIgnoreCase(String lastName) {
+	 * return ownerRepository.findByLastnameIgnoreCase(lastName); }
+	 */
 
 }

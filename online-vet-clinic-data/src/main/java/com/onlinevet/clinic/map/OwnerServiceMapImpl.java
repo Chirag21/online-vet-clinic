@@ -1,5 +1,6 @@
 package com.onlinevet.clinic.map;
 
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.context.annotation.Profile;
@@ -81,4 +82,25 @@ public class OwnerServiceMapImpl extends AbstractMapService<Owner, Long> impleme
 	public Owner findByLastName(String lastName) {
 		return this.findAll().stream().filter(owner -> owner.getLastName().equals(lastName)).findFirst().orElse(null);
 	}
+
+	@Override
+	public List<Owner> findAllByLastNameLike(String lastName) {
+		// TODO Auto-generated method stub
+		//todo - impl
+		return null;
+	}
+
+	@Override
+	public List<Owner> findAllByFirstNameLike(String firstName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * @Override public List<Owner> findByFirstNameIgnoreCase(String firstName) { //
+	 * TODO Auto-generated method stub return null; }
+	 * 
+	 * @Override public List<Owner> findByLastNameIgnoreCase(String lastName) { //
+	 * TODO Auto-generated method stub return null; }
+	 */
 }

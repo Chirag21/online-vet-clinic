@@ -29,7 +29,6 @@ public class DataLoader implements CommandLineRunner {
 	// no need for @Autowired after Spring 4.2 if there is only 1 constructor
 	public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService,
 			SpecialityService specialityService, VisitService visitService) {
-		super();
 		this.ownerService = ownerService;
 		this.vetService = vetService;
 		this.petTypeService = petTypeService;
@@ -86,13 +85,29 @@ public class DataLoader implements CommandLineRunner {
 		manas.setAddress("CBD Sector-5");
 		manas.setCity("CBD Belapur");
 		manas.setTelephone("8888888888");
+		ownerService.save(manas);	// why saving this owner here works?
 		Pet manassPet = new Pet();
 		manassPet.setPetType(dog);
 		manassPet.setName("Max");
-		manassPet.setOwner(aquib);
+		manassPet.setOwner(manas);
 		manassPet.setBirthDate(LocalDate.now());
 		manas.getPets().add(manassPet);
-		ownerService.save(manas);
+		//ownerService.save(manas);		why saving this owner here does not work?
+				
+		Owner nilesh = new Owner();
+		nilesh.setId(3L);
+		nilesh.setFirstName("Nilesh");
+		nilesh.setLastName("Pawar");
+		nilesh.setAddress("CBD Sector-4");
+		nilesh.setCity("CBD Belapur");
+		nilesh.setTelephone("7777777777");
+		Pet nileshsPet = new Pet();
+		nileshsPet.setPetType(dog);
+		nileshsPet.setName("Bruno");
+		nileshsPet.setOwner(nilesh);
+		nileshsPet.setBirthDate(LocalDate.now());
+		nilesh.getPets().add(nileshsPet);
+		ownerService.save(nilesh);
 
 		Visit catVisit = new Visit();
 		catVisit.setPet(manassPet);
@@ -116,6 +131,13 @@ public class DataLoader implements CommandLineRunner {
 		gautam.setLastName("Singh");
 		gautam.getSpecialities().add(radiology);
 		vetService.save(gautam);
+		
+		Vet kunal = new Vet();
+		kunal.setId(3L);
+		kunal.setFirstName("Kunal");
+		kunal.setLastName("Choramale");
+		kunal.getSpecialities().add(radiology);
+		vetService.save(kunal);
 
 		System.out.println("Vets Loaded .......");
 	}
