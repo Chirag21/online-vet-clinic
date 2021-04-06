@@ -42,7 +42,7 @@ public class Pet extends BaseEntity {
 	@JoinColumn(name = "owner_id")
 	private Owner owner;
 
-	@Column(name = "birth_name")
+	@Column(name = "birth_date")
 	private LocalDate birthDate;
 	
 	@Default

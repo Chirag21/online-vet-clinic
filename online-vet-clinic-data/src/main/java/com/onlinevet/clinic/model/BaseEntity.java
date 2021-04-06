@@ -1,6 +1,7 @@
 package com.onlinevet.clinic.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,4 +27,9 @@ public class BaseEntity implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	public boolean isNew() {
+		return Objects.isNull(id);
+	}
+	
 }
