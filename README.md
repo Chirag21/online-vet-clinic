@@ -2,7 +2,7 @@
 
 # online-vet-clinic
 Online vet clinic based on Spring pet clinic project
-opinionated version of the classic reference application - [Spring Pet Clinic](https://github.com/spring-projects/spring-petclinic)
+opinionated version of the classic reference application - Spring Pet Clinic.
 
 # License
 
