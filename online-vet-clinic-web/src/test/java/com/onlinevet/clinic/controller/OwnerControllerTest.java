@@ -12,6 +12,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.hamcrest.Matchers;
 import org.hamcrest.beans.HasPropertyWithValue;
@@ -97,14 +98,15 @@ class OwnerControllerTest {
 
 	@Test
 	void processFindFormReturnOne() {
+		Owner testOwner = owners.iterator().next();
 		when(ownerService.findAllByLastNameLikeIgnoreCase(ArgumentMatchers.anyString()))
-				.thenReturn(Arrays.asList(owners.iterator().next()));
+				.thenReturn(Stream.of(testOwner).collect(Collectors.toList()));
 
 		try {
 			mockMvc.perform(get("/owners"))
 				.andExpect(status()
 				.is3xxRedirection())
-				.andExpect(view().name("redirect:/owners/1"));
+				.andExpect(view().name("redirect:/owners/" + testOwner.getId()));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
