@@ -28,7 +28,7 @@ public class Visit extends BaseEntity {
 	 */
 	private static final long serialVersionUID = 6363360173075367566L;
 
-	@Column(name = "date")
+	@Column(name = "visit_date")
 	private LocalDate date;
 
 	@Column(name = "description")

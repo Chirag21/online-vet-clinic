@@ -18,9 +18,13 @@ import org.springframework.web.servlet.ModelAndView;
 import com.onlinevet.clinic.model.Owner;
 import com.onlinevet.clinic.services.OwnerService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RequestMapping("/owners")
 @Controller
+@Slf4j
 public class OwnerController {
+	private static final String OWNER = "owner";
 	private static final String REDIRECT_OWNERS = "redirect:/owners/";
 	private static final String OWNERS_CREATE_OR_UPDATE_OWNER_FORM = "owners/createOrUpdateOwnerForm";
 	private final OwnerService ownerService;
@@ -50,7 +54,7 @@ public class OwnerController {
 
 	@RequestMapping("/find")
 	public String initFindForm(Model model) {
-		model.addAttribute("owner", new Owner());
+		model.addAttribute(OWNER, new Owner());
 		return "owners/findOwners";
 	}
 
@@ -75,7 +79,7 @@ public class OwnerController {
 
 	@GetMapping("/new")
 	public String initCreationForm(Model model) {
-		model.addAttribute("owner", Owner.builder().build());
+		model.addAttribute(OWNER, Owner.builder().build());
 		return OWNERS_CREATE_OR_UPDATE_OWNER_FORM;
 	}
 
@@ -91,7 +95,7 @@ public class OwnerController {
 
 	@GetMapping("/{ownerId}/edit")
 	public String initUpdateOwnerForm(@PathVariable Long ownerId, Model model) {
-		model.addAttribute("owner", ownerService.findById(ownerId));
+		model.addAttribute(OWNER, ownerService.findById(ownerId));
 		return OWNERS_CREATE_OR_UPDATE_OWNER_FORM;
 	}
 
@@ -104,5 +108,13 @@ public class OwnerController {
 			Owner savedOwner = ownerService.save(owner);
 			return REDIRECT_OWNERS + savedOwner.getId();
 		}	
+	}
+	
+	@GetMapping("{ownerId}/delete")
+	public String  deleteOwner(@PathVariable Long ownerId, Model model) {
+		log.debug("Deleting owner id:" + ownerId);
+		ownerService.deleteById(ownerId);
+		model.addAttribute(OWNER,Owner.builder().build());
+		return "owners/findOwners";
 	}
 }
