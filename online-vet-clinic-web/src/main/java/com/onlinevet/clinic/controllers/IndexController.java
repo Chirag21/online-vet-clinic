@@ -1,7 +1,10 @@
 package com.onlinevet.clinic.controllers;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.onlinevet.clinic.model.User;
 
 @Controller
 public class IndexController {
@@ -12,7 +15,8 @@ public class IndexController {
 	}
 
 	@RequestMapping({ "", "/" })
-	public String loginSignupPage() {
+	public String loginSignupPage(Model model) {
+		model.addAttribute("user",User.builder().build());
 		return "loginSignup";
 	}
 }

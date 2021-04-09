@@ -52,8 +52,15 @@
         </ul>
 
         <ul class="nav navbar-nav navbar-right">
-
-          <li th:replace="::menuItem ('/','home','home page','home','Home')">
+        
+                  
+          <li
+            th:replace="::menuItem ('/logout','logout','Logout','log-out','Logout')">
+            <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
+            <span>Logout</span>
+          </li>
+        
+          <li th:replace="::menuItem ('/index','home','home page','home','Home')">
             <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
             <span>Home</span>
           </li>
@@ -68,13 +75,8 @@
             <span>Veterinarians</span>
           </li>
 
-    <!--  <li
-            th:replace="::menuItem ('/oups','error','trigger a RuntimeException to see how it is handled','warning-sign','Error')">
-            <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
-            <span>Error</span>
-          </li>	 -->
 
-        </ul>
+       </ul>
       </div>
     </div>
   </nav>
