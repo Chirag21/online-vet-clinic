@@ -61,19 +61,42 @@ public class OwnerController {
 	@GetMapping
 	public String processFindForm(Owner owner, BindingResult bindingResult, Model model) {
 		// allow parameterless GET request for /owners to return all records
-		if (Objects.isNull(owner.getLastName()))
-			owner.setLastName("");
+		String value = owner.getTelephone();
+		List<Owner> telephoneResults = ownerService.findByTelephoneLike("%" + value + "%");
+		List<Owner> lastNameResults = ownerService.findAllByLastNameLikeIgnoreCase("%" + value + "%");
 
-		List<Owner> results = ownerService.findAllByLastNameLikeIgnoreCase("%" + owner.getLastName() + "%");
-		if (results.isEmpty()) {
-			bindingResult.rejectValue("lastName", "notFound", "not found");
-			return "owners/findOwners";
-		} else if (results.size() == 1) {
-			owner = results.iterator().next();
+		/*
+		 * if (Objects.isNull(owner.getLastName())) owner.setLastName("");
+		 */
+
+		/*
+		 * if (Objects.isNull(owner.getTelephone())) owner.setTelephone("");
+		 */
+
+		/*
+		 * if (lastNameresults.isEmpty()) { bindingResult.rejectValue("lastName",
+		 * "notFound", "not found"); return "owners/findOwners"; } else if
+		 * (lastNameresults.size() == 1) { owner = lastNameresults.iterator().next();
+		 * return REDIRECT_OWNERS + owner.getId(); } else {
+		 * model.addAttribute("selections", lastNameresults); return
+		 * "owners/ownersList"; }
+		 */
+
+		if (telephoneResults.size() > 1) {
+			model.addAttribute("selections", telephoneResults);
+			return "owners/ownersList";
+		} else if (lastNameResults.size() > 1) {
+			model.addAttribute("selections", lastNameResults);
+			return "owners/ownersList";
+		} else if (telephoneResults.size() == 1) {
+			owner = telephoneResults.iterator().next();
+			return REDIRECT_OWNERS + owner.getId();
+		} else if (lastNameResults.size() == 1) {
+			owner = lastNameResults.iterator().next();
 			return REDIRECT_OWNERS + owner.getId();
 		} else {
-			model.addAttribute("selections", results);
-			return "owners/ownersList";
+			bindingResult.rejectValue("telephone", "notFound", "not found");
+			return "owners/findOwners";
 		}
 	}
 
@@ -100,21 +123,21 @@ public class OwnerController {
 	}
 
 	@PostMapping("{ownerId}/edit")
-	public String processUpdateOwnerForm(@Validated Owner owner, @PathVariable Long ownerId,BindingResult result) {
-		if(result.hasErrors())
+	public String processUpdateOwnerForm(@Validated Owner owner, @PathVariable Long ownerId, BindingResult result) {
+		if (result.hasErrors())
 			return OWNERS_CREATE_OR_UPDATE_OWNER_FORM;
 		else {
 			owner.setId(ownerId);
 			Owner savedOwner = ownerService.save(owner);
 			return REDIRECT_OWNERS + savedOwner.getId();
-		}	
+		}
 	}
-	
+
 	@GetMapping("{ownerId}/delete")
-	public String  deleteOwner(@PathVariable Long ownerId, Model model) {
+	public String deleteOwner(@PathVariable Long ownerId, Model model) {
 		log.debug("Deleting owner id:" + ownerId);
 		ownerService.deleteById(ownerId);
-		model.addAttribute(OWNER,Owner.builder().build());
-		return "owners/findOwners";
+		// model.addAttribute(OWNER,Owner.builder().build());
+		return "redirect:owners/findOwners";
 	}
 }

@@ -15,18 +15,18 @@ import lombok.ToString;
 @Table(name = "roles")
 @ToString
 @EqualsAndHashCode
-public class Role extends BaseEntity{
-	
+public class Role extends BaseEntity {
+
 	private static final long serialVersionUID = -3982694917787914936L;
 
-	@Column(name = "name")
-    private String name;
-	
-    @Column(name = "active")
-    private char active;
-    
-    public Role(Long id, String name) {
-    	super(id);
-    	this.name = name;
-    }
+	@Column(name = "name", unique = true)
+	private String name;
+
+	@Column(name = "active")
+	private char active;
+
+	public Role(Long id, String name) {
+		super(id);
+		this.name = name;
+	}
 }

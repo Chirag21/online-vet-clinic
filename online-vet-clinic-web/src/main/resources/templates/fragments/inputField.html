@@ -1,30 +1,38 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Input Field Fragment</title>
+</head>
 <body>
-  <form>
-    <th:block th:fragment="input (label, name, type)">
-      <div th:with="valid=${!#fields.hasErrors(name)}"
-        th:class="${'form-group' + (valid ? '' : ' has-error')}"
-        class="form-group">
-        <label class="col-sm-2 control-label" th:text="${label}">Label</label>
-        <div class="col-sm-10">
-            <div th:switch="${type}">
-                <input th:case="'text'" class="form-control" type="text" th:field="*{__${name}__}" />
-                <input th:case="'date'" class="form-control" type="text" th:field="*{__${name}__}"
-                        placeholder="YYYY-MM-DD" title="Enter a date in this format: YYYY-MM-DD"
-                        pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))"/>
-            </div>
-          <span th:if="${valid}"
-            class="glyphicon glyphicon-ok form-control-feedback"
-            aria-hidden="true"></span>
-          <th:block th:if="${!valid}">
-            <span
-              class="glyphicon glyphicon-remove form-control-feedback"
-              aria-hidden="true"></span>
-            <span class="help-inline" th:errors="*{__${name}__}">Error</span>
-          </th:block>
-        </div>
-      </div>
-    </th:block>
-  </form>
+	<form>
+		<th:block th:fragment="input (label, name, type)">
+			<div th:with="valid=${!#fields.hasErrors(name)}"
+				th:class="${'form-group' + (valid ? '' : ' has-error')}"
+				class="form-group">
+				<label class="col-sm-2 control-label" th:text="${label}">Label</label>
+				<div class="col-sm-10">
+					<div th:switch="${type}">
+						<input th:case="'text'" class="form-control" type="text"
+							th:field="*{__${name}__}" placeholder="Enter Here"
+							required="required" maxlength="10" />
+
+						<input th:case="'date'" class="form-control" type="text"
+							th:field="*{__${name}__}" placeholder="DD-MM-YYYY"
+							title="Enter a date in this format: DD-MM-YYYY"
+							pattern="^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$" 
+						/>
+					</div>
+					<span th:if="${valid}"
+						class="glyphicon glyphicon-ok form-control-feedback"
+						aria-hidden="true"></span>
+					<th:block th:if="${!valid}">
+						<span class="glyphicon glyphicon-remove form-control-feedback"
+							aria-hidden="true"></span>
+						<span class="help-inline" th:errors="*{__${name}__}">Error</span>
+					</th:block>
+				</div>
+			</div>
+		</th:block>
+	</form>
 </body>
 </html>

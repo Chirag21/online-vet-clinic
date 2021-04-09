@@ -53,7 +53,12 @@
 
         <ul class="nav navbar-nav navbar-right">
 
-          <li th:replace="::menuItem ('/','home','home page','home','Home')">
+          <li th:replace="::menuItem ('/','login','login page','Sign Up','Logout')">
+            <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+            <span>Logout</span>
+          </li>
+
+          <li th:replace="::menuItem ('/index','index','index page','Index','Home')">
             <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
             <span>Home</span>
           </li>

@@ -28,31 +28,30 @@ public class User extends Person {
 
 	private static final long serialVersionUID = 2732492892459817441L;
 
-	@Column(name ="user_name")
+	@Column(name = "user_name", unique = true)
 	private String userName;
 
-    @Column(name= "password")
-    private String password;
+	@Column(name = "email", unique = true)
+	private String email;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(
-        name = "users_roles",
-        joinColumns = @JoinColumn(
-            name = "user_id", referencedColumnName = "id"),
-        inverseJoinColumns = @JoinColumn(
-            name = "role_id", referencedColumnName = "id"))
-    private Set<Role> roles;
-    
-    @Column(name = "active")
-    private char active;
+	@Column(name = "password")
+	private String password;
 
-    @Builder
-    public User(Long id, String firstName, String lastName, String userName, String password, Set <Role> roles , char active) {
-        super(id,firstName,lastName);
-        this.userName = userName;
-        this.password = password;
-        this.roles = roles;
-        this.active = active;
-    }
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+	private Set<Role> roles;
+
+	@Column(name = "active")
+	private char active;
+
+	@Builder
+	public User(Long id, String firstName, String lastName, String userName, String password, Set<Role> roles,
+			char active) {
+		super(id, firstName, lastName);
+		this.userName = userName;
+		this.password = password;
+		this.roles = roles;
+		this.active = active;
+	}
 
 }

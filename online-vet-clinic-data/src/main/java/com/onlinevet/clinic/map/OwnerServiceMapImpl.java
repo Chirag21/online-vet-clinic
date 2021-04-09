@@ -96,6 +96,18 @@ public class OwnerServiceMapImpl extends AbstractMapService<Owner, Long> impleme
 		return null;
 	}
 
+	@Override
+	public List<Owner> findByTelephone(String telephone) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Owner> findByTelephoneLike(String telephone) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	/*
 	 * @Override public List<Owner> findByFirstNameIgnoreCase(String firstName) { //
 	 * TODO Auto-generated method stub return null; }
