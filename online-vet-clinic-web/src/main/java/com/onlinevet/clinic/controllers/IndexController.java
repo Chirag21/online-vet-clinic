@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.onlinevet.clinic.model.User;
 import com.onlinevet.clinic.services.UserService;
+import com.onlinevet.clinic.model.User;
 
 @Controller
 public class IndexController {
@@ -27,7 +28,6 @@ public class IndexController {
 	}
 
 	@GetMapping({ "", "/","/loginSignup","/loginSignup.html" })
-	public String loginSignupPage(Model model) {
 		model.addAttribute("user",User.builder().build());
 		return "loginSignup";
 	}

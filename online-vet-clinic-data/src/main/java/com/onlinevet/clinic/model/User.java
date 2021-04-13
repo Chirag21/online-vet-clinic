@@ -33,7 +33,7 @@ public class User extends Person {
 	@Column(name = "user_name")
 	private String username;
 
-	@Column(name = "email")
+	@Column(name = "email", unique = true)
 	private String email;
 
 	@Column(name = "password")
@@ -51,7 +51,7 @@ public class User extends Person {
 
 	@Builder
 	public User(Long id, String firstName, String lastName, String username, String password, Set<Role> roles,
-			char active, String role) {
+		char active, String role) {
 		super(id, firstName, lastName);
 		this.username = username;
 		this.password = password;

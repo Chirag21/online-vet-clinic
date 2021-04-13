@@ -1,5 +1,6 @@
 package com.onlinevet.clinic.springdatajpa;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -79,6 +80,13 @@ public class OwnerServiceJpa implements OwnerService {
 	@Override
 	public List<Owner> findAllByFirstNameLikeIgnoreCase(String firstName) {
 		return ownerRepository.findAllByFirstNameLikeIgnoreCase(firstName);
+	}
+
+	@Override
+	public List<Owner> findByTelephoneLike(String telephone) {
+		List<Owner> owners = new ArrayList<>();
+		ownerRepository.findByTelephoneLike(telephone).forEach(owners::add);
+		return owners;
 	}
 	
 	/*
