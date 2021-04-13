@@ -59,9 +59,18 @@ public class OwnerController {
 	}
 
 	@GetMapping
-	public String processFindForm(Owner owner, BindingResult bindingResult, Model model) {
+	public String processFindForm(Owner owner1, BindingResult bindingResult, Model model) {
 		// allow parameterless GET request for /owners to return all records
-		String value = owner.getTelephone();
+
+		Owner owner= (Owner)model.getAttribute("owner");
+		
+		System.out.println("***********************************");
+		System.out.println(owner1);
+		System.out.println(owner);
+		System.out.println("***********************************");
+				
+
+		String value = owner.getLastName();
 		List<Owner> telephoneResults = ownerService.findByTelephoneLike("%" + value + "%");
 		List<Owner> lastNameResults = ownerService.findAllByLastNameLikeIgnoreCase("%" + value + "%");
 

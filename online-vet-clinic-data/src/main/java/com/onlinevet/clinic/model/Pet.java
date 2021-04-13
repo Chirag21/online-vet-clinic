@@ -11,25 +11,17 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Builder.Default;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Setter
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 @Entity
 @Table(name = "pets")
 public class Pet extends BaseEntity {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -4401687880835935591L;
 	@Column(name = "name")
 	private String name;
@@ -42,11 +34,24 @@ public class Pet extends BaseEntity {
 	@JoinColumn(name = "owner_id")
 	private Owner owner;
 
+	
+	@DateTimeFormat(pattern = "dd-MM-yyyy")
 	@Column(name = "birth_date")
 	private LocalDate birthDate;
-	
-	@Default
+
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pet")
 	private Set<Visit> visits = new HashSet<>();
 
+	@Builder
+	public Pet(Long id, String name, PetType petType, Owner owner, LocalDate birthDate, Set<Visit> visits) {
+		super(id);
+		this.name = name;
+		this.petType = petType;
+		this.owner = owner;
+		this.birthDate = birthDate;
+		this.visits = visits;
+	}
+
+	public Pet() {
+	}
 }

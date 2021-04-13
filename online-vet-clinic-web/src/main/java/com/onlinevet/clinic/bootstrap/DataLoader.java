@@ -1,5 +1,6 @@
 package com.onlinevet.clinic.bootstrap;
 
+import java.sql.Date;
 import java.time.LocalDate;
 
 import org.springframework.boot.CommandLineRunner;
