@@ -21,8 +21,8 @@
 		<div class="forms-container">
 			<div class="signin-signup">
 				<div action="#" th:if="${session.message}" class="alert alert-primary" role="alert" style="margin-top: 20px;">
-					<p th:text="${session.message.content}" style="text-align: center"></p>
-					<th:block th:text="${#session.removeAttribute('message')}" style="text-align:center"></th:block>
+					<p th:text="${session.message.content}" style="text-align:center;"></p>
+					<th:block th:text="${#session.removeAttribute('message')}" style="text-align:center;"></th:block>
 				</div>
 				<div th:if="${param.error}" class="alert alert-primary">
 					Invalid username/password
@@ -30,8 +30,10 @@
 				<div th:if="${param.logout}" class="alert alert-primary">
 					You have been logged out.
 				</div>
-				<form  class="sign-in-form" method="post"
-					th:object="${user}">
+				
+				
+				
+				<form action="#" th:action="@{/login}" class="sign-in-form" method="post" th:object="${user}">
 					<h2 class="title">Sign in</h2>
 					<div class="input-field">
 						<i class="fas fa-user"></i> <input id="username" name="username"
@@ -57,8 +59,8 @@
 
 				<form action="#" th:action="@{/doRegister}" class="sign-up-form" method="post">
 					<div th:if="${session.message}" class="alert alert-primary" role="alert" style="margin-top: 20px;">
-						<p th:text="${session.message.content}" style="text-align: center"></p>
-						<th:block th:text="${#session.removeAttribute('message')}" style="text-align:center"></th:block>
+						<p th:text="${session.message.content}" style="text-align:center;"></p>
+						<th:block th:text="${#session.removeAttribute('message')}" style="text-align:center;"></th:block>
 					</div>
 					<h2 class="title">Sign up</h2>
 					<div class="input-field">

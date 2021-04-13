@@ -21,7 +21,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Bean
 	public UserDetailsService getUserDetailsService() {
-		return new UserDetailsServiceImpl();
+		return new UserDetailsServiceImpl(); 
 	}
 
 	@Bean
@@ -46,7 +46,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests().antMatchers("/index","/owners/**","/pets/**","/vets/**").hasRole("ADMIN")
 			.antMatchers("/","/loginSignup").permitAll()
-			.and().formLogin().loginPage("/loginSignup")
-			.and().csrf().disable();
+			.and().formLogin().loginPage("/loginSignup").loginProcessingUrl("/login")
+			.defaultSuccessUrl("/index",false)
+			//.failureUrl("/loginSignup?failure")
+			.and().csrf().disable()
+			.logout().logoutSuccessUrl("/loginSignup")
+			.and().exceptionHandling().accessDeniedPage("/accessDenied");
 	}
 }
