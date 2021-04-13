@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'error')}">
-<head>
-<title>Error!</title>
-</head>
+<!-- <html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'error')}">	 -->
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+
   <body>
-    <img src="../static/resources/images/pets.png" th:src="@{/resources/images/pets.png}" alt="Pets image"/>
+    <img src="../static/resources/images/pets.png" th:src="@{/resources/images/pets.png}" alt="pets image"/>
     <h2>Something happened...</h2>
     <p th:text="${message}">Exception message</p>
   </body>
