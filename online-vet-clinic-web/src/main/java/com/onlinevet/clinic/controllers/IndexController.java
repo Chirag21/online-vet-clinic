@@ -27,7 +27,7 @@ public class IndexController {
 		return "index";
 	}
 
-	@GetMapping({ "", "/","/loginSignup","/loginSignup.html" })
+	@GetMapping({ "", "/","/loginSignup","/loginSignup.html" }){
 		model.addAttribute("user",User.builder().build());
 		return "loginSignup";
 	}
