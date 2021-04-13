@@ -5,11 +5,10 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 
-public class PasswordEncryption {
+import lombok.NoArgsConstructor;
 
-	private PasswordEncryption() {
-		super();
-	}
+@NoArgsConstructor
+public class PasswordEncryption {
 
 	public static String encrypt(String password) throws NoSuchAlgorithmException {
 
@@ -21,5 +20,4 @@ public class PasswordEncryption {
 		return Base64.getEncoder().encodeToString(resultByte);
 
 	}
-
 }

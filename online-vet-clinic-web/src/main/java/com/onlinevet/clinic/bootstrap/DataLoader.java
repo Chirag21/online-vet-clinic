@@ -17,7 +17,7 @@ import com.onlinevet.clinic.services.SpecialityService;
 import com.onlinevet.clinic.services.VetService;
 import com.onlinevet.clinic.services.VisitService;
 
-@Component
+//@Component
 public class DataLoader implements CommandLineRunner {
 
 	private OwnerService ownerService;

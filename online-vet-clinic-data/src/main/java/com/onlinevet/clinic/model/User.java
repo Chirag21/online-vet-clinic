@@ -15,21 +15,23 @@ import javax.persistence.UniqueConstraint;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = "user_name"))
 @ToString
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = false)
 public class User extends Person {
 
 	private static final long serialVersionUID = 2732492892459817441L;
 
-	@Column(name = "user_name", unique = true)
-	private String userName;
+	@Column(name = "user_name")
+	private String username;
 
 	@Column(name = "email", unique = true)
 	private String email;
@@ -41,17 +43,21 @@ public class User extends Person {
 	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
 	private Set<Role> roles;
 
+	@Column(name = "role", nullable = false)
+	private String role;
+
 	@Column(name = "active")
 	private char active;
 
 	@Builder
-	public User(Long id, String firstName, String lastName, String userName, String password, Set<Role> roles,
-			char active) {
+	public User(Long id, String firstName, String lastName, String username, String password, Set<Role> roles,
+		char active, String role) {
 		super(id, firstName, lastName);
-		this.userName = userName;
+		this.username = username;
 		this.password = password;
 		this.roles = roles;
 		this.active = active;
+		this.role = role;
 	}
 
 }

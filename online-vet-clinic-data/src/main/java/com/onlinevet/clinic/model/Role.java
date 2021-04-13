@@ -6,6 +6,7 @@ import javax.persistence.Table;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -14,19 +15,24 @@ import lombok.ToString;
 @Entity
 @Table(name = "roles")
 @ToString
-@EqualsAndHashCode
-public class Role extends BaseEntity {
-
+@EqualsAndHashCode(callSuper = false)
+@NoArgsConstructor
+public class Role extends BaseEntity{
+	
 	private static final long serialVersionUID = -3982694917787914936L;
 
-	@Column(name = "name", unique = true)
-	private String name;
+	@Column(name = "name")
+    private String name;
+	
+    @Column(name = "active")
+    private char active;
+    
+    public Role(Long id, String name) {
+    	super(id);
+    	this.name = name;
+    }
 
-	@Column(name = "active")
-	private char active;
-
-	public Role(Long id, String name) {
-		super(id);
+	public Role(String name) {
 		this.name = name;
 	}
 }

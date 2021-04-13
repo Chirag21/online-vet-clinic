@@ -23,7 +23,11 @@ public class UserServiceJpa implements UserService{
 	
 	@Override
 	public User findById(Long id) {
-		return userRepository.findById(id).get();
+		Optional<User> user = userRepository.findById(id);
+		if(user.isPresent())
+			return user.get();
+		
+		return null;
 	}
 
 	@Override
@@ -50,8 +54,23 @@ public class UserServiceJpa implements UserService{
 	}
 
 	@Override
-	public Optional<User> findByUserName(String userName) {
-		return userRepository.findByUserName(userName);
+	public Optional<User> findByUsername(String username) {
+		return userRepository.findByUsername(username);
+	}
+
+	@Override
+	public boolean existsUserByUsername(String username) {
+		return userRepository.existsUserByUsername(username);
+	}
+	
+	@Override
+	public boolean existsById(Long id) {
+		return userRepository.existsById(id);
+	}
+
+	@Override
+	public boolean existsUserByEmail(String email) {
+		return userRepository.existsUserByEmail(email);
 	}
 
 }

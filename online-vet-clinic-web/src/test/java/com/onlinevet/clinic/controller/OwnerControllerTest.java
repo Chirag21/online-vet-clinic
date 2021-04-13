@@ -159,15 +159,18 @@ class OwnerControllerTest {
 		//verifyNoInteractions(ownerService);
 	}
 	
-	/*
-	 * @Test void processUpdateOwnerForm() {
-	 * when(ownerService.save(ArgumentMatchers.any())).thenReturn(Owner.builder().id
-	 * (1L).build()); try { mockMvc.perform(post("/owners/edit"))
-	 * .andExpect(status().is3xxRedirection()) .andExpect(null)
-	 * .andExpect(view().name("redirect:/owners/1"))
-	 * .andExpect(model().attributeExists("owner")); } catch (Exception e) {
-	 * e.printStackTrace(); }
-	 * 
-	 * verify(ownerService).save(ArgumentMatchers.any()); }
-	 */
+	@Test
+	void processUpdateOwnerForm() {
+		when(ownerService.save(ArgumentMatchers.any())).thenReturn(Owner.builder().id(1L).build());
+		try {
+			mockMvc.perform(post("/owners/1/edit"))
+				.andExpect(status().is3xxRedirection())
+				.andExpect(view().name("redirect:/owners/1"))
+				.andExpect(model().attributeExists("owner"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		verify(ownerService).save(ArgumentMatchers.any());
+	}
 }
