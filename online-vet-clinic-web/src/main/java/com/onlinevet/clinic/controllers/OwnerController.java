@@ -1,8 +1,6 @@
 package com.onlinevet.clinic.controllers;
 
 import java.util.List;
-import java.util.Objects;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;

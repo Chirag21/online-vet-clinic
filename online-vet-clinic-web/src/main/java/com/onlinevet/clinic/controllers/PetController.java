@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.onlinevet.clinic.model.Owner;
 import com.onlinevet.clinic.model.Pet;
 import com.onlinevet.clinic.model.PetType;
-import com.onlinevet.clinic.model.User;
 import com.onlinevet.clinic.services.OwnerService;
 import com.onlinevet.clinic.services.PetService;
 import com.onlinevet.clinic.services.PetTypeService;
