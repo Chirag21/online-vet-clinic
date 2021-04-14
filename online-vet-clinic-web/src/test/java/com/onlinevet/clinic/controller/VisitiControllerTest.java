@@ -98,10 +98,10 @@ class VisitControllerTest {
     void processNewVisitForm() throws Exception {
         mockMvc.perform(post(visitsUri)
                             .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                            .param("date","2018-11-11")
+                            .param("date","11-11-2018")
                             .param("description", YET_ANOTHER_VISIT_DESCRIPTION))
-                .andExpect(view().name(PETS_CREATE_OR_UPDATE_VISIT_FORM))
-                .andExpect(status().isOk())
+                .andExpect(view().name(REDIRECT_OWNERS_1))
+                .andExpect(status().is3xxRedirection())
                 .andExpect(model().attributeExists("visit"))
         ;
     }
