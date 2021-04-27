@@ -13,11 +13,11 @@ import com.onlinevet.clinic.services.UserService;
 
 @Service
 @Profile("springdatajpa")
-public class UserServiceJpa implements UserService{
+public class UserServiceImpl implements UserService{
 
 	UserRepository userRepository;
 	
-	public UserServiceJpa(UserRepository userRepository) {
+	public UserServiceImpl(UserRepository userRepository) {
 		this.userRepository = userRepository;
 	}
 	

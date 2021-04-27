@@ -69,8 +69,9 @@ public class OwnerController {
 				
 
 		String value = owner.getLastName();
-		List<Owner> telephoneResults = ownerService.findByTelephoneLike("%" + value + "%");
-		List<Owner> lastNameResults = ownerService.findAllByLastNameLikeIgnoreCase("%" + value + "%");
+		List<Owner> telephoneResults = ownerService.findByTelephoneLike("%" + value.trim() + "%");
+		List<Owner> lastNameResults = ownerService.findAllByLastNameLike("%" + value.trim() + "%");
+		List<Owner> firstNameResults = ownerService.findAllByFirstNameLike("%" + value.trim() + "%");
 
 		/*
 		 * if (Objects.isNull(owner.getLastName())) owner.setLastName("");
@@ -95,13 +96,21 @@ public class OwnerController {
 		} else if (lastNameResults.size() > 1) {
 			model.addAttribute("selections", lastNameResults);
 			return "owners/ownersList";
-		} else if (telephoneResults.size() == 1) {
+		} else if(firstNameResults.size() > 1) {
+			model.addAttribute("selections",firstNameResults);
+			return "owners/ownersList";
+		}
+		else if (telephoneResults.size() == 1) {
 			owner = telephoneResults.iterator().next();
 			return REDIRECT_OWNERS + owner.getId();
 		} else if (lastNameResults.size() == 1) {
 			owner = lastNameResults.iterator().next();
 			return REDIRECT_OWNERS + owner.getId();
-		} else {
+		} else if (firstNameResults.size() == 1) {
+			owner = firstNameResults.iterator().next();
+			return REDIRECT_OWNERS + owner.getId();
+		} 
+		else {
 			bindingResult.rejectValue("telephone", "notFound", "not found");
 			return "owners/findOwners";
 		}

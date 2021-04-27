@@ -88,7 +88,7 @@ class OwnerControllerTest {
 	void processFindFormReturnMany() {
 		List<Owner> ownersList = owners.stream().collect(Collectors.toList());
 		System.out.println(ownersList);
-		when(ownerService.findAllByLastNameLikeIgnoreCase(ArgumentMatchers.anyString())).thenReturn(ownersList);
+		when(ownerService.findAllByLastNameLike(ArgumentMatchers.anyString())).thenReturn(ownersList);
 		try {
 			mockMvc.perform(get("/owners")).andExpect(status().isOk()).andExpect(view().name("owners/ownersList"))
 					.andExpect(model().attribute("selections", Matchers.hasSize(2)));
@@ -100,7 +100,7 @@ class OwnerControllerTest {
 	@Test
 	void processFindFormReturnOne() {
 		Owner testOwner = owners.iterator().next();
-		when(ownerService.findAllByLastNameLikeIgnoreCase(ArgumentMatchers.anyString()))
+		when(ownerService.findAllByLastNameLike(ArgumentMatchers.anyString()))
 				.thenReturn(Stream.of(testOwner).collect(Collectors.toList()));
 
 		try {

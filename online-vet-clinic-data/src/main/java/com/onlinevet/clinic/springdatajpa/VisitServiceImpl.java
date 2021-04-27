@@ -12,11 +12,11 @@ import com.onlinevet.clinic.services.VisitService;
 
 @Service
 @Profile("springdatajpa")
-public class VisitServiceJpa implements VisitService {
+public class VisitServiceImpl implements VisitService {
 
 	private final VisitRepository visitRepository;
 
-	public VisitServiceJpa(VisitRepository visitRepository) {
+	public VisitServiceImpl(VisitRepository visitRepository) {
 		super();
 		this.visitRepository = visitRepository;
 	}

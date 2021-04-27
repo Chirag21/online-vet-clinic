@@ -16,12 +16,12 @@ import com.onlinevet.clinic.services.OwnerService;
 
 @Service
 @Profile("springdatajpa")
-public class OwnerServiceJpa implements OwnerService {
+public class OwnerServiceImpl implements OwnerService {
 	private final OwnerRepository ownerRepository;
 	private final PetRepository petRepository;
 	private final PetTypeRepository petTypeRepository;
 
-	public OwnerServiceJpa(OwnerRepository ownerRepository, PetRepository petRepository,
+	public OwnerServiceImpl(OwnerRepository ownerRepository, PetRepository petRepository,
 			PetTypeRepository petTypeRepository) {
 		this.ownerRepository = ownerRepository;
 		this.petRepository = petRepository;
@@ -73,13 +73,13 @@ public class OwnerServiceJpa implements OwnerService {
 
 	
 	@Override
-	public List<Owner> findAllByLastNameLikeIgnoreCase(String lastName) {
-		return ownerRepository.findAllByLastNameLikeIgnoreCase(lastName);
+	public List<Owner> findAllByLastNameLike(String lastName) {
+		return ownerRepository.findAllByLastNameLike(lastName);
 	}
 
 	@Override
-	public List<Owner> findAllByFirstNameLikeIgnoreCase(String firstName) {
-		return ownerRepository.findAllByFirstNameLikeIgnoreCase(firstName);
+	public List<Owner> findAllByFirstNameLike(String firstName) {
+		return ownerRepository.findAllByFirstNameLike(firstName);
 	}
 
 	@Override

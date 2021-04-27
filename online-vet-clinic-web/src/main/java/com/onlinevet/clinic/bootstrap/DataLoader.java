@@ -1,11 +1,8 @@
 package com.onlinevet.clinic.bootstrap;
 
-import java.sql.Date;
 import java.time.LocalDate;
 
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
-
 import com.onlinevet.clinic.model.Owner;
 import com.onlinevet.clinic.model.Pet;
 import com.onlinevet.clinic.model.PetType;

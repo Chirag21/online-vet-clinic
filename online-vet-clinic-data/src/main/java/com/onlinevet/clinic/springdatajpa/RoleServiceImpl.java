@@ -13,7 +13,7 @@ import com.onlinevet.clinic.services.RoleService;
 
 @Service
 @Profile("springdatajpa")
-public class RoleServiceJpa implements RoleService{
+public class RoleServiceImpl implements RoleService{
 
 	RoleReposiory roleRepository;
 	

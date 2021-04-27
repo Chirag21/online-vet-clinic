@@ -12,10 +12,10 @@ import com.onlinevet.clinic.services.PetService;
 
 @Service
 @Profile({"default","springdatajpa"})
-public class PetServiceJpa implements PetService{
+public class PetServiceImpl implements PetService{
 	private final PetRepository petRepository;
 	
-	public PetServiceJpa(PetRepository petRepository) {
+	public PetServiceImpl(PetRepository petRepository) {
 		super();
 		this.petRepository = petRepository;
 	}

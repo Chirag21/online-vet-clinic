@@ -40,7 +40,7 @@ class OwnerServiceJpaTest {
 	PetTypeRepository petTypeRepository;
 
 	@InjectMocks
-	OwnerServiceJpa ownerServiceJpa;
+	OwnerServiceImpl ownerServiceJpa;
 
 	@BeforeEach
 	void setUp() throws Exception {

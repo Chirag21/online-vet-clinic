@@ -11,11 +11,11 @@ public interface OwnerRepository extends CrudRepository<Owner, Long> {
 
 	Owner findByLastName(String lastName);
 	
-	List<Owner> findAllByFirstNameLikeIgnoreCase(String firstName);
+	List<Owner> findAllByFirstNameLike(String firstName);
 	
 	//List<Owner> findByFirstNameIgnoreCase(String firstName);
 	
-	List<Owner> findAllByLastNameLikeIgnoreCase(String lastName);
+	List<Owner> findAllByLastNameLike(String lastName);
 	
 	//List<Owner> findByLastNameIgnoreCase(String lastName);
 	
