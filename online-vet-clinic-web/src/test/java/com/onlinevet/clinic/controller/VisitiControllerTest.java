@@ -8,7 +8,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import java.net.URI;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -74,7 +76,7 @@ class VisitControllerTest {
                                     .name("Dog").build())
                             .build()
                 );
-
+     
         uriVariables.clear();
         uriVariables.put("ownerId", ownerId.toString());
         uriVariables.put("petId", petId.toString());
@@ -89,8 +91,8 @@ class VisitControllerTest {
     void initNewVisitForm() throws Exception {
         mockMvc.perform(get(visitsUri))
                 .andExpect(status().isOk())
-                .andExpect(view().name(PETS_CREATE_OR_UPDATE_VISIT_FORM))
-        ;
+                .andExpect(view().name(PETS_CREATE_OR_UPDATE_VISIT_FORM));
+        LocalDate.of(21, 12, 2012);
     }
 
 

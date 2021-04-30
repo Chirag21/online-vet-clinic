@@ -31,8 +31,6 @@
 					You have been logged out.
 				</div>
 				
-				
-				
 				<form action="#" th:action="@{/login}" class="sign-in-form" method="post" th:object="${user}">
 					<h2 class="title">Sign in</h2>
 					<div class="input-field">
@@ -139,7 +137,6 @@
 			document.getElementById("error-info").style.display = 'none';
 		});
 
-		
 		var email = document.getElementById("email");
 		var confirmemail = document.getElementById("confirmemail");
 		function validateEmail(){
@@ -152,20 +149,24 @@
 		email.onchange = validateEmail;
 		confirmemail.onkeyup = validateEmail;
 		
-		function confirmcheck(){
-			   var email= $('#password').val(); 
-			   var confirmemail= $('#confirmpassword').val();    
-			   if(email==confirmemail){
-			      $('.alert').html('<span>email and password are same</span>');
-			   }
-			}
-			$('#password').on('change',function(){
-			  confirmcheck();
-			});
-			$('#confirmpassword').on('change',function(){
-			  confirmcheck();
-			});
 		
+		var password = document.getElementById("password");
+		var confirmpassword = document.getElementById("confirmpassword");
+		function validatePassword(){
+		  if(password.value != confirmpassword.value) {
+			  confirmpassword.setCustomValidity("Passwords don't Match");
+		  } else {
+			  confirmpassword.setCustomValidity('');
+		  }
+		}
+		password.onchange = validatePassword;
+		confirmpassword.onkeyup = validatePassword;
+		
+		
+		window.onload = () => {
+			document.getElementById("error-msg").style.display = 'none';
+			document.getElementById("error-info").style.display = 'none';
+		}
 	</script>
 </body>
 </html>

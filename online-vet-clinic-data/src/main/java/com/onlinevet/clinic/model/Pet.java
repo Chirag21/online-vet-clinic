@@ -1,6 +1,7 @@
 package com.onlinevet.clinic.model;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Builder;
@@ -42,6 +44,9 @@ public class Pet extends BaseEntity {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pet")
 	private Set<Visit> visits = new HashSet<>();
 
+	public Pet() {
+	}
+	
 	@Builder
 	public Pet(Long id, String name, PetType petType, Owner owner, LocalDate birthDate, Set<Visit> visits) {
 		super(id);
@@ -50,8 +55,5 @@ public class Pet extends BaseEntity {
 		this.owner = owner;
 		this.birthDate = birthDate;
 		this.visits = visits;
-	}
-
-	public Pet() {
 	}
 }

@@ -19,7 +19,7 @@
       <input
         th:replace="~{fragments/inputField :: input ('Name', 'name', 'text')}" required/>
       <input
-        th:replace="~{fragments/inputField :: input ('Birth Date', 'birthDate', 'date')}" required/>
+        th:replace="~{fragments/inputField :: input ('Birth Date', 'birthDate', 'textdate')}" required/>
       <input
         th:replace="~{fragments/selectField :: select ('Type', 'petType', ${types})}" required/>
     </div>
