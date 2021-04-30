@@ -49,6 +49,9 @@ public class User extends Person {
 	@Column(name = "active")
 	private char active;
 
+	@Column(name = "reset_password_token")
+	private String resetPasswordToken;
+	
 	@Builder
 	public User(Long id, String firstName, String lastName, String username, String password, Set<Role> roles,
 		char active, String role) {

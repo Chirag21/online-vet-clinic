@@ -24,10 +24,10 @@
 					<p th:text="${session.message.content}" style="text-align:center;"></p>
 					<th:block th:text="${#session.removeAttribute('message')}" style="text-align:center;"></th:block>
 				</div>
-				<div th:if="${param.error}" class="alert alert-primary">
+				<div id="error-msg" th:if="${param.error}" class="alert alert-primary">
 					Invalid username/password
 				</div>
-				<div th:if="${param.logout}" class="alert alert-primary">
+				<div id="error-info" th:if="${param.logout}" class="alert alert-primary">
 					You have been logged out.
 				</div>
 				
@@ -46,6 +46,8 @@
 							required />
 					</div>
 					<input type="submit" value="Login" class="btn solid" />
+					<a th:href="@{/forgotPassword}">Forgot your password?</a>
+					<!-- 
 					<p class="social-text">Or Sign in with social platforms</p>
 					<div class="social-media">
 						<a href="#" class="social-icon"> <em class="fab fa-facebook-f"></em>
@@ -55,6 +57,7 @@
 							class="fab fa-linkedin-in"></em>
 						</a>
 					</div>
+					 -->
 				</form>
 
 				<form action="#" th:action="@{/doRegister}" class="sign-up-form" method="post">
@@ -90,6 +93,7 @@
 							value="Sign up" /> &nbsp; <input id="reset" name="reset"
 							type="reset" class="btn" value="Reset" />
 					</div>
+					<!--
 					<p class="social-text">Or Sign up with social platforms</p>
 					<div class="social-media">
 						<a href="#" class="social-icon"> <em class="fab fa-facebook-f"></em>
@@ -99,6 +103,7 @@
 							class="fab fa-linkedin-in"></em>
 						</a>
 					</div>
+					-->
 				</form>
 			</div>
 		</div>
@@ -124,9 +129,15 @@
 		const sign_up_btn = document.querySelector("#sign-up-btn");
 		const container = document.querySelector(".container");
 		sign_up_btn.addEventListener("click", () => {
-			container.classList.add("sign-up-mode");});
+			container.classList.add("sign-up-mode");
+			document.getElementById("error-msg").style.display = 'none';
+			document.getElementById("error-info").style.display = 'none';
+		});
 		sign_in_btn.addEventListener("click", () => {
-			container.classList.remove("sign-up-mode");});
+			container.classList.remove("sign-up-mode");
+			document.getElementById("error-msg").style.display = 'none';
+			document.getElementById("error-info").style.display = 'none';
+		});
 
 		
 		var email = document.getElementById("email");

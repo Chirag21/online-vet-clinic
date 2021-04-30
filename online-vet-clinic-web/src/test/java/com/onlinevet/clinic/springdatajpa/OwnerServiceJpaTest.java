@@ -23,6 +23,7 @@ import com.onlinevet.clinic.model.Owner;
 import com.onlinevet.clinic.repositories.OwnerRepository;
 import com.onlinevet.clinic.repositories.PetRepository;
 import com.onlinevet.clinic.repositories.PetTypeRepository;
+import com.onlinevet.clinic.serviceimpl.OwnerServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
 class OwnerServiceJpaTest {
