@@ -1,4 +1,4 @@
-package com.onlinevet.clinic.springdatajpa;
+package com.onlinevet.clinic.serviceimpl;
 
 import java.util.ArrayList;
 import java.util.HashSet;

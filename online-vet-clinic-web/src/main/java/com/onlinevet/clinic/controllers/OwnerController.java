@@ -57,38 +57,14 @@ public class OwnerController {
 	}
 
 	@GetMapping
-	public String processFindForm(Owner owner1, BindingResult bindingResult, Model model) {
+	public String processFindForm(Owner owner, BindingResult bindingResult, Model model) {
 		// allow parameterless GET request for /owners to return all records
-
-		Owner owner= (Owner)model.getAttribute("owner");
-		
-		System.out.println("***********************************");
-		System.out.println(owner1);
-		System.out.println(owner);
-		System.out.println("***********************************");
-				
+			
 
 		String value = owner.getLastName();
 		List<Owner> telephoneResults = ownerService.findByTelephoneLike("%" + value.trim() + "%");
 		List<Owner> lastNameResults = ownerService.findAllByLastNameLike("%" + value.trim() + "%");
 		List<Owner> firstNameResults = ownerService.findAllByFirstNameLike("%" + value.trim() + "%");
-
-		/*
-		 * if (Objects.isNull(owner.getLastName())) owner.setLastName("");
-		 */
-
-		/*
-		 * if (Objects.isNull(owner.getTelephone())) owner.setTelephone("");
-		 */
-
-		/*
-		 * if (lastNameresults.isEmpty()) { bindingResult.rejectValue("lastName",
-		 * "notFound", "not found"); return "owners/findOwners"; } else if
-		 * (lastNameresults.size() == 1) { owner = lastNameresults.iterator().next();
-		 * return REDIRECT_OWNERS + owner.getId(); } else {
-		 * model.addAttribute("selections", lastNameresults); return
-		 * "owners/ownersList"; }
-		 */
 
 		if (telephoneResults.size() > 1) {
 			model.addAttribute("selections", telephoneResults);

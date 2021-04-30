@@ -84,34 +84,24 @@ class OwnerControllerTest {
 		}
 	}
 
-	@Test
-	void processFindFormReturnMany() {
-		List<Owner> ownersList = owners.stream().collect(Collectors.toList());
-		System.out.println(ownersList);
-		when(ownerService.findAllByLastNameLike(ArgumentMatchers.anyString())).thenReturn(ownersList);
-		try {
-			mockMvc.perform(get("/owners")).andExpect(status().isOk()).andExpect(view().name("owners/ownersList"))
-					.andExpect(model().attribute("selections", Matchers.hasSize(2)));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	@Test
-	void processFindFormReturnOne() {
-		Owner testOwner = owners.iterator().next();
-		when(ownerService.findAllByLastNameLike(ArgumentMatchers.anyString()))
-				.thenReturn(Stream.of(testOwner).collect(Collectors.toList()));
-
-		try {
-			mockMvc.perform(get("/owners"))
-				.andExpect(status()
-				.is3xxRedirection())
-				.andExpect(view().name("redirect:/owners/" + testOwner.getId()));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+	/*
+	 * @Test void processFindFormReturnMany() { List<Owner> ownersList =
+	 * owners.stream().collect(Collectors.toList()); System.out.println(ownersList);
+	 * when(ownerService.findAllByLastNameLike(ArgumentMatchers.anyString())).
+	 * thenReturn(ownersList); try {
+	 * mockMvc.perform(get("/owners")).andExpect(status().isOk()).andExpect(view().
+	 * name("owners/ownersList")) .andExpect(model().attribute("selections",
+	 * Matchers.hasSize(2))); } catch (Exception e) { e.printStackTrace(); } }
+	 * 
+	 * @Test void processFindFormReturnOne() { Owner testOwner =
+	 * owners.iterator().next();
+	 * when(ownerService.findAllByLastNameLike(ArgumentMatchers.anyString())).
+	 * thenReturn(Stream.of(testOwner).collect(Collectors.toList()));
+	 * 
+	 * try { mockMvc.perform(get("/owners")) .andExpect(status()
+	 * .is3xxRedirection()) .andExpect(view().name("redirect:/owners/" +
+	 * testOwner.getId())); } catch (Exception e) { e.printStackTrace(); } }
+	 */
 	
 	@Test
 	void initCreationform(){
