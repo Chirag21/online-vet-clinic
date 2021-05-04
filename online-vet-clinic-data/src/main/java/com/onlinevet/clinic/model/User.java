@@ -52,6 +52,8 @@ public class User extends Person {
 	@Column(name = "reset_password_token")
 	private String resetPasswordToken;
 	
+	private boolean isEnabled;
+	
 	@Builder
 	public User(Long id, String firstName, String lastName, String username, String password, Set<Role> roles,
 		char active, String role) {

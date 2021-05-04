@@ -9,8 +9,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.onlinevet.clinic.model.User;
-import com.onlinevet.clinic.repositories.UserRepository;
-import com.onlinevet.clinic.services.UserService;
+import com.onlinevet.clinic.repository.UserRepository;
+import com.onlinevet.clinic.service.UserService;
 
 @Service
 @Profile("springdatajpa")

@@ -7,7 +7,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -20,9 +21,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.onlinevet.clinic.model.Owner;
-import com.onlinevet.clinic.repositories.OwnerRepository;
-import com.onlinevet.clinic.repositories.PetRepository;
-import com.onlinevet.clinic.repositories.PetTypeRepository;
+import com.onlinevet.clinic.repository.OwnerRepository;
+import com.onlinevet.clinic.repository.PetRepository;
+import com.onlinevet.clinic.repository.PetTypeRepository;
 import com.onlinevet.clinic.serviceimpl.OwnerServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
@@ -64,10 +65,10 @@ class OwnerServiceJpaTest {
 
 	@Test
 	void testFindAll() {
-		Set<Owner> returnOwnersSet = new HashSet<>();
-		returnOwnersSet.add(Owner.builder().id(1L).build());
-		returnOwnersSet.add(Owner.builder().id(2L).build());
-		when(ownerRepository.findAll()).thenReturn(returnOwnersSet);
+		List<Owner> returnOwnersList = new ArrayList<>();
+		returnOwnersList.add(Owner.builder().id(1L).build());
+		returnOwnersList.add(Owner.builder().id(2L).build());
+		when(ownerRepository.findAll()).thenReturn(returnOwnersList);
 
 		Set<Owner> owners = ownerServiceJpa.findAll();
 		assertNotNull(owners);

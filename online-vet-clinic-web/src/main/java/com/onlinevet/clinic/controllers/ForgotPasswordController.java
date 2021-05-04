@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.onlinevet.clinic.helper.URLHelper;
 import com.onlinevet.clinic.model.User;
-import com.onlinevet.clinic.services.UserService;
+import com.onlinevet.clinic.service.UserService;
 
 import net.bytebuddy.utility.RandomString;
 

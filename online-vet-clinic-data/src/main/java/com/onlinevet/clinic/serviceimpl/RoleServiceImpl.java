@@ -8,8 +8,8 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import com.onlinevet.clinic.model.Role;
-import com.onlinevet.clinic.repositories.RoleReposiory;
-import com.onlinevet.clinic.services.RoleService;
+import com.onlinevet.clinic.repository.RoleReposiory;
+import com.onlinevet.clinic.service.RoleService;
 
 @Service
 @Profile("springdatajpa")
@@ -19,7 +19,7 @@ public class RoleServiceImpl implements RoleService{
 	
 	@Override
 	public Role findById(Long id) {
-		return roleRepository.findById(id).get();
+		return roleRepository.findById(id).orElse(new Role());
 	}
 
 	@Override
@@ -45,8 +45,8 @@ public class RoleServiceImpl implements RoleService{
 	}
 
 	@Override
-	public Optional<Role> findByName(String name) {
-		return roleRepository.findByName(name);
+	public Optional<Role> findByAuthority(String authority) {
+		return roleRepository.findByAuthority(authority);
 	}
 
 }

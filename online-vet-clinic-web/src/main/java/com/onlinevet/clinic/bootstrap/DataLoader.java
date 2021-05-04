@@ -9,11 +9,11 @@ import com.onlinevet.clinic.model.PetType;
 import com.onlinevet.clinic.model.Speciality;
 import com.onlinevet.clinic.model.Vet;
 import com.onlinevet.clinic.model.Visit;
-import com.onlinevet.clinic.services.OwnerService;
-import com.onlinevet.clinic.services.PetTypeService;
-import com.onlinevet.clinic.services.SpecialityService;
-import com.onlinevet.clinic.services.VetService;
-import com.onlinevet.clinic.services.VisitService;
+import com.onlinevet.clinic.service.OwnerService;
+import com.onlinevet.clinic.service.PetTypeService;
+import com.onlinevet.clinic.service.SpecialityService;
+import com.onlinevet.clinic.service.VetService;
+import com.onlinevet.clinic.service.VisitService;
 
 //@Component
 public class DataLoader implements CommandLineRunner {

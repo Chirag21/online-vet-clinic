@@ -45,12 +45,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests().antMatchers("/index","/owners/**","/pets/**","/vets/**").hasRole("ADMIN")
-			.antMatchers("/","/loginSignup").permitAll()
+			.antMatchers("/","/loginSignup","/appointments/**").permitAll()
 			.and().formLogin().loginPage("/loginSignup").loginProcessingUrl("/login")
 			.defaultSuccessUrl("/index",false)
 			//.failureUrl("/loginSignup?failure")
 			.and().csrf().disable()
 			.logout().logoutSuccessUrl("/loginSignup")
 			.and().exceptionHandling().accessDeniedPage("/accessDenied");
+		
+		http.headers().frameOptions().disable();
 	}
 }

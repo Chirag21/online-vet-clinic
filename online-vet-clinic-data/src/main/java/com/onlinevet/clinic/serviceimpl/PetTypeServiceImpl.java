@@ -7,8 +7,8 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import com.onlinevet.clinic.model.PetType;
-import com.onlinevet.clinic.repositories.PetTypeRepository;
-import com.onlinevet.clinic.services.PetTypeService;
+import com.onlinevet.clinic.repository.PetTypeRepository;
+import com.onlinevet.clinic.service.PetTypeService;
 
 @Service
 @Profile("springdatajpa")

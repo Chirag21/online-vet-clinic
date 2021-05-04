@@ -13,26 +13,26 @@ import lombok.ToString;
 @Getter
 @Setter
 @Entity
-@Table(name = "roles")
 @ToString
 @EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
+@Table(name = "roles")
 public class Role extends BaseEntity{
 	
 	private static final long serialVersionUID = -3982694917787914936L;
 
-	@Column(name = "name")
-    private String name;
+	@Column(name = "authority")
+    private String authority;
 	
     @Column(name = "active")
     private char active;
     
-    public Role(Long id, String name) {
+    public Role(Long id, String authority) {
     	super(id);
-    	this.name = name;
+    	this.authority = authority;
     }
 
-	public Role(String name) {
-		this.name = name;
+	public Role(String authority) {
+		this.authority = authority;
 	}
 }

@@ -9,7 +9,7 @@ import org.springframework.format.Formatter;
 import org.springframework.stereotype.Component;
 
 import com.onlinevet.clinic.model.PetType;
-import com.onlinevet.clinic.services.PetTypeService;
+import com.onlinevet.clinic.service.PetTypeService;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

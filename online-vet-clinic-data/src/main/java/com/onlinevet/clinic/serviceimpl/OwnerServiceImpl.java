@@ -9,10 +9,10 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import com.onlinevet.clinic.model.Owner;
-import com.onlinevet.clinic.repositories.OwnerRepository;
-import com.onlinevet.clinic.repositories.PetRepository;
-import com.onlinevet.clinic.repositories.PetTypeRepository;
-import com.onlinevet.clinic.services.OwnerService;
+import com.onlinevet.clinic.repository.OwnerRepository;
+import com.onlinevet.clinic.repository.PetRepository;
+import com.onlinevet.clinic.repository.PetTypeRepository;
+import com.onlinevet.clinic.service.OwnerService;
 
 @Service
 @Profile("springdatajpa")

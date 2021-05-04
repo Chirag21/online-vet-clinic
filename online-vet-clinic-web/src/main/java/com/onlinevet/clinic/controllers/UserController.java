@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.onlinevet.clinic.helper.MessageHelper;
 import com.onlinevet.clinic.model.User;
-import com.onlinevet.clinic.services.UserService;
+import com.onlinevet.clinic.service.UserService;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

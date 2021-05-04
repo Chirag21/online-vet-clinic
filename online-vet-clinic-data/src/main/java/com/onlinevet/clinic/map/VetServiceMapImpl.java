@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.onlinevet.clinic.model.Speciality;
 import com.onlinevet.clinic.model.Vet;
-import com.onlinevet.clinic.services.SpecialityService;
-import com.onlinevet.clinic.services.VetService;
+import com.onlinevet.clinic.service.SpecialityService;
+import com.onlinevet.clinic.service.VetService;
 
 @Service
 @Profile({"default","map"})

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.onlinevet.clinic.model.Vet;
-import com.onlinevet.clinic.services.VetService;
+import com.onlinevet.clinic.service.VetService;
 
 @RequestMapping
 @Controller

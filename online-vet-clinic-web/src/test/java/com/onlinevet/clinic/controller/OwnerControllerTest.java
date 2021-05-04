@@ -30,7 +30,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.onlinevet.clinic.controllers.OwnerController;
 import com.onlinevet.clinic.model.Owner;
-import com.onlinevet.clinic.services.OwnerService;
+import com.onlinevet.clinic.service.OwnerService;
 
 @ExtendWith(MockitoExtension.class)
 class OwnerControllerTest {

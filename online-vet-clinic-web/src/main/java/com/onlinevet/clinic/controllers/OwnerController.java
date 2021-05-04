@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.onlinevet.clinic.model.Owner;
-import com.onlinevet.clinic.services.OwnerService;
+import com.onlinevet.clinic.service.OwnerService;
 
 import lombok.extern.slf4j.Slf4j;
 

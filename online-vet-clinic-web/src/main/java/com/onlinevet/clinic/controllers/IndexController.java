@@ -9,7 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.onlinevet.clinic.model.User;
-import com.onlinevet.clinic.services.UserService;
+import com.onlinevet.clinic.service.UserService;
 
 @Controller
 public class IndexController {

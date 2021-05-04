@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.onlinevet.clinic.config.UserDetailsImpl;
 import com.onlinevet.clinic.model.User;
-import com.onlinevet.clinic.services.UserService;
+import com.onlinevet.clinic.service.UserService;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;

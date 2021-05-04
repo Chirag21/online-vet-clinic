@@ -22,6 +22,9 @@ public class Speciality extends BaseEntity {
 	 * 
 	 */
 	private static final long serialVersionUID = 5353194709987645203L;
+	
+	private String name;
+	
 	private String description;
 
 }

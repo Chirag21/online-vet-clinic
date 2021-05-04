@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.onlinevet.clinic.model.Pet;
 import com.onlinevet.clinic.model.Visit;
-import com.onlinevet.clinic.services.PetService;
-import com.onlinevet.clinic.services.VisitService;
+import com.onlinevet.clinic.service.PetService;
+import com.onlinevet.clinic.service.VisitService;
 
 import lombok.AllArgsConstructor;
 
