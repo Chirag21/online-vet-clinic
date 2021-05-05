@@ -3,6 +3,7 @@ package com.onlinevet.clinic.bootstrap;
 import java.util.Date;
 
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -21,6 +22,7 @@ import com.onlinevet.clinic.service.VetService;
 import com.onlinevet.clinic.service.VisitService;
 
 @Component
+@Profile(value = "test")
 public class DataLoader implements CommandLineRunner {
 
 	private OwnerService ownerService;
@@ -54,6 +56,7 @@ public class DataLoader implements CommandLineRunner {
 		user.setUsername("admin1");
 		user.setPassword("$2a$10$H3vmHuhZg4SfU7tM4FI40ulLqdHGRo5H5HU3YBySZNwHWCjQ5kCRe");
 		user.setRole("ROLE_ADMIN");
+		user.setActive('Y');
 		userService.save(user);
 		
 		User userAquib = new User();
@@ -62,6 +65,7 @@ public class DataLoader implements CommandLineRunner {
 		userAquib.setUsername("admin");
 		userAquib.setPassword("$2a$10$H3vmHuhZg4SfU7tM4FI40ulLqdHGRo5H5HU3YBySZNwHWCjQ5kCRe");
 		userAquib.setRole("ROLE_ADMIN");
+		userAquib.setActive('Y');
 		userService.save(userAquib);
 		
 		User userManas = new User();
@@ -70,6 +74,7 @@ public class DataLoader implements CommandLineRunner {
 		userManas.setUsername("admin2");
 		userManas.setPassword("$2a$10$H3vmHuhZg4SfU7tM4FI40ulLqdHGRo5H5HU3YBySZNwHWCjQ5kCRe");
 		userManas.setRole("ROLE_ADMIN");
+		userManas.setActive('Y');
 		userService.save(userManas);
 		
 		User userNilesh = new User();
@@ -78,6 +83,7 @@ public class DataLoader implements CommandLineRunner {
 		userNilesh.setUsername("admin3");
 		userNilesh.setPassword("$2a$10$H3vmHuhZg4SfU7tM4FI40ulLqdHGRo5H5HU3YBySZNwHWCjQ5kCRe");
 		userNilesh.setRole("ROLE_ADMIN");
+		userNilesh.setActive('Y');
 		userService.save(userNilesh);
 		
 		PetType dog = new PetType();
@@ -167,6 +173,7 @@ public class DataLoader implements CommandLineRunner {
 		userSagar.setUsername("admin4");
 		userSagar.setPassword("$2a$10$H3vmHuhZg4SfU7tM4FI40ulLqdHGRo5H5HU3YBySZNwHWCjQ5kCRe");
 		userSagar.setRole("ROLE_ADMIN");
+		userSagar.setActive('Y');
 		userService.save(userSagar);
 		
 		Vet sagar = new Vet();
@@ -185,6 +192,7 @@ public class DataLoader implements CommandLineRunner {
 		userGautam.setUsername("admin5");
 		userGautam.setPassword("$2a$10$H3vmHuhZg4SfU7tM4FI40ulLqdHGRo5H5HU3YBySZNwHWCjQ5kCRe");
 		userGautam.setRole("ROLE_ADMIN");
+		userGautam.setActive('Y');
 		userService.save(userGautam);
 		
 		Vet gautam = new Vet();
@@ -202,6 +210,7 @@ public class DataLoader implements CommandLineRunner {
 		userKunal.setUsername("admin6");
 		userKunal.setPassword("$2a$10$H3vmHuhZg4SfU7tM4FI40ulLqdHGRo5H5HU3YBySZNwHWCjQ5kCRe");
 		userKunal.setRole("ROLE_ADMIN");
+		userKunal.setActive('Y');
 		userService.save(userKunal);
 		
 		Vet kunal = new Vet();
