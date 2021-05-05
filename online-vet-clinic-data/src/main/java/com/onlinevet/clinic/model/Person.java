@@ -2,6 +2,10 @@ package com.onlinevet.clinic.model;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+
+import org.springframework.lang.Nullable;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,10 +29,18 @@ public class Person extends BaseEntity {
 	@Column(name = "last_name")
 	private String lastName;
 	
-	public Person(Long id,String firstName,String lastName) {
+
+    //@NotBlank(message = "Invalid email address")
+    //@Email(message = "Invalid email address")
+    @Column(name = "email")
+    @Nullable
+    private String email;
+	
+	public Person(Long id,String firstName,String lastName, String email) {
 		super(id);
 		this.firstName = firstName;
 		this.lastName = lastName;
+		this.email = email;
 	}
 
 }

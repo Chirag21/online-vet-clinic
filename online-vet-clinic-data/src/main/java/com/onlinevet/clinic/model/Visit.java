@@ -1,6 +1,7 @@
 package com.onlinevet.clinic.model;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -32,7 +33,7 @@ public class Visit extends BaseEntity {
 
 	@Column(name = "visit_date")
 	@DateTimeFormat(pattern = "dd-MM-yyyy")
-	private LocalDate date;
+	private Date date;
 
 	@Column(name = "description")
 	private String description;

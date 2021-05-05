@@ -16,7 +16,15 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.lang.Nullable;
+import org.springframework.validation.annotation.Validated;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -42,7 +50,10 @@ public class Vet extends Person {
 	@JoinTable(name = "vet_specialities", joinColumns = @JoinColumn(name = "vet_id"), inverseJoinColumns = @JoinColumn(name = "speciality_id"))
 	private Set<Speciality> specialities = new HashSet<>();
 
+    //@NotNull(message = "Invalid gender.")
+    //@Pattern(regexp = "^(MALE|FEMALE)$", message = "Invalid gender.")
     @Enumerated(value = EnumType.STRING)
+    @Nullable
     private Gender gender;
     
     @Column(name = "telephone_number")
@@ -51,7 +62,11 @@ public class Vet extends Person {
     @Column(name = "date_of_birth")
     private Date dateOfBirth;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy", timezone = "IST")
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    //@NotNull(message = "Invalid start practice date")
     @Column(name = "start_practice_date")
+    @Nullable
     private Date startPracticeDate;
     
     private String description;

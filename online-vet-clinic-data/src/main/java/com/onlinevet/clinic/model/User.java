@@ -33,14 +33,12 @@ public class User extends Person {
 	@Column(name = "user_name")
 	private String username;
 
-	@Column(name = "email", unique = true)
-	private String email;
-
 	@Column(name = "password")
 	private String password;
 
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id")
+				, inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
 	private Set<Role> roles;
 
 	@Column(name = "role", nullable = false)
@@ -52,12 +50,10 @@ public class User extends Person {
 	@Column(name = "reset_password_token")
 	private String resetPasswordToken;
 	
-	private boolean isEnabled;
-	
 	@Builder
-	public User(Long id, String firstName, String lastName, String username, String password, Set<Role> roles,
+	public User(Long id, String firstName, String lastName ,String email , String username, String password, Set<Role> roles,
 		char active, String role) {
-		super(id, firstName, lastName);
+		super(id, firstName, lastName,email);
 		this.username = username;
 		this.password = password;
 		this.roles = roles;

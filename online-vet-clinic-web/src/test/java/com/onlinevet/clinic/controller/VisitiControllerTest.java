@@ -11,6 +11,7 @@ import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -64,7 +65,7 @@ class VisitControllerTest {
                 .thenReturn(
                         Pet.builder()
                             .id(petId)
-                            .birthDate(LocalDate.of(2018,11,13))
+                            .birthDate(new Date(2012, 12, 20))
                             .name("Cutie")
                             .visits(new HashSet<>())
                             .owner(Owner.builder()

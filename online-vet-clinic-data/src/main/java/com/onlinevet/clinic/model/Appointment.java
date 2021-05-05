@@ -1,6 +1,8 @@
 package com.onlinevet.clinic.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,6 +33,8 @@ public class Appointment extends BaseEntity implements Serializable{
     @JoinColumn(name = "vet_id")
     private Vet vet;
 
+    @NotBlank
+    @Size(max = 255 , message = "Invalid description length")
     @Column(name = "description")
     private String description;
 

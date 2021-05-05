@@ -11,6 +11,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+
+import org.springframework.lang.Nullable;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -43,12 +47,16 @@ public class Owner extends Person {
 	
     @OneToOne(optional = false)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @Nullable
     private User user;
+    
+    @Column(name = "is_profile_complete")
+    private Character isProfileComplete;
 	
 	@Builder
-	public Owner(Long id, String firstName, String lastName, String address, String city, String telephone,
+	public Owner(Long id, String firstName, String lastName, String email , String address, String city, String telephone,
 			Set<Pet> pets) {
-		super(id, firstName, lastName);
+		super(id, firstName, lastName,email);
 		this.address = address;
 		this.city = city;
 		this.telephone = telephone;

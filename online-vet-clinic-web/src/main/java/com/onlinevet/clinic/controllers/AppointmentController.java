@@ -23,10 +23,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.onlinevet.clinic.bindingmodel.AddAppointmentModel;
 import com.onlinevet.clinic.exceptions.AppointmentNotFoundException;
 import com.onlinevet.clinic.exceptions.InvalidAppointmentDateException;
-import com.onlinevet.clinic.viewmodel.AppointmentDateViewModel;
+import com.onlinevet.clinic.model.Appointment;
 
 @Controller
 @RequestMapping("/appointments")
@@ -64,13 +63,13 @@ public class AppointmentController {
 
     @GetMapping("/patient/add")
     public String getPatientAddAppointment(Principal principal, @RequestParam("date") @DateTimeFormat(pattern = "MM/dd/yyyy hh:mm:ss a") Date date,
-    											@ModelAttribute AddAppointmentModel addAppointmentModel, Model model) {
+    											@ModelAttribute Appointment appointment, Model model) {
     		return "appointments/add";
     }
 
     @PostMapping("/patient/add")
     public String patientAddAppointment(@RequestParam("date") @DateTimeFormat(pattern = "MM/dd/yyyy hh:mm:ss a") Date date,
-                                        @Validated @ModelAttribute AddAppointmentModel addAppointmentModel,
+                                        @Validated @ModelAttribute Appointment appointment,
                                         BindingResult bindingResult, Authentication principal, Model model) {
     		return "appointment/add";
     		//return "redirect:/schedule/";
@@ -79,20 +78,20 @@ public class AppointmentController {
     @GetMapping("/doctor/add")
     public String getDoctorAddAppointment(Principal principal,
                                           @RequestParam("date") @DateTimeFormat(pattern = "MM/dd/yyyy hh:mm:ss a") Date date,
-                                          @ModelAttribute AddAppointmentModel addAppointmentModel, Model model) {
+                                          @ModelAttribute Appointment appointment, Model model) {
     	return "appointment/add";
     }
 
     @PostMapping("/doctor/add")
     public String doctorAddAppointment(@RequestParam("date") @DateTimeFormat(pattern = "MM/dd/yyyy hh:mm:ss a") Date date,
-                                       @Validated @ModelAttribute AddAppointmentModel addAppointmentModel,
+                                       @Validated @ModelAttribute Appointment appointment,
                                        BindingResult bindingResult, Authentication principal, Model model) {
     	return "appointment/add";
     	//return "redirect:/schedule/";
     }
 
     @GetMapping("/getForDate")
-    public ResponseEntity<List<AppointmentDateViewModel>> getWeekSchedule(
+    public ResponseEntity<List<Appointment>> getWeekSchedule(
     		@RequestParam("date") @DateTimeFormat(pattern = "MM/dd/yyyy") Date date, Authentication principal, HttpServletRequest request) {
         //return ResponseEntity.ok(appointmentDateViewModels);
         return null;
