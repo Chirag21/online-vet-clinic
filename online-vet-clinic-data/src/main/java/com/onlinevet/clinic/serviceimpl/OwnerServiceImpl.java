@@ -5,28 +5,32 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import com.onlinevet.clinic.model.Owner;
+import com.onlinevet.clinic.repository.DayScheduleRepository;
 import com.onlinevet.clinic.repository.OwnerRepository;
 import com.onlinevet.clinic.repository.PetRepository;
 import com.onlinevet.clinic.repository.PetTypeRepository;
 import com.onlinevet.clinic.service.OwnerService;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
+@AllArgsConstructor
 @Service
 @Profile("springdatajpa")
 public class OwnerServiceImpl implements OwnerService {
+	@Autowired
 	private final OwnerRepository ownerRepository;
+	
+	@Autowired
 	private final PetRepository petRepository;
+	
+	@Autowired
 	private final PetTypeRepository petTypeRepository;
-
-	public OwnerServiceImpl(OwnerRepository ownerRepository, PetRepository petRepository,
-			PetTypeRepository petTypeRepository) {
-		this.ownerRepository = ownerRepository;
-		this.petRepository = petRepository;
-		this.petTypeRepository = petTypeRepository;
-	}
 
 	@Override
 	public Owner findById(Long id) {

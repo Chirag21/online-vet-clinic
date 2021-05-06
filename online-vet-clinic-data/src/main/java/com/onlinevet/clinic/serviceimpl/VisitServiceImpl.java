@@ -3,6 +3,7 @@ package com.onlinevet.clinic.serviceimpl;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
@@ -10,16 +11,14 @@ import com.onlinevet.clinic.model.Visit;
 import com.onlinevet.clinic.repository.VisitRepository;
 import com.onlinevet.clinic.service.VisitService;
 
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
 @Service
 @Profile("springdatajpa")
 public class VisitServiceImpl implements VisitService {
-
+	@Autowired
 	private final VisitRepository visitRepository;
-
-	public VisitServiceImpl(VisitRepository visitRepository) {
-		super();
-		this.visitRepository = visitRepository;
-	}
 
 	@Override
 	public Visit findById(Long id) {

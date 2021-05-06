@@ -1,9 +1,10 @@
 package com.onlinevet.clinic.serviceimpl;
 
-import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
@@ -11,22 +12,25 @@ import com.onlinevet.clinic.model.Role;
 import com.onlinevet.clinic.repository.RoleReposiory;
 import com.onlinevet.clinic.service.RoleService;
 
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
 @Service
 @Profile("springdatajpa")
 public class RoleServiceImpl implements RoleService{
-
-	RoleReposiory roleRepository;
+	private static final String DEFAULT_ROLE = "ROLE_USER";
+	
+	@Autowired
+	private final RoleReposiory roleRepository;
 	
 	@Override
 	public Role findById(Long id) {
-		return roleRepository.findById(id).orElse(new Role());
+		return roleRepository.findById(id).orElseThrow();
 	}
 
 	@Override
 	public Set<Role> findAll() {
-		Set<Role> roles = new HashSet<>();
-		roleRepository.findAll().forEach(roles :: add);
-		return roles;
+		return roleRepository.findAll().stream().collect(Collectors.toSet());
 	}
 
 	@Override
@@ -47,6 +51,11 @@ public class RoleServiceImpl implements RoleService{
 	@Override
 	public Optional<Role> findByAuthority(String authority) {
 		return roleRepository.findByAuthority(authority);
+	}
+
+	@Override
+	public Role getDefaultRole() {
+		return this.roleRepository.findByAuthority(DEFAULT_ROLE).orElseThrow();
 	}
 
 }

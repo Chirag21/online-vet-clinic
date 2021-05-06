@@ -3,6 +3,7 @@ package com.onlinevet.clinic.serviceimpl;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
@@ -10,16 +11,16 @@ import com.onlinevet.clinic.model.Pet;
 import com.onlinevet.clinic.repository.PetRepository;
 import com.onlinevet.clinic.service.PetService;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
+@AllArgsConstructor
 @Service
 @Profile({"default","springdatajpa"})
 public class PetServiceImpl implements PetService{
+	@Autowired
 	private final PetRepository petRepository;
 	
-	public PetServiceImpl(PetRepository petRepository) {
-		super();
-		this.petRepository = petRepository;
-	}
-
 	@Override
 	public Pet findById(Long id) {
 		return petRepository.findById(id).orElse(null);

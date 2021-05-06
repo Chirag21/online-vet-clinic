@@ -1,11 +1,10 @@
 package com.onlinevet.clinic.serviceimpl;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -15,11 +14,17 @@ import com.onlinevet.clinic.model.Log;
 import com.onlinevet.clinic.repository.LogRepository;
 import com.onlinevet.clinic.service.LogService;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+@AllArgsConstructor
 @Service
+@Profile("springdatajpa")
 public class LogServiceImpl implements LogService {
 
 	@Autowired
-	LogRepository logRepository;
+	private LogRepository logRepository;
 	
 	@Override
 	public Log findById(Long id) {
@@ -28,9 +33,7 @@ public class LogServiceImpl implements LogService {
 
 	@Override
 	public Set<Log> findAll() {
-		Set<Log> logs = new HashSet<>();
-		logRepository.findAll().forEach(logs::add);
-		return logs;
+		return logRepository.findAll().stream().collect(Collectors.toSet());
 	}
 
 	@Override
@@ -51,9 +54,7 @@ public class LogServiceImpl implements LogService {
 	@Override
 	public Page<Log> getAll(Pageable pageable) {
 		Page<Log> logs = logRepository.findAll(pageable);
-		List<Log> list = new ArrayList<>();
-		logs.forEach(list::add);
-		return new PageImpl<>(list, pageable, logs.getTotalElements());
+		return new PageImpl<>(logs.toList(), pageable, logs.getTotalElements());
 	}
 
 }

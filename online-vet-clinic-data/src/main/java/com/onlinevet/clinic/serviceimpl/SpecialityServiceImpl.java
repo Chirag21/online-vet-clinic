@@ -3,6 +3,7 @@ package com.onlinevet.clinic.serviceimpl;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
@@ -10,15 +11,14 @@ import com.onlinevet.clinic.model.Speciality;
 import com.onlinevet.clinic.repository.SpecialityRepository;
 import com.onlinevet.clinic.service.SpecialityService;
 
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
 @Service
 @Profile("springdatajpa")
 public class SpecialityServiceImpl implements SpecialityService {
+	@Autowired
 	private final SpecialityRepository specialityRepository;
-
-	public SpecialityServiceImpl(SpecialityRepository specialityRepository) {
-		super();
-		this.specialityRepository = specialityRepository;
-	}
 
 	@Override
 	public Speciality findById(Long id) {

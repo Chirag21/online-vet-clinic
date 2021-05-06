@@ -1,11 +1,13 @@
 package com.onlinevet.clinic.serviceimpl;
 
-import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
-import org.springframework.context.annotation.Bean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -13,23 +15,21 @@ import com.onlinevet.clinic.model.User;
 import com.onlinevet.clinic.repository.UserRepository;
 import com.onlinevet.clinic.service.UserService;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+@AllArgsConstructor
 @Service
 @Profile("springdatajpa")
 public class UserServiceImpl implements UserService {
 
-	UserRepository userRepository;
-
-	public UserServiceImpl(UserRepository userRepository) {
-		this.userRepository = userRepository;
-	}
+	@Autowired
+	private UserRepository userRepository;
 
 	@Override
 	public User findById(Long id) {
-		Optional<User> user = userRepository.findById(id);
-		if (user.isPresent())
-			return user.get();
-
-		return null;
+		return userRepository.findById(id).orElseThrow();
 	}
 
 	@Override
@@ -39,9 +39,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public Set<User> findAll() {
-		HashSet<User> users = new HashSet<>();
-		userRepository.findAll().forEach(users::add);
-		return users;
+		return userRepository.findAll().stream().collect(Collectors.toSet());
 	}
 
 	@Override
@@ -105,9 +103,18 @@ public class UserServiceImpl implements UserService {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encodedPassword = passwordEncoder.encode(newPassword);
         user.setPassword(encodedPassword);
-         
         user.setResetPasswordToken(null);
         userRepository.save(user);
     }
 	
+	@Override
+    public User register(User user) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+      return userRepository.findByUsername(username).orElseThrow();
+	}
 }

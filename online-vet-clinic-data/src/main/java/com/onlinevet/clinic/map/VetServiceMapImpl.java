@@ -1,9 +1,12 @@
 package com.onlinevet.clinic.map;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.onlinevet.clinic.model.Speciality;
@@ -58,6 +61,48 @@ public class VetServiceMapImpl extends AbstractMapService<Vet, Long> implements 
 
 	@Override
 	public Vet findByLastName(String lastName) {
+		return null;
+	}
+
+	@Override
+	public void create(Vet vet) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void savePicture(Vet vet) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void savePicture(String picturPath) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Vet findByUserId(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Vet> findAllSelect() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Page<Vet> findAll(Pageable pageable) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Vet> findAllByOrderByFirstNameAscLastName() {
+		// TODO Auto-generated method stub
 		return null;
 	}
 }

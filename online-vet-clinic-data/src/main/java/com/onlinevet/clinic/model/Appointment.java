@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -38,6 +39,7 @@ public class Appointment extends BaseEntity implements Serializable{
     @Column(name = "description")
     private String description;
 
+    @Builder
 	public Appointment(Long id, Date date, Pet pet, Vet vet, String description) {
 		super(id);
 		this.date = date;

@@ -3,6 +3,7 @@ package com.onlinevet.clinic.serviceimpl;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -18,6 +19,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Service
+@Profile("springdatajpa")
 public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Autowired

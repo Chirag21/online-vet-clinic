@@ -1,8 +1,12 @@
 package com.onlinevet.clinic.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+
+import org.springframework.security.core.GrantedAuthority;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -17,7 +21,7 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
 @Table(name = "roles")
-public class Role extends BaseEntity{
+public class Role extends BaseEntity implements GrantedAuthority, Serializable{
 	
 	private static final long serialVersionUID = -3982694917787914936L;
 

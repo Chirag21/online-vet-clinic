@@ -15,4 +15,7 @@ public interface PetRepository extends JpaRepository<Pet, Long> {
 
     Page<Pet> findAllByVetIdOrderByBirthDateDesc(Long vetId, Pageable pageable);
 
+    Pet findByOwnerId(Long ownerId);
+    
+    List<Pet> findAllByOwnerId(Long ownerId);
 }
