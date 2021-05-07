@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Patients</title>
+    <title>Pets</title>
     <link rel="stylesheet" href="../static/resources/css/commons.css"
           th:href="@{/resources/css/commons.css}"/>
 </head>
@@ -15,7 +15,7 @@
 <main>
     <div class="container">
         <div class="table-wrapper">
-            <h1 class="h1">My Patients</h1>
+            <h1 class="h1">My Pets</h1>
             <table class="table">
                 <thead>
                 <tr>
@@ -28,35 +28,35 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="patient,iter : ${patients}" th:object="${patient}">
+                <tr th:each="pet,iter : ${pets}" th:object="${pet}">
                     <td th:if="${param.page != null}" th:text="${param.page[0]} * 8 + ${iter.index + 1}">index</td>
                     <td th:if="${param.page == null}" th:text="${iter.index + 1}">index</td>
 
                     <td th:text="|*{firstName} *{lastName}|">name</td>
-                    <td th:text="*{#dates.format(dateOfBirth, 'dd-MMM-yyyy')}">date</td>
+                    <td th:text="*{#dates.format(birthDate, 'dd-MMM-yyyy')}">date</td>
                     <td th:text="*{telephoneNumber}">telephone</td>
                     <td th:text="*{isInsured} ? 'Yes' : 'No'">isInsured</td>
 
                     <td>
-                        <a class="btn btn-secondary" th:href="|/patient/*{id}|">View</a>
+                        <a class="btn btn-secondary" th:href="|/pet/*{id}|">View</a>
                     </td>
                 </tr>
                 </tbody>
             </table>
         </div>
 
-        <nav aria-label="Page navigation example" th:if="!${#lists.isEmpty(patients)}">
+        <nav aria-label="Page navigation example" th:if="!${#lists.isEmpty(pets)}">
             <ul class="pagination">
-                <li class="page-item" th:classappend="!${patients.hasPrevious()}? 'disabled'">
+                <li class="page-item" th:classappend="!${pets.hasPrevious()}? 'disabled'">
                     <a class="page-link"
-                       th:href="${patients.hasPrevious()} ? '/doctor/patients?page=' + ${patients.previousPageable().getPageNumber()}" >Previous</a>
+                       th:href="${pets.hasPrevious()} ? '/vet/pets?page=' + ${pets.previousPageable().getPageNumber()}" >Previous</a>
                 </li>
-                <li class="page-item" th:each="i : ${#numbers.sequence(0, patients.getTotalPages() - 1)}">
-                    <a class="page-link" href="#" th:href="|/doctor/patients?page=${i}|" th:text="${i + 1}">1</a>
+                <li class="page-item" th:each="i : ${#numbers.sequence(0, pets.getTotalPages() - 1)}">
+                    <a class="page-link" href="#" th:href="|/vet/pets?page=${i}|" th:text="${i + 1}">1</a>
                 </li>
-                <li class="page-item" th:classappend="!${patients.hasNext()}? 'disabled'">
+                <li class="page-item" th:classappend="!${pets.hasNext()}? 'disabled'">
                     <a class="page-link"
-                       th:href="${patients.hasNext()} ? '/doctor/patients?page=' + ${patients.nextPageable().getPageNumber()}">Next</a>
+                       th:href="${pets.hasNext()} ? '/vet/pets?page=' + ${pets.nextPageable().getPageNumber()}">Next</a>
                 </li>
             </ul>
         </nav>

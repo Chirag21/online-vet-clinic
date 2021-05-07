@@ -1,37 +1,42 @@
 package com.onlinevet.clinic.serviceimpl;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
+
 import com.onlinevet.clinic.model.Owner;
-import com.onlinevet.clinic.repository.DayScheduleRepository;
+import com.onlinevet.clinic.model.User;
 import com.onlinevet.clinic.repository.OwnerRepository;
-import com.onlinevet.clinic.repository.PetRepository;
-import com.onlinevet.clinic.repository.PetTypeRepository;
 import com.onlinevet.clinic.service.OwnerService;
+import com.onlinevet.clinic.service.UserService;
 
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @Service
 @Profile("springdatajpa")
 public class OwnerServiceImpl implements OwnerService {
+	private static String DEFAULT_OWNER_ROLE = "ROLE_USER";
+	
 	@Autowired
 	private final OwnerRepository ownerRepository;
 	
 	@Autowired
-	private final PetRepository petRepository;
-	
-	@Autowired
-	private final PetTypeRepository petTypeRepository;
+	private final UserService userService;
 
+	@Override
+	public void create(Owner owner) {
+		owner.setAdditionalRole(DEFAULT_OWNER_ROLE);
+		User user = userService.register(owner);
+		owner.setUser(user);
+		ownerRepository.saveAndFlush(owner);
+	}
+	
 	@Override
 	public Owner findById(Long id) {
 		return ownerRepository.findById(id).orElse(null);
@@ -39,30 +44,22 @@ public class OwnerServiceImpl implements OwnerService {
 
 	@Override
 	public Set<Owner> findAll() {
-		Set<Owner> owners = new HashSet<>();
-		ownerRepository.findAll().forEach(owners::add);
-		return owners;
+		return ownerRepository.findAll().stream().collect(Collectors.toSet());
 	}
 
 	@Override
-	public Owner save(Owner object) {
-		System.out.println("JPA JPA JPA JPA JPA JPA JPA JPA JPA JPA");
-		System.out.println("JPA JPA JPA JPA JPA JPA JPA JPA JPA JPA");
-		System.out.println("JPA JPA JPA JPA JPA JPA JPA JPA JPA JPA");
-		System.out.println("JPA JPA JPA JPA JPA JPA JPA JPA JPA JPA");
-		System.out.println("JPA JPA JPA JPA JPA JPA JPA JPA JPA JPA");
-		System.out.println("JPA JPA JPA JPA JPA JPA JPA JPA JPA JPA");
-		return ownerRepository.save(object);
+	public Owner save(Owner owner) {
+		return ownerRepository.saveAndFlush(owner);
 	}
 
 	@Override
-	public void delete(Owner object) {
-		ownerRepository.delete(object);
+	public void delete(Owner owner) {
+		ownerRepository.delete(owner);
 	}
 
 	@Override
-	public void deleteById(Long id) {
-		ownerRepository.deleteById(id);
+	public void deleteById(Long ownerId) {
+		ownerRepository.deleteById(ownerId);
 	}
 
 	@Override
@@ -78,27 +75,23 @@ public class OwnerServiceImpl implements OwnerService {
 	
 	@Override
 	public List<Owner> findAllByLastNameLike(String lastName) {
-		return ownerRepository.findAllByLastNameLike(lastName);
+		return ownerRepository.findAllByLastNameLikeIgnoreCase(lastName);
 	}
 
 	@Override
 	public List<Owner> findAllByFirstNameLike(String firstName) {
-		return ownerRepository.findAllByFirstNameLike(firstName);
+		return ownerRepository.findAllByFirstNameLikeIgnoreCase(firstName);
 	}
 
 	@Override
 	public List<Owner> findByTelephoneLike(String telephone) {
-		List<Owner> owners = new ArrayList<>();
-		ownerRepository.findByTelephoneLike(telephone).forEach(owners::add);
-		return owners;
+		return ownerRepository.findByTelephoneLike(telephone)
+					.stream()
+					.collect(Collectors.toList());
 	}
-	
-	/*
-	 * @Override public List<Owner> findByFirstNameIgnoreCase(String firstName) {
-	 * return ownerRepository.findByFirstnameIgnoreCase(firstName); }
-	 * 
-	 * @Override public List<Owner> findByLastNameIgnoreCase(String lastName) {
-	 * return ownerRepository.findByLastnameIgnoreCase(lastName); }
-	 */
 
+	@Override
+	public Owner findByUserId(Long userId) {
+		return ownerRepository.findByUserId(userId);
+	}
 }

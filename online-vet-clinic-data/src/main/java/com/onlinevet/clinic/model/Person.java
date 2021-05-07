@@ -2,8 +2,7 @@ package com.onlinevet.clinic.model;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 import org.springframework.lang.Nullable;
 
@@ -29,6 +28,18 @@ public class Person extends BaseEntity {
 	@Column(name = "last_name")
 	private String lastName;
 	
+    @Size(min = 5, message = "Username too short")
+    @Column(name = "username")
+    private String username;
+
+    @Size(min = 5, message = "Password too short")
+    @Column(name="passowrd")
+    private String password;
+    
+    @Size(min = 5, message = "Password too short")
+    @Column(insertable=false, updatable=false)
+    private String confirmPassword;
+
 
     //@NotBlank(message = "Invalid email address")
     //@Email(message = "Invalid email address")

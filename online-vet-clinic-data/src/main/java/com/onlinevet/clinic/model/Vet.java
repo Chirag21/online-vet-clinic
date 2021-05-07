@@ -52,11 +52,14 @@ public class Vet extends Person {
     @Nullable
     private Gender gender;
     
-    @Column(name = "telephone_number")
-    private String telephoneNumber;
+    @Column(name = "registration_number")
+    private String registrationNumber;
+    
+    @Column(name = "telephone")
+    private String telephone;
 
-    @Column(name = "date_of_birth")
-    private Date dateOfBirth;
+    @Column(name = "birth_date")
+    private Date birthDate;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy", timezone = "IST")
     @DateTimeFormat(pattern = "dd-MM-yyyy")

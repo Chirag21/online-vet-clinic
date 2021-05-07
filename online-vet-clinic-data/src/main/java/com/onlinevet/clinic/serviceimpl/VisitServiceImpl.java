@@ -1,7 +1,7 @@
 package com.onlinevet.clinic.serviceimpl;
 
-import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
@@ -27,19 +27,17 @@ public class VisitServiceImpl implements VisitService {
 
 	@Override
 	public Set<Visit> findAll() {
-		Set<Visit> visits = new HashSet<>();
-		visitRepository.findAll().forEach(visits::add);
-		return visits;
+		return visitRepository.findAll().stream().collect(Collectors.toSet());
 	}
 
 	@Override
-	public Visit save(Visit object) {
-		return visitRepository.save(object);
+	public Visit save(Visit visit) {
+		return visitRepository.saveAndFlush(visit);
 	}
 
 	@Override
-	public void delete(Visit object) {
-		visitRepository.delete(object);
+	public void delete(Visit visit) {
+		visitRepository.delete(visit);
 	}
 
 	@Override

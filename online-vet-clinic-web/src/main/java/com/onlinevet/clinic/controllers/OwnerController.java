@@ -1,6 +1,9 @@
 package com.onlinevet.clinic.controllers;
 
 import java.util.List;
+import java.util.Set;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -8,29 +11,33 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.onlinevet.clinic.model.Owner;
+import com.onlinevet.clinic.model.Vet;
 import com.onlinevet.clinic.service.OwnerService;
+import com.onlinevet.clinic.service.VetService;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-@RequestMapping("/owners")
 @Controller
 @Slf4j
+@AllArgsConstructor
 public class OwnerController {
 	private static final String OWNER = "owner";
 	private static final String REDIRECT_OWNERS = "redirect:/owners/";
 	private static final String OWNERS_CREATE_OR_UPDATE_OWNER_FORM = "owners/createOrUpdateOwnerForm";
+
+	@Autowired
 	private final OwnerService ownerService;
 
-	// no need for @Autowired after Spring 4.2 if there is only 1 constructor
-	public OwnerController(OwnerService ownerService) {
-		this.ownerService = ownerService;
-	}
+	@Autowired
+	private final VetService vetService;
 
 	@InitBinder
 	public void setAllowedFields(WebDataBinder webDataBinder) {
@@ -43,20 +50,27 @@ public class OwnerController {
 	 * ownerService.findAll()); return "owners/ownerList"; }
 	 */
 
-	@GetMapping("/{ownerId}")
+	@GetMapping(path = "/register-owner")
+    public String getOwnerRegister(@ModelAttribute Owner owner, Model model) {
+        Set<Vet> vets = vetService.findAll();
+        model.addAttribute("vets", vets);
+        return "owners/register";
+    }
+	
+	@GetMapping("/owners/{ownerId}")
 	public ModelAndView showOwner(@PathVariable Long ownerId) { // if not working out("ownerId")
 		ModelAndView mav = new ModelAndView("owners/ownerDetails");
 		mav.addObject(ownerService.findById(ownerId)); // remove owner if not working
 		return mav;
 	}
 
-	@RequestMapping("/find")
+	@RequestMapping("/owners/find")
 	public String initFindForm(Model model) {
 		model.addAttribute(OWNER, new Owner());
 		return "owners/findOwners";
 	}
 
-	@GetMapping
+	@GetMapping("/owners")
 	public String processFindForm(Owner owner, BindingResult bindingResult, Model model) {
 		// allow parameterless GET request for /owners to return all records
 			
@@ -92,13 +106,13 @@ public class OwnerController {
 		}
 	}
 
-	@GetMapping("/new")
+	@GetMapping("/owners/new")
 	public String initCreationForm(Model model) {
 		model.addAttribute(OWNER, Owner.builder().build());
 		return OWNERS_CREATE_OR_UPDATE_OWNER_FORM;
 	}
 
-	@PostMapping("/new")
+	@PostMapping("/owners/new")
 	public String processCreationForm(@Validated Owner owner, BindingResult result) {
 		if (result.hasErrors())
 			return OWNERS_CREATE_OR_UPDATE_OWNER_FORM;
@@ -108,13 +122,13 @@ public class OwnerController {
 		}
 	}
 
-	@GetMapping("/{ownerId}/edit")
+	@GetMapping("/owners/{ownerId}/edit")
 	public String initUpdateOwnerForm(@PathVariable Long ownerId, Model model) {
 		model.addAttribute(OWNER, ownerService.findById(ownerId));
 		return OWNERS_CREATE_OR_UPDATE_OWNER_FORM;
 	}
 
-	@PostMapping("{ownerId}/edit")
+	@PostMapping("/owners/{ownerId}/edit")
 	public String processUpdateOwnerForm(@Validated Owner owner, @PathVariable Long ownerId, BindingResult result) {
 		if (result.hasErrors())
 			return OWNERS_CREATE_OR_UPDATE_OWNER_FORM;
@@ -125,7 +139,7 @@ public class OwnerController {
 		}
 	}
 
-	@GetMapping("{ownerId}/delete")
+	@GetMapping("/owners/{ownerId}/delete")
 	public String deleteOwner(@PathVariable Long ownerId, Model model) {
 		log.debug("Deleting owner id:" + ownerId);
 		ownerService.deleteById(ownerId);

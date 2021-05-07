@@ -30,28 +30,23 @@ import com.onlinevet.clinic.model.Appointment;
 @Controller
 @RequestMapping("/appointments")
 public class AppointmentController {
-	@GetMapping("/home")
-	public String getHome() {
-		return "appointments/home";
-	}
-	
-	@GetMapping("/patient")
-	public String getPatientAppointmentHomePage(Authentication principal, Model model, @PageableDefault(size = 8) Pageable pageable) {
+	@GetMapping("/pet")
+	public String getPetAppointmentHomePage(Authentication principal, Model model, @PageableDefault(size = 8) Pageable pageable) {
 		return "appointments/appointments";
 	}
 	
-    @GetMapping("/doctor")
-    public String getDoctorAppointmentHomePage(Authentication principal, Model model, @PageableDefault(size = 8) Pageable pageable) {
+    @GetMapping("/vet")
+    public String getVetAppointmentHomePage(Authentication principal, Model model, @PageableDefault(size = 8) Pageable pageable) {
         return "appointments/appointments";
     }
     
-    @GetMapping("/doctor/{appointmentId}")
-    public String getDoctorAppointment(@PathVariable long appointmentId, Authentication principal, Model model) {
+    @GetMapping("/vet/{appointmentId}")
+    public String getVetAppointment(@PathVariable long appointmentId, Authentication principal, Model model) {
         return "appointments/appointment";
     }
     
-    @GetMapping("/patient/{appointmentId}")
-    public String getPatientAppointment(@PathVariable long appointmentId, Authentication principal, Model model) {
+    @GetMapping("/pet/{appointmentId}")
+    public String getPetAppointment(@PathVariable long appointmentId, Authentication principal, Model model) {
         return "appointments/appointment";
     }
 
@@ -61,29 +56,29 @@ public class AppointmentController {
         return "appointments/appointment";
     }
 
-    @GetMapping("/patient/add")
-    public String getPatientAddAppointment(Principal principal, @RequestParam("date") @DateTimeFormat(pattern = "MM/dd/yyyy hh:mm:ss a") Date date,
+    @GetMapping("/pet/add")
+    public String getPetAddAppointment(Principal principal, @RequestParam("date") @DateTimeFormat(pattern = "MM/dd/yyyy hh:mm:ss a") Date date,
     											@ModelAttribute Appointment appointment, Model model) {
     		return "appointments/add";
     }
 
-    @PostMapping("/patient/add")
-    public String patientAddAppointment(@RequestParam("date") @DateTimeFormat(pattern = "MM/dd/yyyy hh:mm:ss a") Date date,
+    @PostMapping("/pet/add")
+    public String petAddAppointment(@RequestParam("date") @DateTimeFormat(pattern = "MM/dd/yyyy hh:mm:ss a") Date date,
                                         @Validated @ModelAttribute Appointment appointment,
                                         BindingResult bindingResult, Authentication principal, Model model) {
     		return "appointment/add";
     		//return "redirect:/schedule/";
     }
 
-    @GetMapping("/doctor/add")
-    public String getDoctorAddAppointment(Principal principal,
+    @GetMapping("/vet/add")
+    public String getVetAddAppointment(Principal principal,
                                           @RequestParam("date") @DateTimeFormat(pattern = "MM/dd/yyyy hh:mm:ss a") Date date,
                                           @ModelAttribute Appointment appointment, Model model) {
     	return "appointment/add";
     }
 
-    @PostMapping("/doctor/add")
-    public String doctorAddAppointment(@RequestParam("date") @DateTimeFormat(pattern = "MM/dd/yyyy hh:mm:ss a") Date date,
+    @PostMapping("/vet/add")
+    public String vetAddAppointment(@RequestParam("date") @DateTimeFormat(pattern = "MM/dd/yyyy hh:mm:ss a") Date date,
                                        @Validated @ModelAttribute Appointment appointment,
                                        BindingResult bindingResult, Authentication principal, Model model) {
     	return "appointment/add";
@@ -97,7 +92,7 @@ public class AppointmentController {
         return null;
     }
 
-    private long getDoctorId(Authentication principal, HttpServletRequest request) {
+    private long getVetId(Authentication principal, HttpServletRequest request) {
         return 0;
     }
 

@@ -19,9 +19,9 @@ public interface VetService extends CrudService<Vet, Long> {
 	void create(Vet vet);
     
     void savePicture(Vet vet);
+
+    void savePicture(Vet vet, String picturePath);
     
-    void savePicture(String picturPath);
-   
     List<Vet> findAllSelect();
 
     Page<Vet> findAll(Pageable pageable);

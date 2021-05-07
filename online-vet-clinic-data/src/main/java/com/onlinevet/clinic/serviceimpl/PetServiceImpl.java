@@ -1,10 +1,14 @@
 package com.onlinevet.clinic.serviceimpl;
 
-import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.onlinevet.clinic.model.Pet;
@@ -12,7 +16,6 @@ import com.onlinevet.clinic.repository.PetRepository;
 import com.onlinevet.clinic.service.PetService;
 
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @Service
@@ -28,19 +31,17 @@ public class PetServiceImpl implements PetService{
 
 	@Override
 	public Set<Pet> findAll() {
-		Set<Pet> pets = new HashSet<>();
-		petRepository.findAll().forEach(pets::add);
-		return pets;
+		return petRepository.findAll().stream().collect(Collectors.toSet());
 	}
 
 	@Override
-	public Pet save(Pet object) {
-		return petRepository.save(object);
+	public Pet save(Pet pet) {
+		return petRepository.saveAndFlush(pet);
 	}
 
 	@Override
-	public void delete(Pet object) {
-		petRepository.delete(object);
+	public void delete(Pet pet) {
+		petRepository.delete(pet);
 	}
 
 	@Override
@@ -50,7 +51,28 @@ public class PetServiceImpl implements PetService{
 
 	@Override
 	public Pet findByName(String name) {
-		return petRepository.findByName(name);
+		return petRepository.findByNameIgnoreCase(name);
+	}
+
+	@Override
+	public List<Pet> findAllByVetId(Long vetId) {
+		return petRepository.findAllByVetId(vetId);
+	}
+
+	@Override
+	public Page<Pet> findAllByVetIdOrderByBirthDateDesc(Long vetId, Pageable pageable) {
+		Page<Pet> pets = petRepository.findAll(pageable);
+		return new PageImpl<>(pets.toList(), pageable, pets.getTotalElements());
+	}
+
+	@Override
+	public Pet findByOwnerId(Long ownerId) {
+		return petRepository.findByOwnerId(ownerId);
+	}
+
+	@Override
+	public List<Pet> findAllByOwnerId(Long ownerId) {
+		return petRepository.findAllByOwnerId(ownerId);
 	}
 	
 }

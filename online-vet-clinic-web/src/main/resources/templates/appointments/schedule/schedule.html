@@ -19,7 +19,7 @@
 <main>
     <div class="container">
         <h1 class="h1">
-            <span th:text="'Dr. ' + ${doctor.firstName} + ' ' + ${doctor.lastName}"></span> Schedule
+            <span th:text="'Dr. ' + ${vet.firstName} + ' ' + ${vet.lastName}"></span> Schedule
         </h1>
         <div class="form-group"> <!-- float-lg-right-->
             <input class="form-control col-md-4 push-md-8" type="week" value="2011-W33" id="week-input"/>
@@ -76,7 +76,7 @@
         </div>
     </div>
 </main>
-<span id="role-doctor" sec:authorize="hasRole('ROLE_DOCTOR')">
+<span id="role-vet" sec:authorize="hasRole('ROLE_VET')">
 </span>
 
 <div th:replace="fragments/parts::scripts">
@@ -84,19 +84,19 @@
 <script th:src="@{/resources/js/util/common.js}" src="../static/resources/js/util/common.js"></script>
 <script th:src="@{/resources/js/util/requester.js}" src="../static/resources/js/util/requester.js"></script>
 <script th:src="@{/resources/js/controller/scheduleController.js}" src="../static/resources/js/controller/scheduleController.js"></script>
-<script th:src="@{/resources/js/model/appointmentModel.js}" src="../static/resources/js/model/appointmentModel.js"></script>
-<script th:src="@{/resources/js/model/weekScheduleModel.js}" src="../staticresources//js/model/weekScheduleModel.js"></script>
+<script th:src="@{/resources/js/model/appointment.js}" src="../static/resources/js/model/appointment.js"></script>
+<script th:src="@{/resources/js/model/weekSchedule.js}" src="../staticresources//js/model/weekSchedule.js"></script>
 <script th:src="@{/resources/js/viewBag/scheduleViewBag.js}" src="../static/resources/js/viewBag/scheduleViewBag.js"></script>
 <script type="text/javascript" th:inline="javascript">
     var app = app || {};
 
     var requester = requester || app.requester.load();
 
-    var scheduleModel = app.weekScheduleModel.load(requester);
-    var appointmentModel = app.appointmentModel.load(requester);
+    var schedule = app.weekSchedule.load(requester);
+    var appointment = app.appointment.load(requester);
     var scheduleViewBag = app.scheduleViewBag.load();
 
-    var scheduleController = app.scheduleController.load(scheduleModel, appointmentModel, scheduleViewBag);
+    var scheduleController = app.scheduleController.load(schedule, appointment, scheduleViewBag);
 
     $(document).ready(function () {
         $('#week-input').val(app.getWeekNumberFormat());

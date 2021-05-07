@@ -4,7 +4,6 @@ import java.util.Date;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.onlinevet.clinic.model.Owner;
@@ -53,9 +52,9 @@ public class DataLoader implements CommandLineRunner {
 		User user = new User();
 		user.setId(1L);
 		user.setEmail("admin1@gmail.com");
-		user.setUsername("admin1");
+		user.setUsername("user");
 		user.setPassword("$2a$10$H3vmHuhZg4SfU7tM4FI40ulLqdHGRo5H5HU3YBySZNwHWCjQ5kCRe");
-		user.setRole("ROLE_ADMIN");
+		user.setRole("ROLE_USER");
 		user.setActive('Y');
 		userService.save(user);
 		

@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.onlinevet.clinic.model.Role;
 
 public interface RoleReposiory extends JpaRepository<Role, Long> {
-	Optional<Role> findByAuthority(String authority);
+	Optional<Role> findByAuthorityIgnoreCase(String authority);
 }

@@ -41,7 +41,7 @@ public class WeekScheduleServiceImpl implements WeekScheduleService {
 	@Override
 	public WeekSchedule save(WeekSchedule weekSchedule) {
 		weekSchedule.getDaySchedules().forEach(e -> dayScheduleService.save(e));
-		return weekScheduleRepository.save(weekSchedule);
+		return weekScheduleRepository.saveAndFlush(weekSchedule);
 	}
 
 	@Override

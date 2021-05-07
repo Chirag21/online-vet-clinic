@@ -13,9 +13,9 @@ public interface OwnerRepository extends JpaRepository<Owner, Long> {
 	
 	Owner findByUserId(Long userId);
 	
-	List<Owner> findAllByFirstNameLike(String firstName);
+	List<Owner> findAllByFirstNameLikeIgnoreCase(String firstName);
 	
-	List<Owner> findAllByLastNameLike(String lastName);
+	List<Owner> findAllByLastNameLikeIgnoreCase(String lastName);
 	
 	List<Owner> findByTelephoneLike(String telephone);
 	

@@ -16,7 +16,7 @@
     <div class="container">
         <h1 class="h1">Edit Week Schedule</h1>
         <div style="color: red" th:if="${error} != null" th:text="${error}"></div>
-        <form method="post" th:object="${editWeekScheduleModel}">
+        <form method="post" th:object="${weekSchedule}">
             <div class="table-wrapper">
                 <table class="table">
                     <thead>
@@ -34,16 +34,16 @@
                     <tbody>
                     <tr>
                         <th scope="row">From</th>
-                        <td th:each="editDayScheduleModel, stat : *{editDayScheduleModels}">
+                        <td th:each="daySchedule, stat : *{daySchedules}">
                             <input class="form-control" type="time" value="00:00:00"
-                                   th:field="*{editDayScheduleModels[__${stat.index}__].startTimeStr}"/>
+                                   th:field="*{daySchedules[__${stat.index}__].startTimeStr}"/>
                         </td>
                     </tr>
                     <tr>
                         <th scope="row">To</th>
-                        <td th:each="editDayScheduleModel, stat : *{editDayScheduleModels}">
+                        <td th:each="daySchedule, stat : *{daySchedules}">
                             <input class="form-control" type="time" value="00:00:00"
-                                   th:field="*{editDayScheduleModels[__${stat.index}__].endTimeStr}"/>
+                                   th:field="*{daySchedules[__${stat.index}__].endTimeStr}"/>
                         </td>
                     </tr>
                     </tbody>

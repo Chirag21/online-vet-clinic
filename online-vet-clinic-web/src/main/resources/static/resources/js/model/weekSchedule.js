@@ -1,12 +1,12 @@
 var app = app || {};
 
-app.weekScheduleModel = (function() {
-    function WeekScheduleModel(requester) {
+app.weekSchedule = (function() {
+    function WeekSchedule(requester) {
         this._requester = requester;
         this._serviceUrl = '/schedule/'
     }
 
-    WeekScheduleModel.prototype.getWeekSchedule = function () {
+    WeekSchedule.prototype.getWeekSchedule = function () {
         var queryUrl = this._serviceUrl + 'week';
 
         return this._requester.get(queryUrl);
@@ -14,7 +14,7 @@ app.weekScheduleModel = (function() {
 
     return {
         load: function(requester) {
-            return new WeekScheduleModel(requester);
+            return new WeekSchedule(requester);
         }
     }
 }());

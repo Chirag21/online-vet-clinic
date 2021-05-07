@@ -21,6 +21,8 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 @Slf4j
 public class UserController {
+	private static final String LOGIN_SIGNUP = "loginSignup";
+
 	private static final String MESSAGE = "message";
 
 	private static final String REDIRECT_LOGIN_SIGNUP = "redirect:loginSignup";
@@ -59,20 +61,20 @@ public class UserController {
 			model.addAttribute("user", User.builder().build());
 			session.setAttribute(MESSAGE, MessageHelper.builder()
 					.content("Successfully registered. Login to continue.").type("alert-success").build());
-			return "loginSignup";
+			return LOGIN_SIGNUP;
 
 		} else if (userService.existsUserByUsername(user.getUsername())) {
 			model.addAttribute("user", user);
 			session.setAttribute(MESSAGE,
 					MessageHelper.builder().content("Username  \"" + user.getUsername() + "\"  is already taken.")
 							.type("alert-danger").build());
-			return "loginSignup";
+			return LOGIN_SIGNUP;
 
 		} else {
 			model.addAttribute("user", user);
 			session.setAttribute(MESSAGE, MessageHelper.builder()
 					.content("Email  \"" + user.getEmail() + "\"  is already taken.").type("alert-danger").build());
-			return "loginSignup";
+			return LOGIN_SIGNUP;
 		}
 	}
 }

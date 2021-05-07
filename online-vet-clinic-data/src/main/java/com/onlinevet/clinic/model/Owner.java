@@ -11,8 +11,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 
 import org.springframework.lang.Nullable;
 
@@ -52,6 +50,8 @@ public class Owner extends Person {
     
     @Column(name = "is_profile_complete")
     private Character isProfileComplete;
+    
+    private String additionalRole;
 	
 	@Builder
 	public Owner(Long id, String firstName, String lastName, String email , String address, String city, String telephone,

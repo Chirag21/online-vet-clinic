@@ -4,10 +4,11 @@ import java.util.Optional;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import com.onlinevet.clinic.model.BaseEntity;
 import com.onlinevet.clinic.model.User;
 
 public interface UserService extends CrudService<User, Long>,UserDetailsService {
-    User register(User user);
+    User register(BaseEntity baseEntity);
 	
 	Optional<User> findByUsername(String username);
 	

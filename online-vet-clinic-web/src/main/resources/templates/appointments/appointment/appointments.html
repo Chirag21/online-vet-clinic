@@ -22,48 +22,48 @@
                     <th>#</th>
                     <th>Date</th>
                     <th>Type</th>
-                    <th sec:authorize="hasRole('ROLE_DOCTOR')">Patient</th>
-                    <th sec:authorize="hasRole('ROLE_PATIENT')">Doctor</th>
+                    <th sec:authorize="hasRole('ROLE_VET')">Pet</th>
+                    <th sec:authorize="hasRole('ROLE_USER')">Vet</th>
                     <th></th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="appointment,iter : ${appointmentViewModels}" th:object="${appointment}">
+                <tr th:each="appointment,iter : ${appointments}" th:object="${appointment}">
                     <td th:if="${param.page != null}" th:text="${param.page[0]} * 8 + ${iter.index + 1}">index</td>
                     <td th:if="${param.page == null}" th:text="${iter.index + 1}">index</td>
 
                     <td th:text="*{#dates.format(date, 'dd-MMM-yyyy HH:mm')}">date</td>
                     <td th:text="*{type}">type</td>
-                    <td sec:authorize="hasRole('ROLE_DOCTOR')"
-                        th:text="*{patientBasicViewModel.firstName} + ' ' + *{patientBasicViewModel.lastName}">patient</td>
-                    <td sec:authorize="hasRole('ROLE_PATIENT')"
-                        th:text="*{doctorSelectViewModel.firstName} + ' ' + *{doctorSelectViewModel.lastName}">doctor</td>
+                    <td sec:authorize="hasRole('ROLE_VET')"
+                        th:text="*{pet.name}">pet</td>
+                    <td sec:authorize="hasRole('ROLE_USER')"
+                        th:text="*{vet.firstName} + ' ' + *{vet.lastName}">vet</td>
                     <td>
-                        <a sec:authorize="hasRole('ROLE_PATIENT')" class="btn btn-secondary" th:href="|/appointment/patient/*{id}|">View</a>
-                        <a sec:authorize="hasRole('ROLE_DOCTOR')" class="btn btn-secondary" th:href="|/appointment/doctor/*{id}|">View</a>
+                        <a sec:authorize="hasRole('ROLE_USER')" class="btn btn-secondary" th:href="|/appointment/pet/*{id}|">View</a>
+                        <a sec:authorize="hasRole('ROLE_VET')" class="btn btn-secondary" th:href="|/appointment/vet/*{id}|">View</a>
                     </td>
                 </tr>
                 </tbody>
             </table>
         </div>
 
-        <nav aria-label="Page navigation example" th:if="!${#lists.isEmpty(appointmentViewModels)}">
+        <nav aria-label="Page navigation example" th:if="!${#lists.isEmpty(appointments)}">
             <ul class="pagination">
-                <li class="page-item" th:classappend="!${appointmentViewModels.hasPrevious()}? 'disabled'">
-                    <a sec:authorize="hasRole('ROLE_DOCTOR')" class="page-link"
-                       th:href="${appointmentViewModels.hasPrevious()} ? '/appointment/doctor?page=' + ${appointmentViewModels.previousPageable().getPageNumber()}" >Previous</a>
-                    <a sec:authorize="hasRole('ROLE_PATIENT')" class="page-link"
-                       th:href="${appointmentViewModels.hasPrevious()} ? '/appointment/patient?page=' + ${appointmentViewModels.previousPageable().getPageNumber()}" >Previous</a>
+                <li class="page-item" th:classappend="!${appointments.hasPrevious()}? 'disabled'">
+                    <a sec:authorize="hasRole('ROLE_VET')" class="page-link"
+                       th:href="${appointments.hasPrevious()} ? '/appointment/vet?page=' + ${appointments.previousPageable().getPageNumber()}" >Previous</a>
+                    <a sec:authorize="hasRole('ROLE_USER')" class="page-link"
+                       th:href="${appointments.hasPrevious()} ? '/appointment/pet?page=' + ${appointments.previousPageable().getPageNumber()}" >Previous</a>
                 </li>
-                <li class="page-item" th:each="i : ${#numbers.sequence(0, (appointmentViewModels.getTotalPages() == 0 ? 0 : appointmentViewModels.getTotalPages() - 1))}">
-                    <a sec:authorize="hasRole('ROLE_DOCTOR')" class="page-link" href="#" th:href="|/appointment/doctor?page=${i}|" th:text="${i + 1}">1</a>
-                    <a sec:authorize="hasRole('ROLE_PATIENT')" class="page-link" href="#" th:href="|/appointment/patient?page=${i}|" th:text="${i + 1}">1</a>
+                <li class="page-item" th:each="i : ${#numbers.sequence(0, (appointments.getTotalPages() == 0 ? 0 : appointments.getTotalPages() - 1))}">
+                    <a sec:authorize="hasRole('ROLE_VET')" class="page-link" href="#" th:href="|/appointment/vet?page=${i}|" th:text="${i + 1}">1</a>
+                    <a sec:authorize="hasRole('ROLE_USER')" class="page-link" href="#" th:href="|/appointment/pet?page=${i}|" th:text="${i + 1}">1</a>
                 </li>
-                <li class="page-item" th:classappend="!${appointmentViewModels.hasNext()}? 'disabled'">
-                    <a sec:authorize="hasRole('ROLE_DOCTOR')" class="page-link"
-                       th:href="${appointmentViewModels.hasNext()} ? '/appointment/doctor?page=' + ${appointmentViewModels.nextPageable().getPageNumber()}">Next</a>
-                    <a sec:authorize="hasRole('ROLE_PATIENT')" class="page-link"
-                       th:href="${appointmentViewModels.hasNext()} ? '/appointment/patient?page=' + ${appointmentViewModels.nextPageable().getPageNumber()}">Next</a>
+                <li class="page-item" th:classappend="!${appointments.hasNext()}? 'disabled'">
+                    <a sec:authorize="hasRole('ROLE_VET')" class="page-link"
+                       th:href="${appointments.hasNext()} ? '/appointment/vet?page=' + ${appointments.nextPageable().getPageNumber()}">Next</a>
+                    <a sec:authorize="hasRole('ROLE_USER')" class="page-link"
+                       th:href="${appointments.hasNext()} ? '/appointment/pet?page=' + ${appointments.nextPageable().getPageNumber()}">Next</a>
                 </li>
             </ul>
         </nav>

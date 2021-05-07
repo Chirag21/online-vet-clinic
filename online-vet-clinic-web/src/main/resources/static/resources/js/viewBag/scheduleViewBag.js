@@ -4,7 +4,7 @@ app.scheduleViewBag = (function () {
     function showSchedule(data) {
         var scheduleDays = $('#schedule-table .schedule-day');
         scheduleDays.each(function (index, scheduleDay) {
-            _appendAppointmentTimes(scheduleDay, data.editDayScheduleModels[index], data.appointmentDuration);
+            _appendAppointmentTimes(scheduleDay, data.editDaySchedules[index], data.appointmentDuration);
         });
     }
 
@@ -25,13 +25,13 @@ app.scheduleViewBag = (function () {
             var appointmentEl = $('<span>').addClass('appointment-wrapper');
             var appointmentLink = $('<a>').text(time);
 
-            if ($('#role-doctor').length) {
-                $(appointmentLink).attr('href', '/appointment/doctor/add')
+            if ($('#role-vet').length) {
+                $(appointmentLink).attr('href', '/appointment/vet/add')
                 // + new Date().toLocaleString("en-US").replace(',', '')
-                    .attr('data-content', ('/appointment/doctor/add?date={0} ' + app.convert24To12HourFormat(time + ':00')));
+                    .attr('data-content', ('/appointment/vet/add?date={0} ' + app.convert24To12HourFormat(time + ':00')));
             } else {
-                $(appointmentLink).attr('href', '/appointment/patient/add')
-                    .attr('data-content', ('/appointment/patient/add?date={0} ' + app.convert24To12HourFormat(time + ':00')));
+                $(appointmentLink).attr('href', '/appointment/pet/add')
+                    .attr('data-content', ('/appointment/pet/add?date={0} ' + app.convert24To12HourFormat(time + ':00')));
             }
 
             $(appointmentEl).append(appointmentLink);
@@ -112,7 +112,7 @@ app.scheduleViewBag = (function () {
                     var appDate = new Date(appointment.date);
 
                     if (hour === appDate.getHours() && minute === appDate.getMinutes()) {
-                        if ($('#role-doctor').length) {
+                        if ($('#role-vet').length) {
                             var href = $(appointmentLinkEl).attr('href').split('?');
 
                             $(appointmentLinkEl)

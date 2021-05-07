@@ -18,23 +18,23 @@
     <div class="container">
         <h1 class="h1">Add Appointment</h1>
         <br/>
-        <form method="post" th:object="${addAppointmentModel}">
+        <form method="post" th:object="${appointment}">
             <div class="form-group">
                 <label class="form-control-label">Appointment For</label>
                 <div>
                     <a href="#"
-                       th:text="'Dr. ' + ${doctorSelectViewModel.firstName} + ' ' + ${doctorSelectViewModel.lastName}"></a>,
-                    <span class="form-control-label" th:text="${doctorSelectViewModel.settlePointName}"></span>
+                       th:text="'Dr. ' + ${vet.firstName} + ' ' + ${vet.lastName}"></a>,
+                    <span class="form-control-label" th:text="${vet.settlePointName}"></span>
                 </div>
             </div>
 
-            <span sec:authorize="hasRole('ROLE_DOCTOR')">
+            <span sec:authorize="hasRole('ROLE_VET')">
                 <div class="form-group">
-                    <label class="form-control-label" for="inputPatient">For Patient</label>
-                    <select class="form-control form-control-danger" id="inputPatient" th:field="*{patient}">
-                        <option th:each="patient : ${doctorPatients}"
-                                th:value="${patient.id}"
-                                th:text="${patient.firstName} + ' ' + ${patient.lastName} + ' (' + ${patient.EGN} + ')'"></option>
+                    <label class="form-control-label" for="inputPet">For Pet</label>
+                    <select class="form-control form-control-danger" id="inputPet" th:field="*{pet}">
+                        <option th:each="pet : ${vetPets}"
+                                th:value="${pet.id}"
+                                th:text="${pet.firstName} + ' ' + ${pet.lastName} + ' (' + ${pet.EGN} + ')'"></option>
                     </select>
                 </div>
             </span>
@@ -42,7 +42,7 @@
             <div class="form-group">
                 <label class="form-control-label" for="inputDate">Appointment Date</label>
                 <input type="text" class="form-control form-control-danger" id="inputDate" readonly="readonly"
-                       th:value="${#dates.format(addAppointmentModel.date, 'dd-MMM-yyyy HH:mm')}"/>
+                       th:value="${#dates.format(appointment.date, 'dd-MMM-yyyy HH:mm')}"/>
             </div>
 
             <div class="form-group">

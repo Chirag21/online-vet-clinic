@@ -1,6 +1,7 @@
 package com.onlinevet.clinic.controllers;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Objects;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -41,8 +42,12 @@ public class ForgotPasswordController {
 	@PostMapping("/forgotPassword")
 	public String processForgotPassword(HttpServletRequest request, Model model) {
 		String email = request.getParameter("email");
+		if(Objects.isNull(userService.findByEmail(email))) {
+			model.addAttribute("error", "Email is not registered with us.");
+			return FORGOT_PASSWORD_FORM;
+		}
+		
 		String token = RandomString.make(30);
-
 		try {
 			userService.updateResetPasswordToken(token, email);
 			String resetPasswordLink = URLHelper.getSiteURL(request) + "/resetPassword?token=" + token;

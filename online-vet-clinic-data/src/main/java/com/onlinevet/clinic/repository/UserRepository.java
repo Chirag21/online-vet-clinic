@@ -7,15 +7,15 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.onlinevet.clinic.model.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
-	Optional<User> findByUsername(String username);
+	Optional<User> findByUsernameIgnoreCase(String username);
 	
-	User findByEmail(String email);
+	User findByEmailIgnoreCase(String email);
 	
 	Optional<User> findById(Long id);
 	
-	boolean existsUserByUsername(String username);
+	boolean existsUserByUsernameIgnoreCase(String username);
 	
-	boolean existsUserByEmail(String email);
+	boolean existsUserByEmailIgnoreCase(String email);
 	
 	public boolean existsById(Long id);
 	

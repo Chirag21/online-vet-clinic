@@ -12,7 +12,7 @@ import com.onlinevet.clinic.model.Pet;
 import com.onlinevet.clinic.service.PetService;
 
 @Service
-@Profile({ "default", "map" })
+@Profile({ "map" })
 public class PetServiceMapImpl extends AbstractMapService<Pet, Long> implements PetService {
 
 	@Override

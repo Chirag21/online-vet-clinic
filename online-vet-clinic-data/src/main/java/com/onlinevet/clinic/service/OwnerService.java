@@ -6,6 +6,8 @@ import com.onlinevet.clinic.model.Owner;
 
 
 public interface OwnerService extends CrudService<Owner, Long> {
+	void create(Owner owner);
+	
 	Owner findByFirstName(String firstName);
 
 	Owner findByLastName(String lastName);

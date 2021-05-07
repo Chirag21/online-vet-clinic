@@ -12,7 +12,7 @@ import com.onlinevet.clinic.service.PetService;
 import com.onlinevet.clinic.service.PetTypeService;
 
 @Service
-@Profile({ "default", "map" })
+@Profile({ "map" })
 public class OwnerServiceMapImpl extends AbstractMapService<Owner, Long> implements OwnerService {
 
 	private final PetTypeService petTypeService;
@@ -112,6 +112,12 @@ public class OwnerServiceMapImpl extends AbstractMapService<Owner, Long> impleme
 	public Owner findByUserId(Long userId) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void create(Owner owner) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	/*

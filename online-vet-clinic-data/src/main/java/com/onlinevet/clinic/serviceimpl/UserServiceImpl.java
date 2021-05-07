@@ -11,8 +11,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.onlinevet.clinic.model.BaseEntity;
 import com.onlinevet.clinic.model.User;
 import com.onlinevet.clinic.repository.UserRepository;
+import com.onlinevet.clinic.service.RoleService;
 import com.onlinevet.clinic.service.UserService;
 
 import lombok.AllArgsConstructor;
@@ -26,6 +28,12 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	RoleService roleService;
+	
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@Override
 	public User findById(Long id) {
@@ -34,7 +42,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User findByEmail(String email) {
-		return userRepository.findByEmail(email);
+		return userRepository.findByEmailIgnoreCase(email);
 	}
 
 	@Override
@@ -44,13 +52,12 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User save(User user) {
-		return userRepository.save(user);
+		return userRepository.saveAndFlush(user);
 	}
 
 	@Override
 	public void delete(User user) {
 		userRepository.delete(user);
-
 	}
 
 	@Override
@@ -60,12 +67,12 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public Optional<User> findByUsername(String username) {
-		return userRepository.findByUsername(username);
+		return userRepository.findByUsernameIgnoreCase(username);
 	}
 
 	@Override
 	public boolean existsUserByUsername(String username) {
-		return userRepository.existsUserByUsername(username);
+		return userRepository.existsUserByUsernameIgnoreCase(username);
 	}
 
 	@Override
@@ -75,7 +82,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public boolean existsUserByEmail(String email) {
-		return userRepository.existsUserByEmail(email);
+		return userRepository.existsUserByEmailIgnoreCase(email);
 	}
 
 	@Override
@@ -85,10 +92,10 @@ public class UserServiceImpl implements UserService {
 
 	@Override
     public void updateResetPasswordToken(String token, String email) {
-        User user = userRepository.findByEmail(email);
+        User user = userRepository.findByEmailIgnoreCase(email);
         if (user != null) {
             user.setResetPasswordToken(token);
-            userRepository.save(user);
+            userRepository.saveAndFlush(user);
         } else {
             throw new RuntimeException("Error setting password");
         }
@@ -100,21 +107,25 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
     public void updatePassword(User user, String newPassword) {
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String encodedPassword = passwordEncoder.encode(newPassword);
-        user.setPassword(encodedPassword);
+        user.setPassword(bCryptPasswordEncoder.encode(newPassword));
         user.setResetPasswordToken(null);
-        userRepository.save(user);
+        userRepository.saveAndFlush(user);
     }
-	
-	@Override
-    public User register(User user) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-      return userRepository.findByUsername(username).orElseThrow();
+      return userRepository.findByUsernameIgnoreCase(username).orElseThrow();
+	}
+
+	@Override
+	public User register(BaseEntity baseEntity) {
+		User user = (User) baseEntity;
+		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+		user.setAccountNonExpired(true);
+		user.setAccountNonLocked(true);
+		user.setCredentialsNonExpired(true);
+		user.setEnabled(true);
+		user.addRole(roleService.getDefaultRole());
+		return userRepository.saveAndFlush(user);
 	}
 }

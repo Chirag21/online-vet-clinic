@@ -1,9 +1,9 @@
 var app = app || {};
 
 app.scheduleController = function () {
-    function ScheduleController(model, appointmentModel, viewBag) {
+    function ScheduleController(model, appointment, viewBag) {
         this._model = model;
-        this._appointmentModel = appointmentModel;
+        this._appointment = appointment;
         this._viewBag = viewBag;
         this.currentMonday = null;
     }
@@ -37,7 +37,7 @@ app.scheduleController = function () {
         var startDate = this.currentMonday;
 
         for (var dayOfWeek = 0; dayOfWeek < 7; ++dayOfWeek) {
-            this._appointmentModel.getBookedAppointmentsForDay(startDate.toLocaleDateString('en-US'))
+            this._appointment.getBookedAppointmentsForDay(startDate.toLocaleDateString('en-US'))
                 .then(function (data) {
                     _this._viewBag.showBookedAppointmentsForDay(data);
                 }, function (error) {
@@ -49,8 +49,8 @@ app.scheduleController = function () {
     };
 
     return {
-        load: function (model, appointmentModel, viewBag) {
-            return new ScheduleController(model, appointmentModel, viewBag);
+        load: function (model, appointment, viewBag) {
+            return new ScheduleController(model, appointment, viewBag);
         }
     }
 }();

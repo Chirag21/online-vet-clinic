@@ -48,7 +48,7 @@ public class LogServiceImpl implements LogService {
 
 	@Override
 	public Log save(Log log) {
-		return logRepository.save(log);
+		return logRepository.saveAndFlush(log);
 	}
 
 	@Override

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Patient</title>
+    <title>Pet</title>
     <link rel="stylesheet" href="../static/resources/css/commons.css"
           th:href="@{/resources/css/commons.css}"/>
 </head>
@@ -14,20 +14,19 @@
 </header>
 <main>
     <div class="container">
-        <h1 class="h1 text-center">Patient</h1>
+        <h1 class="h1 text-center">Pet</h1>
 
         <div class="card">
             <div class="card-block text-center">
                 <h4 class="card-title">
-                    <a th:text="|${patientViewModel.firstName} ${patientViewModel.lastName}|"></a>
+                    <a th:text="|${pet.name}|"></a>
                 </h4>
 
-                <small class="text-muted" th:text="|EGN: ${patientViewModel.EGN}|"></small>
                 <br/>
                 <small class="text-muted"
-                       th:text="|Date of birth: ${#dates.format(patientViewModel.dateOfBirth, 'dd-MMM-yyyy')}"></small>
+                       th:text="|Date of birth: ${#dates.format(pet.birthDate, 'dd-MMM-yyyy')}"></small>
                 <br/>
-                <small class="text-muted" th:text="|Telephone: ${patientViewModel.telephoneNumber}|">Telephone number: #
+                <small class="text-muted" th:text="|Telephone: ${pet.owner.telephone}|">Telephone number: #
                 </small>
             </div>
         </div>

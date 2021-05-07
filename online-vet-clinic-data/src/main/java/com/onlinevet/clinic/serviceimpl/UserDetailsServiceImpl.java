@@ -24,16 +24,19 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Autowired
 	private UserService userService;
-	
+
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Optional<User> user = userService.findByUsername(username);
-		if(user.isPresent()) {
+		if (user.isPresent()) {
 			return new UserDetailsImpl(user.get());
-		}
-		else {
+		} else {
 			throw new UsernameNotFoundException("User not found with username = " + username);
 		}
-	}
 
+		/*
+		 * return userService.findByUsername(username).
+		 * orElseThrow(UsernameNotFoundException("f")::new);
+		 */
+	}
 }

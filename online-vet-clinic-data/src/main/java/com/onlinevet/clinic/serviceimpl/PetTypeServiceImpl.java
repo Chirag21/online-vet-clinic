@@ -1,7 +1,7 @@
 package com.onlinevet.clinic.serviceimpl;
 
-import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
@@ -27,19 +27,17 @@ public class PetTypeServiceImpl implements PetTypeService{
 
 	@Override
 	public Set<PetType> findAll() {
-		Set<PetType> petTypes = new HashSet<>();
-		petTypeRepository.findAll().forEach(petTypes::add);
-		return petTypes;
+		return petTypeRepository.findAll().stream().collect(Collectors.toSet());
 	}
 
 	@Override
-	public PetType save(PetType object) {
-		return petTypeRepository.save(object);
+	public PetType save(PetType petType) {
+		return petTypeRepository.saveAndFlush(petType);
 	}
 
 	@Override
-	public void delete(PetType object) {
-		petTypeRepository.delete(object);
+	public void delete(PetType petType) {
+		petTypeRepository.delete(petType);
 	}
 
 	@Override

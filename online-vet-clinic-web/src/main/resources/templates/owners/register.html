@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" 
+	  xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<title>Owner Register</title>
+<link rel="stylesheet"
+	href="../static/resources/select2/css/select2.min.css"
+	th:href="@{/resources/select2/css/select2.min.css}" />
+<link rel="stylesheet" href="../static/resources/css/commons.css"
+	th:href="@{/resources/css/commons.css}" />
+</head>
+<head th:replace="fragments/parts::head">
+</head>
+<body>
+	<header th:replace="fragments/parts::menu"> </header>
+	<main>
+		<div class="container">
+			<h1 class="h1">Owner Registration Page</h1>
+			<span class="float-right">
+				<a class="pr-2" href="/register-vet">Click here to register as Vet</a>
+			</span> 
+			<form method="post" th:object="${owner}">
+
+				<div class="form-group"
+					th:classappend="${#fields.hasErrors('email')} ? 'has-danger'">
+					<label class="form-control-label" for="inputEmail">Email</label> <input
+						type="email" class="form-control form-control-danger"
+						id="inputEmail" th:field="*{email}" th:required="required"/>
+					<div class="form-control-feedback"
+						th:each="error : ${#fields.errors('email')}" th:text="${error}">
+						Sorry, that email is incorrect. Try another?</div>
+				</div>
+
+				<div class="form-group"
+					th:classappend="${#fields.hasErrors('username')} ? 'has-danger'">
+					<label class="form-control-label" for="inputUsername">Username</label>
+					<input type="text" class="form-control form-control-danger"
+						id="inputUsername" th:field="*{username}" th:required="required"/>
+					<div class="form-control-feedback"
+						th:each="error : ${#fields.errors('username')}" th:text="${error}">
+						Sorry, that username's taken. Try another?</div>
+				</div>
+
+				<div class="form-group"
+					th:classappend="${#fields.hasErrors('password')}? 'has-danger'">
+					<label class="form-control-label" for="inputPassword">Password</label>
+					<input type="password" class="form-control form-control-danger"
+						id="inputPassword" th:field="*{password}" th:required="required" minlength="5"/>
+					<div class="form-control-feedback"
+						th:each="error : ${#fields.errors('password')}" th:text="${error}">
+						Sorry, that password is incorrect.</div>
+				</div>
+
+				<div class="form-group"
+					th:classappend="${#fields.hasErrors('global')} ? 'has-danger'">
+					<label class="form-control-label" for="inputConfirmPassword">Confirm
+						Password</label> <input type="password"
+						class="form-control form-control-danger" id="inputConfirmPassword"
+						th:field="*{confirmPassword}" th:required="required" minlength="5"/>
+					<div class="form-control-feedback"
+						th:each="error : ${#fields.errors('global')}" th:text="${error}">
+						Sorry, passwords are not matching.</div>
+				</div>
+
+				<div class="form-group"
+					th:classappend="${#fields.hasErrors('firstName')} ? 'has-danger'">
+					<label class="form-control-label" for="inputFirstName">First
+						Name</label> <input type="text" class="form-control form-control-danger"
+						id="inputFirstName" th:field="*{firstName}" th:required="required"/>
+					<div class="form-control-feedback"
+						th:each="error : ${#fields.errors('firstName')}"
+						th:text="${error}">Sorry, that First name is incorrect. Try
+						another?</div>
+				</div>
+
+				<div class="form-group"
+					th:classappend="${#fields.hasErrors('lastName')} ? 'has-danger'">
+					<label class="form-control-label" for="inputLastName">Last
+						Name</label> <input type="text" class="form-control form-control-danger"
+						id="inputLastName" th:field="*{lastName}" th:required="required"/>
+					<div class="form-control-feedback"
+						th:each="error : ${#fields.errors('lastName')}" th:text="${error}">
+						Sorry, that Last name is incorrect. Try another?</div>
+				</div>
+
+				<div class="form-group"
+					th:classappend="${#fields.hasErrors('address')} ? 'has-danger'">
+					<label class="form-control-label" for="inputAddress">Address</label>
+					<input type="tel" class="form-control form-control-danger"
+						id="inputAddress" th:field="*{address}" th:required="required" style="height: 116px;width: 1110px;"/>
+					<div class="form-control-feedback"
+						th:each="error : ${#fields.errors('address')}" th:text="${error}">
+						Please enter address.</div>
+				</div>
+
+				<div class="form-group"
+					th:classappend="${#fields.hasErrors('city')} ? 'has-danger'">
+					<label class="form-control-label" for="inputCity">City
+					</label> <input type="tel" class="form-control form-control-danger"
+						id="inputCity" th:field="*{city}" th:required="required"/>
+					<div class="form-control-feedback"
+						th:each="error : ${#fields.errors('city')}"
+						th:text="${error}">Please enter city.</div>
+				</div>
+
+				<div class="form-group"
+					th:classappend="${#fields.hasErrors('telephone')} ? 'has-danger'">
+					<label class="form-control-label" for="inputTelephoneNumber">Telephone
+						Number</label> <input type="number" class="form-control form-control-danger"
+						id="inputTelephoneNumber" th:field="*{telephone}" th:required="required" 
+						minlength="10"/>
+					<div class="form-control-feedback"
+						th:each="error : ${#fields.errors('telephone')}"
+						th:text="${error}">Sorry, that telephone number is
+						incorrect.</div>
+				</div>
+
+				<div>
+					<span class="float-left">
+						<input type="submit" class="btn btn-primary clickable" value="Register" />
+					</span>
+				</div>
+			</form>
+			<br /> <br />
+		</div>
+	</main>
+	<div th:replace="fragments/parts::scripts"></div>
+	<script th:src="@{/resources/select2/js/select2.min.js}"></script>
+	<script type="text/javascript" th:inline="javascript">
+		$(document).ready(function() {
+			$("#inputVet").select2();
+			$("#gender-male").attr('checked', 'checked');
+			$("#inputbirthDate").val(new Date().toISOString().substr(0, 10));
+		});
+
+		$('#inputEmail').focusout(function() {
+			$('#inputUsername').val($(this).val());
+		});
+		
+		var password = document.getElementById("inputPassword");
+		var confirmpassword = document.getElementById("inputConfirmPassword");
+		function validatePassword(){
+		  if(password.value != confirmpassword.value) {
+			  confirmpassword.setCustomValidity("Passwords don't Match");
+		  } else {
+			  confirmpassword.setCustomValidity('');
+		  }
+		}
+		password.onchange = validatePassword;
+		confirmpassword.onkeyup = validatePassword;
+		
+		var telephone = document.getElementById("inputTelephoneNumber");
+		if(telephone.length != 10)
+			telephone.setCustomValidity('Telephone number should be of 10 digits');
+	</script>
+</body>
+</html>

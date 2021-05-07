@@ -15,7 +15,7 @@
 <main>
     <div class="container">
         <h1 class="h1">Edit Profile</h1>
-        <form method="post" th:object="${editPatientModel}">
+        <form method="post" th:object="${pet}">
 
             <div class="form-group" th:classappend="${#fields.hasErrors('firstName')} ? 'has-danger'">
                 <label class="form-control-label" for="inputFirstName">First Name</label>
@@ -52,11 +52,11 @@
                 </div>
             </div>
 
-            <div class="form-group" th:classappend="${#fields.hasErrors('dateOfBirth')} ? 'has-danger'">
-                <label class="form-control-label" for="inputDateOfBirth">Date Of Birth</label>
-                <input type="date" class="form-control form-control-danger" id="inputDateOfBirth"
-                       th:field="*{dateOfBirth}"/>
-                <div class="form-control-feedback" th:each="error : ${#fields.errors('dateOfBirth')}"
+            <div class="form-group" th:classappend="${#fields.hasErrors('birthDate')} ? 'has-danger'">
+                <label class="form-control-label" for="inputbirthDate">Date Of Birth</label>
+                <input type="date" class="form-control form-control-danger" id="inputbirthDate"
+                       th:field="*{birthDate}"/>
+                <div class="form-control-feedback" th:each="error : ${#fields.errors('birthDate')}"
                      th:text="${error}">
                     Sorry, that date is incorrect.
                 </div>
@@ -84,9 +84,9 @@
             </div>
 
             <div class="form-group">
-                <label class="form-control-label" for="inputDoctor">Doctor</label>
-                <input type="tel" readonly="readonly" class="form-control form-control-danger" id="inputDoctor"
-                       th:value="|*{doctorFirstName} *{doctorLastName}|"/>
+                <label class="form-control-label" for="inputVet">Vet</label>
+                <input type="tel" readonly="readonly" class="form-control form-control-danger" id="inputVet"
+                       th:value="|*{vetFirstName} *{vetLastName}|"/>
             </div>
 
             <div class="form-group" th:classappend="${#fields.hasErrors('isInsured')} ? 'has-danger'">
@@ -108,7 +108,7 @@
 <script th:src="@{/resources/select2/js/select2.min.js}"></script>
 <script type="text/javascript" th:inline="javascript">
     $(document).ready(function () {
-        $("#inputDoctor").select2();
+        $("#inputVet").select2();
     });
 </script>
 </body>

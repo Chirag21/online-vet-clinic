@@ -9,7 +9,7 @@ import com.onlinevet.clinic.model.Visit;
 import com.onlinevet.clinic.service.VisitService;
 
 @Service
-@Profile({"default","map"})
+@Profile({"map"})
 public class VisitServiceMapImpl extends AbstractMapService<Visit, Long> implements VisitService {
 
 	@Override

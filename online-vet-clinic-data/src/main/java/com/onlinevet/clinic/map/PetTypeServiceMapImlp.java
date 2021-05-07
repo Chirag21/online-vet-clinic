@@ -9,7 +9,7 @@ import com.onlinevet.clinic.model.PetType;
 import com.onlinevet.clinic.service.PetTypeService;
 
 @Service
-@Profile({"default","map"})
+@Profile({"map"})
 public class PetTypeServiceMapImlp extends AbstractMapService<PetType, Long> implements PetTypeService {
 
 	@Override

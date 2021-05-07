@@ -35,7 +35,7 @@ public class RoleServiceImpl implements RoleService{
 
 	@Override
 	public Role save(Role role) {
-		return roleRepository.save(role);
+		return roleRepository.saveAndFlush(role);
 	}
 
 	@Override
@@ -50,12 +50,12 @@ public class RoleServiceImpl implements RoleService{
 
 	@Override
 	public Optional<Role> findByAuthority(String authority) {
-		return roleRepository.findByAuthority(authority);
+		return roleRepository.findByAuthorityIgnoreCase(authority);
 	}
 
 	@Override
 	public Role getDefaultRole() {
-		return this.roleRepository.findByAuthority(DEFAULT_ROLE).orElseThrow();
+		return this.roleRepository.findByAuthorityIgnoreCase(DEFAULT_ROLE).orElseThrow();
 	}
 
 }

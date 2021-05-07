@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.onlinevet.clinic.model.Pet;
 
 public interface PetRepository extends JpaRepository<Pet, Long> {
-	Pet findByName(String name);
+	Pet findByNameIgnoreCase(String name);
 	
 	List<Pet> findAllByVetId(Long vetId);
 

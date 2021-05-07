@@ -20,39 +20,31 @@
         <div class="form-group">
             <label class="form-control-label">Appointment For</label>
             <div>
-                <a th:href="|/doctors/${appointmentViewModel.doctorSelectViewModel.id}|"
-                   th:text="'Dr. ' + ${appointmentViewModel.doctorSelectViewModel.firstName} + ' ' + ${appointmentViewModel.doctorSelectViewModel.lastName}"></a>,
+                <a th:href="|/vets/${appointment.vet.id}|"
+                   th:text="'Dr. ' + ${appointment.vet.firstName} + ' ' + ${appointment.vet.lastName}"></a>,
                 <span class="form-control-label"
-                      th:text="${appointmentViewModel.doctorSelectViewModel.settlePointName}"></span>
+                      th:text="${appointment.vet.settlePointName}"></span>
             </div>
         </div>
 
-        <div class="form-group" sec:authorize="hasRole('ROLE_DOCTOR')">
-            <label class="form-control-label">For Patient</label>
+        <div class="form-group" sec:authorize="hasRole('ROLE_VET')">
+            <label class="form-control-label">For Pet</label>
             <div>
-                <a th:href="|/patient/${appointmentViewModel.patientBasicViewModel.id}|"
-                   th:text="${appointmentViewModel.patientBasicViewModel.firstName} + ' ' + ${appointmentViewModel.patientBasicViewModel.lastName}"></a>,
-                <span class="form-control-label"
-                      th:text="'(' + ${appointmentViewModel.patientBasicViewModel.EGN} + ')'"></span>
+                <a th:href="|/pet/${appointment.pet.id}|"
+                   th:text="${appointment.pet.name}"></a>
             </div>
         </div>
 
         <div class="form-group">
             <label class="form-control-label" for="inputDate">Appointment Date</label>
             <input type="text" class="form-control form-control-danger" id="inputDate" readonly="readonly"
-                   th:value="${#dates.format(appointmentViewModel.date, 'dd-MMM-yyyy HH:mm')}"/>
-        </div>
-
-        <div class="form-group">
-            <label class="form-control-label" for="inputType">Appointment Type</label>
-            <input type="text" class="form-control form-control-danger" id="inputType" readonly="readonly"
-                   th:field="${appointmentViewModel.type}"/>
+                   th:value="${#dates.format(appointment.date, 'dd-MMM-yyyy HH:mm')}"/>
         </div>
 
         <div class="form-group">
             <label class="form-control-label" for="inputDescription">Description</label>
             <textarea class="form-control form-control-danger" rows="3" id="inputDescription" readonly="readonly"
-                      th:field="${appointmentViewModel.description}"></textarea>
+                      th:field="${appointment.description}"></textarea>
         </div>
         <br/>
     </div>

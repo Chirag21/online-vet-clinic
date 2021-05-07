@@ -12,7 +12,9 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.Email;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import lombok.AllArgsConstructor;
@@ -32,13 +34,17 @@ import lombok.ToString;
 @Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = "user_name"))
 @ToString
 @EqualsAndHashCode(callSuper = false)
-public class User implements UserDetails, Serializable{
+public class User extends BaseEntity implements UserDetails, Serializable{
 
 	private static final long serialVersionUID = 2732492892459817441L;
 
 	@Column(name = "user_name")
 	private String username;
 
+	@Column(name = "email")
+	@Email
+	private String email;
+	
 	@Column(name = "password")
 	private String password;
 

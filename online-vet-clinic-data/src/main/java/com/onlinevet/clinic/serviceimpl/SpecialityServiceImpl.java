@@ -1,7 +1,7 @@
 package com.onlinevet.clinic.serviceimpl;
 
-import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
@@ -27,19 +27,17 @@ public class SpecialityServiceImpl implements SpecialityService {
 
 	@Override
 	public Set<Speciality> findAll() {
-		Set<Speciality> specialities = new HashSet<>();
-		specialityRepository.findAll().forEach(specialities::add);
-		return specialities;
+		return specialityRepository.findAll().stream().collect(Collectors.toSet());
 	}
 
 	@Override
-	public Speciality save(Speciality object) {
-		return specialityRepository.save(object);
+	public Speciality save(Speciality speciality) {
+		return specialityRepository.saveAndFlush(speciality);
 	}
 
 	@Override
-	public void delete(Speciality object) {
-		specialityRepository.delete(object);
+	public void delete(Speciality speciality) {
+		specialityRepository.delete(speciality);
 	}
 
 	@Override

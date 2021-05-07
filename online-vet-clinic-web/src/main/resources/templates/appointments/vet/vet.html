@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Doctor</title>
+    <title>Vet</title>
     <link rel="stylesheet" href="../static/resources/css/commons.css"
           th:href="@{/resources/css/commons.css}"/>
 </head>
@@ -14,28 +14,28 @@
 </header>
 <main>
     <div class="container">
-        <h1 class="h1 text-center">Doctor</h1>
+        <h1 class="h1 text-center">Vet</h1>
 
         <div class="card">
             <div class="card-block text-center">
                 <img height="250px" style="margin-bottom: 5px; border: 1px solid black;"
-                     th:src="${doctorViewModel.picturePath} ? (|/mm_pics/${doctorViewModel.picturePath}|) : 'http://www.hghtherapy.me/wp-content/uploads/2012/02/happy-doctor4.jpg'" alt=""/>
+                     th:src="${vet.picturePath} ? (|/mm_pics/${vet.picturePath}|) : 'http://www.hghtherapy.me/wp-content/uploads/2012/02/happy-doctor4.jpg'" alt=""/>
 
                 <h4 class="card-title">
-                    <a th:text="|Dr. ${doctorViewModel.firstName} ${doctorViewModel.lastName}|">Dr.
+                    <a th:text="|Dr. ${vet.firstName} ${vet.lastName}|">Dr.
                         Name</a>
                 </h4>
 
-                <small class="text-muted" th:text="|City: ${doctorViewModel.settlePointName}|">City: Varna</small>
+                <small class="text-muted" th:text="|City: ${vet.settlePointName}|">City: Varna</small>
                 <br/>
                 <!--<small class="text-muted"-->
-                       <!--th:text="|Experience: ${#dates.year(#dates.createNow()) - #dates.year(doctorViewModel.startPracticeDate) + 1} years|"></small>-->
+                       <!--th:text="|Experience: ${#dates.year(#dates.createNow()) - #dates.year(vet.startPracticeDate) + 1} years|"></small>-->
                 <!--<br/>-->
 
                 <small class="text-muted"
-                th:text="|Experience: ${#dates.year(#dates.createNow()) - #dates.year(doctorViewModel.startPracticeDate) + 1} years|"></small>
+                th:text="|Experience: ${#dates.year(#dates.createNow()) - #dates.year(vet.startPracticeDate) + 1} years|"></small>
                 <br/>
-                <small class="text-muted" th:text="|Telephone: ${doctorViewModel.telephoneNumber}|">Telephone number: #
+                <small class="text-muted" th:text="|Telephone: ${vet.telephoneNumber}|">Telephone number: #
                 </small>
             </div>
         </div>

@@ -15,7 +15,7 @@ import com.onlinevet.clinic.service.SpecialityService;
 import com.onlinevet.clinic.service.VetService;
 
 @Service
-@Profile({"default","map"})
+@Profile({"map"})
 public class VetServiceMapImpl extends AbstractMapService<Vet, Long> implements VetService {
 	private SpecialityService specialityService;
 
@@ -77,12 +77,6 @@ public class VetServiceMapImpl extends AbstractMapService<Vet, Long> implements 
 	}
 
 	@Override
-	public void savePicture(String picturPath) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public Vet findByUserId(Long id) {
 		// TODO Auto-generated method stub
 		return null;
@@ -104,5 +98,11 @@ public class VetServiceMapImpl extends AbstractMapService<Vet, Long> implements 
 	public List<Vet> findAllByOrderByFirstNameAscLastName() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void savePicture(Vet vet, String picturePath) {
+		// TODO Auto-generated method stub
+		
 	}
 }
