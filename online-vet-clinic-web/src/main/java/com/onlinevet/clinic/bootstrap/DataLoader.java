@@ -1,5 +1,6 @@
 package com.onlinevet.clinic.bootstrap;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import org.springframework.boot.CommandLineRunner;
@@ -30,6 +31,7 @@ public class DataLoader implements CommandLineRunner {
 	private SpecialityService specialityService;
 	private VisitService visitService;
 	private UserService userService;
+	private static Calendar cal = Calendar.getInstance();
 
 	// no need for @Autowired after Spring 4.2 if there is only 1 constructor
 	public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService,
@@ -52,27 +54,27 @@ public class DataLoader implements CommandLineRunner {
 		User user = new User();
 		user.setId(1L);
 		user.setEmail("admin1@gmail.com");
-		user.setUsername("user");
+		user.setUsername("admin");
 		user.setPassword("$2a$10$H3vmHuhZg4SfU7tM4FI40ulLqdHGRo5H5HU3YBySZNwHWCjQ5kCRe");
-		user.setRole("ROLE_USER");
+		user.setRole("ROLE_ADMIN");
 		user.setActive('Y');
 		userService.save(user);
 		
 		User userAquib = new User();
 		userAquib.setId(2L);
 		userAquib.setEmail("admin@gmail.com");
-		userAquib.setUsername("admin");
+		userAquib.setUsername("owner");
 		userAquib.setPassword("$2a$10$H3vmHuhZg4SfU7tM4FI40ulLqdHGRo5H5HU3YBySZNwHWCjQ5kCRe");
-		userAquib.setRole("ROLE_ADMIN");
+		userAquib.setRole("ROLE_OWNER");
 		userAquib.setActive('Y');
 		userService.save(userAquib);
 		
 		User userManas = new User();
 		userManas.setId(3L);
 		userManas.setEmail("admin2@gmail.com");
-		userManas.setUsername("admin2");
+		userManas.setUsername("vet");
 		userManas.setPassword("$2a$10$H3vmHuhZg4SfU7tM4FI40ulLqdHGRo5H5HU3YBySZNwHWCjQ5kCRe");
-		userManas.setRole("ROLE_ADMIN");
+		userManas.setRole("ROLE_VET");
 		userManas.setActive('Y');
 		userService.save(userManas);
 		
@@ -171,7 +173,7 @@ public class DataLoader implements CommandLineRunner {
 		userSagar.setEmail("admin4@gmail.com");
 		userSagar.setUsername("admin4");
 		userSagar.setPassword("$2a$10$H3vmHuhZg4SfU7tM4FI40ulLqdHGRo5H5HU3YBySZNwHWCjQ5kCRe");
-		userSagar.setRole("ROLE_ADMIN");
+		userSagar.setRole("ROLE_VET");
 		userSagar.setActive('Y');
 		userService.save(userSagar);
 		
@@ -181,6 +183,10 @@ public class DataLoader implements CommandLineRunner {
 		sagar.setLastName("Singh");
 		sagar.getSpecialities().add(dentistry);
 		sagar.getSpecialities().add(surgery);
+		cal.set(2010, 11, 18);
+		sagar.setTelephone("7777777777");
+		sagar.setStartPracticeDate(cal.getTime());
+		sagar.setRegistrationNumber("ABCD12345");
 		sagar.setUser(userSagar);
 		vetService.save(sagar);
 
@@ -190,7 +196,7 @@ public class DataLoader implements CommandLineRunner {
 		userGautam.setEmail("admin5@gmail.com");
 		userGautam.setUsername("admin5");
 		userGautam.setPassword("$2a$10$H3vmHuhZg4SfU7tM4FI40ulLqdHGRo5H5HU3YBySZNwHWCjQ5kCRe");
-		userGautam.setRole("ROLE_ADMIN");
+		userGautam.setRole("ROLE_VET");
 		userGautam.setActive('Y');
 		userService.save(userGautam);
 		
@@ -199,6 +205,9 @@ public class DataLoader implements CommandLineRunner {
 		gautam.setFirstName("Gautam");
 		gautam.setLastName("Singh");
 		gautam.getSpecialities().add(radiology);
+		cal.set(2000, 03, 13);
+		gautam.setTelephone("8888888888");
+		gautam.setStartPracticeDate(cal.getTime());
 		gautam.setUser(userGautam);
 		vetService.save(gautam);
 		
@@ -208,7 +217,7 @@ public class DataLoader implements CommandLineRunner {
 		userKunal.setEmail("admin6@gmail.com");
 		userKunal.setUsername("admin6");
 		userKunal.setPassword("$2a$10$H3vmHuhZg4SfU7tM4FI40ulLqdHGRo5H5HU3YBySZNwHWCjQ5kCRe");
-		userKunal.setRole("ROLE_ADMIN");
+		userKunal.setRole("ROLE_VET");
 		userKunal.setActive('Y');
 		userService.save(userKunal);
 		
@@ -217,6 +226,9 @@ public class DataLoader implements CommandLineRunner {
 		kunal.setFirstName("Kunal");
 		kunal.setLastName("Choramale");
 		kunal.getSpecialities().add(radiology);
+		cal.set(2018, 05, 20);
+		kunal.setTelephone("9999999999");
+		kunal.setStartPracticeDate(cal.getTime());
 		kunal.setUser(userKunal);
 		vetService.save(kunal);
 

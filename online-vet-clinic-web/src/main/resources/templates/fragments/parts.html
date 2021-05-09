@@ -32,35 +32,36 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/appointments/home">Home</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/vets">Vets</a>
+                <li sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_OWNER')" class="nav-item">
+                    <a class="nav-link" href="/appointments/vet/vets">Vets</a>
                 </li>
 
                 <!--VET-->
-                <li sec:authorize="hasRole('ROLE_VET')" class="nav-item">
+                <li sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_VET')" class="nav-item">
                     <a class="nav-link" href="/appointments/vet">Appointments</a>
                 </li>
-                <li sec:authorize="hasRole('ROLE_VET')" class="nav-item">
+                <li sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_VET')" class="nav-item">
                     <a class="nav-link" href="/schedule/">Schedule</a>
                 </li>
-                <li sec:authorize="hasRole('ROLE_VET')" class="nav-item">
+                <li sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_VET')" class="nav-item">
                     <a class="nav-link" href="/vet/pets">Pets</a>
                 </li>
 
-                <!-- USER -->
-                <li sec:authorize="hasRole('ROLE_USER')" class="nav-item">
+                <!-- OWNER -->
+                <li sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_OWNER')" class="nav-item">
+                    <a class="nav-link" href="/mypets">My Pets</a>
+                </li>
+                <li sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_OWNER')" class="nav-item">
                     <a class="nav-link" href="/appointments/pet">My Appointments</a>
                 </li>
-                <li sec:authorize="hasRole('ROLE_USER')" class="nav-item">
+                <li sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_OWNER')" class="nav-item">
                     <a class="nav-link" href="/schedule/">Vet's Schedule</a>
                 </li>
 
                 <!-- ADMIN -->
-                <span sec:authorize="hasRole('ROLE_ADMIN')">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/appointments/log">Log</a>
-                    </li>
-                </span>
+                <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item">
+                    <a class="nav-link" href="/appointments/admin/log">Log</a>
+                </li>
 
             </ul>
 
@@ -76,7 +77,7 @@
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="user-actions-menu">
                         <a sec:authorize="hasRole('ROLE_VET')" class="dropdown-item" href="/schedule/edit">Edit Week Schedule</a>
 
-                        <a sec:authorize="hasRole('ROLE_USER')" class="dropdown-item" href="/pet/edit">Edit Profile</a>
+                        <a sec:authorize="hasRole('ROLE_OWNER')" class="dropdown-item" href="/pet/edit">Edit Profile</a>
                         <a sec:authorize="hasRole('ROLE_VET')" class="dropdown-item" href="/vet/edit">Edit Profile</a>
 
                         <a class="dropdown-item" href="/user/change-password">Change Password</a>

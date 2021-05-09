@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+				xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>Pets</title>
     <link rel="stylesheet" href="../static/resources/css/commons.css"
@@ -19,11 +20,12 @@
             <table class="table">
                 <thead>
                 <tr>
-                    <th>#</th>
-                    <th>Name</th>
-                    <th>Date Of Birth</th>
-                    <th>Telephone</th>
-                    <th>Is Insured</th>
+                    <th colspan="1">#</th>
+                    <th colspan="1">Pet Name</th>
+                    <th colspan="1">Date Of Birth</th>
+                    <th colspan="1">Owner Name</th>
+                    <th colspan="1">Pet Type</th>
+                    <th colspan="1">Telephone</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -31,12 +33,11 @@
                 <tr th:each="pet,iter : ${pets}" th:object="${pet}">
                     <td th:if="${param.page != null}" th:text="${param.page[0]} * 8 + ${iter.index + 1}">index</td>
                     <td th:if="${param.page == null}" th:text="${iter.index + 1}">index</td>
-
-                    <td th:text="|*{firstName} *{lastName}|">name</td>
-                    <td th:text="*{#dates.format(birthDate, 'dd-MMM-yyyy')}">date</td>
-                    <td th:text="*{telephoneNumber}">telephone</td>
-                    <td th:text="*{isInsured} ? 'Yes' : 'No'">isInsured</td>
-
+                    <td th:text="|*{name}|">name</td>
+                    <td th:text="|*{#dates.format(birthDate, 'dd-MMM-yyyy')}|">date</td>
+                    <td th:text="|*{owner.firstName} *{owner.lastName}|">Owner</td>
+                    <td th:text="|*{getPetType()}|">Pet Type</td>
+                    <td th:text="|*{owner.telephone}|">telephone</td>
                     <td>
                         <a class="btn btn-secondary" th:href="|/pet/*{id}|">View</a>
                     </td>

@@ -20,6 +20,10 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+	private static final String VET = "VET";
+	private static final String OWNER = "OWNER";
+	private static final String USER = "USER";
+	private static final String ADMIN = "ADMIN";
 	private static final String LOGIN = "/";
 
 	@Bean
@@ -48,10 +52,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-			.antMatchers("/", LOGIN, "/register-owner", "/forgotPassword",
-						 "/register-vet").permitAll()
-			.antMatchers("/appointments/**","/index","/appointments/home").hasAnyRole("ADMIN","USER")
-			.antMatchers("/owners/**", "/pets/**", "/vets/**", "/index").hasRole("ADMIN")
+			.antMatchers(LOGIN, "/register-owner", "/forgotPassword",
+						 "/register-vet", "/vets/**", "/mm_pics/**",
+                         "/bootstrap/**", "/jquery/**", "/tether/**", "/font-awesome/**", "/select2/**", "/css/**",
+                         "/img/**", "/connect/**", "/error/**").permitAll()
+			.antMatchers("/appointments/home").hasAnyRole(ADMIN,USER,OWNER,VET)
+			.antMatchers("/appointment/vet/**", "/schedule/edit", "/vet/edit", "/vet/pets, /vet/edit-picture").hasAnyRole(ADMIN,VET)
+            .antMatchers("/appointments/vet/vets","/appointment/pet/**", "/pet/edit","/owners/**","/mypets"
+            				,"/appointments/pet/pets").hasAnyRole(ADMIN,OWNER)
+			.antMatchers( "/index" ,"/pets/**").hasRole(ADMIN)
+			.antMatchers("/**").hasRole(ADMIN)
 			.anyRequest().authenticated()
 			.and().formLogin()
 			.loginPage(LOGIN).loginProcessingUrl("/login").defaultSuccessUrl("/appointments/home", false)

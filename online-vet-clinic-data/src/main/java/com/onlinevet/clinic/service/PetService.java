@@ -13,8 +13,11 @@ public interface PetService extends CrudService<Pet, Long>{
 	List<Pet> findAllByVetId(Long vetId);
 
     Page<Pet> findAllByVetIdOrderByBirthDateDesc(Long vetId, Pageable pageable);
-
+    
     Pet findByOwnerId(Long ownerId);
     
     List<Pet> findAllByOwnerId(Long ownerId);
+
+    Page<Pet> findAllByOwnerIdOrderByBirthDateDesc(Long ownerId, Pageable pageable);
+  
 }

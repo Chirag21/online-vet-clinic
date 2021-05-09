@@ -21,7 +21,7 @@ import lombok.AllArgsConstructor;
 @Service
 @Profile("springdatajpa")
 public class OwnerServiceImpl implements OwnerService {
-	private static String DEFAULT_OWNER_ROLE = "ROLE_USER";
+	private static String DEFAULT_OWNER_ROLE = "ROLE_OWNER";
 	
 	@Autowired
 	private final OwnerRepository ownerRepository;
@@ -94,4 +94,5 @@ public class OwnerServiceImpl implements OwnerService {
 	public Owner findByUserId(Long userId) {
 		return ownerRepository.findByUserId(userId);
 	}
+
 }

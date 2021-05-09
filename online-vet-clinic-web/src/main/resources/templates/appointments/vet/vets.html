@@ -22,20 +22,17 @@
                 <div class="card">
                     <div class="card-block text-center">
                         <img height="100px" style="margin-bottom: 5px; border: 1px solid black;"
-                             th:src="${vet.picturePath} ? (|/mm_pics/${vet.picturePath}|) : 'http://www.hghtherapy.me/wp-content/uploads/2012/02/happy-doctor4.jpg'" alt=""/>
-
+                             th:src="${vet.picturePath} ? (|/mm_pics/${vet.picturePath}|) : 'https://thumbs.dreamstime.com/z/cartoon-vet-cat-dog-characters-sign-vet-cartoon-character-pet-cat-dog-animals-above-sign-pointing-giving-120473613.jpg'" alt=""/>
                         <h4 class="card-title">
                             <a th:text="|Dr. ${vet.firstName} ${vet.lastName}|" th:href="|/vets/${vet.id}|">Dr.
                                 Name</a>
                         </h4>
-
-                        <small class="text-muted" th:text="|City: ${vet.settlePointName}|">City: Varna</small>
-                        <br/>
-                        <small class="text-muted"
-                               th:text="|Experience: ${#dates.year(#dates.createNow()) - #dates.year(vet.startPracticeDate) + 1} years|"></small>
-                        <br/>
-                        <small class="text-muted" th:text="|Telephone: ${vet.telephoneNumber}|">Telephone number: #
-                        </small>
+                        <span class="text-muted"
+                               th:text="|Experience: ${#dates.year(#dates.createNow()) - #dates.year(vet.startPracticeDate) + 1} years|"></span>
+                        <span class="text-muted" th:text="|Telephone: ${vet.telephone}|">Telephone number: #</span>
+                        <span class="text-muted" th:each="speciality : ${vet.specialities}"
+									th:text="${speciality.description + ' '}"></span>
+						 <span	th:if="${vet?.specialities?.size() == 0}">Specialities</span>
                     </div>
                 </div>
             </div>
@@ -45,14 +42,14 @@
             <ul class="pagination">
                 <li class="page-item" th:classappend="!${vets.hasPrevious()}? 'disabled'">
                     <a class="page-link"
-                       th:href="${vets.hasPrevious()} ? '/vets?page=' + ${vets.previousPageable().getPageNumber()}">Previous</a>
+                       th:href="${vets.hasPrevious()} ? '/appointments/vet/vets?page=' + ${vets.previousPageable().getPageNumber()}">Previous</a>
                 </li>
                 <li class="page-item" th:each="i : ${#numbers.sequence(0, vets.getTotalPages() - 1)}">
-                    <a class="page-link" href="#" th:href="|/vets?page=${i}|" th:text="${i + 1}">1</a>
+                    <a class="page-link" href="#" th:href="|/appointments/vet/vets?page=${i}|" th:text="${i + 1}">1</a>
                 </li>
                 <li class="page-item" th:classappend="!${vets.hasNext()}? 'disabled'">
                     <a class="page-link" href="#"
-                       th:href="${vets.hasNext()} ? '/vets?page=' + ${vets.nextPageable().getPageNumber()}">Next</a>
+                       th:href="${vets.hasNext()} ? '/appointments/vet/vets?page=' + ${vets.nextPageable().getPageNumber()}">Next</a>
                 </li>
             </ul>
         </nav>

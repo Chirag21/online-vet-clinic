@@ -16,7 +16,7 @@
 <main>
     <div class="container">
         <h1 class="h1">Vet Register Page</h1>
-        <form method="post" th:object="${vet}">
+        <form method="post" th:object="${vet}" th:action="@{register-vet}">
 
             <div class="form-group" th:classappend="${#fields.hasErrors('email')} ? 'has-danger'">
                 <label class="form-control-label" for="inputEmail">Email</label>

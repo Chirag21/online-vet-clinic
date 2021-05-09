@@ -19,24 +19,30 @@
         <div class="card">
             <div class="card-block text-center">
                 <img height="250px" style="margin-bottom: 5px; border: 1px solid black;"
-                     th:src="${vet.picturePath} ? (|/mm_pics/${vet.picturePath}|) : 'http://www.hghtherapy.me/wp-content/uploads/2012/02/happy-doctor4.jpg'" alt=""/>
+                     th:src="${vet.picturePath} ? (|/mm_pics/${vet.picturePath}|) : 'https://thumbs.dreamstime.com/z/cartoon-vet-cat-dog-characters-sign-vet-cartoon-character-pet-cat-dog-animals-above-sign-pointing-giving-120473613.jpg'" alt=""/>
 
                 <h4 class="card-title">
                     <a th:text="|Dr. ${vet.firstName} ${vet.lastName}|">Dr.
                         Name</a>
                 </h4>
-
-                <small class="text-muted" th:text="|City: ${vet.settlePointName}|">City: Varna</small>
+				<span class="text-muted" th:text="|Practice Start Date: ${#dates.format(vet.startPracticeDate, 'dd/MM/yyyy')}|">
+				Practice Start Date</span>                                                                              
+				<br/>                                                                                
+                <span class="text-muted"
+                th:text="|Experience: ${#dates.year(#dates.createNow()) - #dates.year(vet.startPracticeDate) + 1} years|">
+                Experience : #</span>
                 <br/>
-                <!--<small class="text-muted"-->
-                       <!--th:text="|Experience: ${#dates.year(#dates.createNow()) - #dates.year(vet.startPracticeDate) + 1} years|"></small>-->
-                <!--<br/>-->
-
-                <small class="text-muted"
-                th:text="|Experience: ${#dates.year(#dates.createNow()) - #dates.year(vet.startPracticeDate) + 1} years|"></small>
+                <span class="text-muted"
+                th:text="|Registration Number: ${vet.registrationNumber?:'Not Specified'}|">
+                Registration Number : #</span>
                 <br/>
-                <small class="text-muted" th:text="|Telephone: ${vet.telephoneNumber}|">Telephone number: #
-                </small>
+                <span class="text-muted" th:text="|Telephone: ${vet.telephone}|">
+                Telephone number: #</span>
+                <br/>
+                Specialities: 
+                <span class="text-muted" th:each="speciality : ${vet.specialities}"
+						th:text="${speciality.description + ' '}"></span>
+				<span	th:if="${vet?.specialities?.size() == 0}">Specialities</span>
             </div>
         </div>
     </div>

@@ -20,7 +20,7 @@
 			<span class="float-right">
 				<a class="pr-2" href="/register-vet">Click here to register as Vet</a>
 			</span> 
-			<form method="post" th:object="${owner}">
+			<form method="post" th:object="${owner}" th:action="@{register-owner}">
 
 				<div class="form-group"
 					th:classappend="${#fields.hasErrors('email')} ? 'has-danger'">

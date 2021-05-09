@@ -1,12 +1,18 @@
 package com.onlinevet.clinic.controllers;
 
+import java.security.Principal;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -77,4 +83,26 @@ public class UserController {
 			return LOGIN_SIGNUP;
 		}
 	}
+	
+    @GetMapping("/user/change-password")
+    public String getChangePasswordPage(@ModelAttribute User user) {
+        return "/appointments/change-password";
+    }
+    
+    @PostMapping("/user/change-password")
+    public String registerUser(@Validated @ModelAttribute User user, BindingResult bindingResult, Principal principal) {
+        if (bindingResult.hasErrors()) {
+            return "/appointments/change-password";
+        }
+
+        Long userId = ((User)((Authentication) principal).getPrincipal()).getId(); 
+        boolean oldPasswordEqualsNew = bCryptPasswordEncoder.encode(user.getPassword()).equals(userService.findById(userId).getPassword());
+        if (oldPasswordEqualsNew) {
+            FieldError fieldError = new FieldError("user", "password", "New password cannot be same as old password.");
+            bindingResult.addError(fieldError);
+            return "change-password";
+        }
+        userService.updatePassword(user, user.getPassword());
+        return "redirect:/";
+    }
 }

@@ -74,5 +74,10 @@ public class PetServiceImpl implements PetService{
 	public List<Pet> findAllByOwnerId(Long ownerId) {
 		return petRepository.findAllByOwnerId(ownerId);
 	}
+
+	@Override
+	public Page<Pet> findAllByOwnerIdOrderByBirthDateDesc(Long ownerId, Pageable pageable) {
+		return petRepository.findAllByOwnerIdOrderByBirthDateDesc(ownerId, pageable);
+	}
 	
 }

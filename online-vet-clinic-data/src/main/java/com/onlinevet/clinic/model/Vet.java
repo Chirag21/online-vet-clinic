@@ -44,6 +44,7 @@ public class Vet extends Person {
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "vet_specialities", joinColumns = @JoinColumn(name = "vet_id"), inverseJoinColumns = @JoinColumn(name = "speciality_id"))
+	@Builder.Default
 	private Set<Speciality> specialities = new HashSet<>();
 
     //@NotNull(message = "Invalid gender.")
@@ -81,7 +82,7 @@ public class Vet extends Person {
     private User user;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "vet")
-    private Set<Pet> pet;
+    private Set<Pet> pets;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "vet")
     private Set<Appointment> appointments;

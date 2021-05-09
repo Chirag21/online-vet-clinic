@@ -14,7 +14,6 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Email;
 
-import org.hibernate.annotations.ColumnDefault;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import lombok.AllArgsConstructor;
@@ -47,7 +46,10 @@ public class User extends BaseEntity implements UserDetails, Serializable{
 	
 	@Column(name = "password")
 	private String password;
-
+	
+	@Column(insertable = false, updatable = false)
+	private String oldPassword;
+	
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id")
 				, inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
