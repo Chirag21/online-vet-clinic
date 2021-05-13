@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>Appointments</title>
     <link rel="stylesheet" href="../static/resources/css/commons.css"
@@ -16,14 +17,19 @@
     <div class="container">
         <div class="table-wrapper">
             <h1 class="h1">My Appointments</h1>
+            <div>
+            	<a sec:authorize="hasAnyRole('ROLE_OWNER','ROLE_ADMIN')" class="btn btn-secondary" th:href="@{/appointments/pet/add}">
+            	BOOK NEW APPOINTMENT</a>
+            </div>
             <table class="table">
                 <thead>
                 <tr>
                     <th>#</th>
                     <th>Date</th>
-                    <th>Type</th>
                     <th sec:authorize="hasRole('ROLE_VET')">Pet</th>
                     <th sec:authorize="hasRole('ROLE_OWNER')">Vet</th>
+                    <th sec:authorize="hasRole('ROLE_OWNER')">Pet</th>
+                    <th>Pet Type</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -33,14 +39,16 @@
                     <td th:if="${param.page == null}" th:text="${iter.index + 1}">index</td>
 
                     <td th:text="*{#dates.format(date, 'dd-MMM-yyyy HH:mm')}">date</td>
-                    <td th:text="*{type}">type</td>
                     <td sec:authorize="hasRole('ROLE_VET')"
                         th:text="*{pet.name}">pet</td>
                     <td sec:authorize="hasRole('ROLE_OWNER')"
                         th:text="*{vet.firstName} + ' ' + *{vet.lastName}">vet</td>
+                    <td sec:authorize="hasRole('ROLE_OWNER')"
+                    	th:text="*{pet.name}">pet</td>
+                  	<td th:text="*{pet.petType}"></td>
                     <td>
-                        <a sec:authorize="hasRole('ROLE_OWNER')" class="btn btn-secondary" th:href="|/appointment/pet/*{id}|">View</a>
-                        <a sec:authorize="hasRole('ROLE_VET')" class="btn btn-secondary" th:href="|/appointment/vet/*{id}|">View</a>
+                        <a sec:authorize="hasRole('ROLE_OWNER')" class="btn btn-secondary" th:href="|/appointments/pet/*{id}|">View</a>
+                        <a sec:authorize="hasRole('ROLE_VET')" class="btn btn-secondary" th:href="|/appointments/vet/*{id}|">View</a>
                     </td>
                 </tr>
                 </tbody>

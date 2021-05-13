@@ -55,11 +55,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers(LOGIN, "/register-owner", "/forgotPassword",
 						 "/register-vet", "/vets/**", "/mm_pics/**",
                          "/bootstrap/**", "/jquery/**", "/tether/**", "/font-awesome/**", "/select2/**", "/css/**",
-                         "/img/**", "/connect/**", "/error/**").permitAll()
-			.antMatchers("/appointments/home").hasAnyRole(ADMIN,USER,OWNER,VET)
-			.antMatchers("/appointment/vet/**", "/schedule/edit", "/vet/edit", "/vet/pets, /vet/edit-picture").hasAnyRole(ADMIN,VET)
-            .antMatchers("/appointments/vet/vets","/appointment/pet/**", "/pet/edit","/owners/**","/mypets"
-            				,"/appointments/pet/pets").hasAnyRole(ADMIN,OWNER)
+                         "/img/**", "/connect/**", "/error/**","/h2/**").permitAll()
+			.antMatchers("/appointments/home","/appointments/vet/appointments","/appointments/appointment/appointment"
+					,"/pet/**","/appointments/appointment/add").hasAnyRole(ADMIN,USER,OWNER,VET)
+			.antMatchers("/appointment/vet/**", "/schedule/edit", "/vet/edit", "/vet/pets, /vet/edit-picture","/pet/pets"
+					,"/appointments/vet/**").hasAnyRole(ADMIN,VET)
+            .antMatchers("/appointments/pet/appointments","/appointment/pet/**", "/pet/edit","/owners/**","/mypets"
+            		,"/appointments/pet/**").hasAnyRole(ADMIN,OWNER)
 			.antMatchers( "/index" ,"/pets/**").hasRole(ADMIN)
 			.antMatchers("/**").hasRole(ADMIN)
 			.anyRequest().authenticated()

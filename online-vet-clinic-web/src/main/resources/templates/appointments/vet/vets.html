@@ -28,7 +28,7 @@
                                 Name</a>
                         </h4>
                         <span class="text-muted"
-                               th:text="|Experience: ${#dates.year(#dates.createNow()) - #dates.year(vet.startPracticeDate) + 1} years|"></span>
+                               th:text="|Experience: ${#dates.year(#dates.createNow()) - #dates.year(vet.startPracticeDate) + 1} year(s)|"></span>
                         <span class="text-muted" th:text="|Telephone: ${vet.telephone}|">Telephone number: #</span>
                         <span class="text-muted" th:each="speciality : ${vet.specialities}"
 									th:text="${speciality.description + ' '}"></span>

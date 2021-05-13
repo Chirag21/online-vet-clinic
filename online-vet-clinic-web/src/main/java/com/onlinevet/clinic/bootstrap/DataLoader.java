@@ -7,6 +7,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
+import com.onlinevet.clinic.model.Appointment;
 import com.onlinevet.clinic.model.Owner;
 import com.onlinevet.clinic.model.Pet;
 import com.onlinevet.clinic.model.PetType;
@@ -14,6 +15,7 @@ import com.onlinevet.clinic.model.Speciality;
 import com.onlinevet.clinic.model.User;
 import com.onlinevet.clinic.model.Vet;
 import com.onlinevet.clinic.model.Visit;
+import com.onlinevet.clinic.service.AppointmentService;
 import com.onlinevet.clinic.service.OwnerService;
 import com.onlinevet.clinic.service.PetTypeService;
 import com.onlinevet.clinic.service.SpecialityService;
@@ -25,23 +27,29 @@ import com.onlinevet.clinic.service.VisitService;
 @Profile(value = "test")
 public class DataLoader implements CommandLineRunner {
 
+	private static final String ROLE_VET = "ROLE_VET";
+	private static final String ROLE_ADMIN = "ROLE_ADMIN";
+	private static final String ROLE_OWNER = "ROLE_OWNER";
 	private OwnerService ownerService;
 	private VetService vetService;
 	private PetTypeService petTypeService;
 	private SpecialityService specialityService;
 	private VisitService visitService;
 	private UserService userService;
+	private AppointmentService appointmentService;
 	private static Calendar cal = Calendar.getInstance();
 
 	// no need for @Autowired after Spring 4.2 if there is only 1 constructor
 	public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService,
-			SpecialityService specialityService, VisitService visitService, UserService userService) {
+			SpecialityService specialityService, VisitService visitService, UserService userService,
+			AppointmentService appointmentService) {
 		this.ownerService = ownerService;
 		this.vetService = vetService;
 		this.petTypeService = petTypeService;
 		this.specialityService = specialityService;
 		this.visitService = visitService;
 		this.userService = userService;
+		this.appointmentService = appointmentService;
 	}
 
 	@Override
@@ -56,34 +64,34 @@ public class DataLoader implements CommandLineRunner {
 		user.setEmail("admin1@gmail.com");
 		user.setUsername("admin");
 		user.setPassword("$2a$10$H3vmHuhZg4SfU7tM4FI40ulLqdHGRo5H5HU3YBySZNwHWCjQ5kCRe");
-		user.setRole("ROLE_ADMIN");
+		user.setRole(ROLE_ADMIN);
 		user.setActive('Y');
 		userService.save(user);
 		
 		User userAquib = new User();
 		userAquib.setId(2L);
 		userAquib.setEmail("admin@gmail.com");
-		userAquib.setUsername("owner");
+		userAquib.setUsername("owner1");
 		userAquib.setPassword("$2a$10$H3vmHuhZg4SfU7tM4FI40ulLqdHGRo5H5HU3YBySZNwHWCjQ5kCRe");
-		userAquib.setRole("ROLE_OWNER");
+		userAquib.setRole(ROLE_OWNER);
 		userAquib.setActive('Y');
 		userService.save(userAquib);
 		
 		User userManas = new User();
 		userManas.setId(3L);
 		userManas.setEmail("admin2@gmail.com");
-		userManas.setUsername("vet");
+		userManas.setUsername("owner2");
 		userManas.setPassword("$2a$10$H3vmHuhZg4SfU7tM4FI40ulLqdHGRo5H5HU3YBySZNwHWCjQ5kCRe");
-		userManas.setRole("ROLE_VET");
+		userManas.setRole(ROLE_OWNER);
 		userManas.setActive('Y');
 		userService.save(userManas);
 		
 		User userNilesh = new User();
 		userNilesh.setId(4L);
 		userNilesh.setEmail("admin3@gmail.com");
-		userNilesh.setUsername("admin3");
+		userNilesh.setUsername("owner3");
 		userNilesh.setPassword("$2a$10$H3vmHuhZg4SfU7tM4FI40ulLqdHGRo5H5HU3YBySZNwHWCjQ5kCRe");
-		userNilesh.setRole("ROLE_ADMIN");
+		userNilesh.setRole(ROLE_OWNER);
 		userNilesh.setActive('Y');
 		userService.save(userNilesh);
 		
@@ -119,7 +127,7 @@ public class DataLoader implements CommandLineRunner {
 		ownerService.save(aquib);
 		Pet aquibsPet = new Pet();
 		aquibsPet.setPetType(cat);
-		aquibsPet.setName("Bubble");
+		aquibsPet.setName("Aquib's Pet");
 		aquibsPet.setOwner(aquib);
 		aquibsPet.setBirthDate(new Date());
 		aquib.getPets().add(aquibsPet);
@@ -137,7 +145,7 @@ public class DataLoader implements CommandLineRunner {
 		ownerService.save(manas);	// why saving this owner here works?
 		Pet manassPet = new Pet();
 		manassPet.setPetType(dog);
-		manassPet.setName("Max");
+		manassPet.setName("Manas's Pet");
 		manassPet.setOwner(manas);
 		manassPet.setBirthDate(new Date());
 		manas.getPets().add(manassPet);
@@ -154,7 +162,7 @@ public class DataLoader implements CommandLineRunner {
 		nilesh.setUser(userNilesh);
 		Pet nileshsPet = new Pet();
 		nileshsPet.setPetType(dog);
-		nileshsPet.setName("Bruno");
+		nileshsPet.setName("Nilesh's Pet");
 		nileshsPet.setOwner(nilesh);
 		nileshsPet.setBirthDate(new Date());
 		nilesh.getPets().add(nileshsPet);
@@ -164,16 +172,16 @@ public class DataLoader implements CommandLineRunner {
 		catVisit.setPet(manassPet);
 		catVisit.setDate(new Date());
 		catVisit.setDescription("Cat Visit Done");
-		visitService.save(catVisit); // pet id is null. need a look into
+		visitService.save(catVisit);
 
 		System.out.println("Loaded owners .......");
 
 		User userSagar = new User();
 		userSagar.setId(5L);
 		userSagar.setEmail("admin4@gmail.com");
-		userSagar.setUsername("admin4");
+		userSagar.setUsername("vet1");
 		userSagar.setPassword("$2a$10$H3vmHuhZg4SfU7tM4FI40ulLqdHGRo5H5HU3YBySZNwHWCjQ5kCRe");
-		userSagar.setRole("ROLE_VET");
+		userSagar.setRole(ROLE_VET);
 		userSagar.setActive('Y');
 		userService.save(userSagar);
 		
@@ -194,9 +202,9 @@ public class DataLoader implements CommandLineRunner {
 		User userGautam = new User();
 		userGautam.setId(6L);
 		userGautam.setEmail("admin5@gmail.com");
-		userGautam.setUsername("admin5");
+		userGautam.setUsername("vet2");
 		userGautam.setPassword("$2a$10$H3vmHuhZg4SfU7tM4FI40ulLqdHGRo5H5HU3YBySZNwHWCjQ5kCRe");
-		userGautam.setRole("ROLE_VET");
+		userGautam.setRole(ROLE_VET);
 		userGautam.setActive('Y');
 		userService.save(userGautam);
 		
@@ -215,9 +223,9 @@ public class DataLoader implements CommandLineRunner {
 		User userKunal = new User();
 		userKunal.setId(7L);
 		userKunal.setEmail("admin6@gmail.com");
-		userKunal.setUsername("admin6");
+		userKunal.setUsername("vet3");
 		userKunal.setPassword("$2a$10$H3vmHuhZg4SfU7tM4FI40ulLqdHGRo5H5HU3YBySZNwHWCjQ5kCRe");
-		userKunal.setRole("ROLE_VET");
+		userKunal.setRole(ROLE_VET);
 		userKunal.setActive('Y');
 		userService.save(userKunal);
 		
@@ -233,6 +241,40 @@ public class DataLoader implements CommandLineRunner {
 		vetService.save(kunal);
 
 		System.out.println("Vets Loaded .......");
+		
+		Appointment aquibsAppointment = new Appointment();
+		cal.set(2021, 01, 18);
+		aquibsAppointment.setDate(cal.getTime());
+		aquibsAppointment.setId(1L);
+		aquibsAppointment.setOwner(aquib);
+		aquibsAppointment.setPet(aquibsPet);
+		aquibsAppointment.setVet(sagar);
+		aquibsAppointment.setDescription("Aquib's Pet Visit done");
+		aquibsAppointment.setStatus("Completed");
+		appointmentService.save(aquibsAppointment);
+		
+		Appointment manassAppointment = new Appointment();
+		cal.set(2021, 02, 07);
+		manassAppointment.setDate(cal.getTime());
+		manassAppointment.setId(2L);
+		manassAppointment.setOwner(manas);
+		manassAppointment.setPet(manassPet);
+		manassAppointment.setVet(gautam);
+		manassAppointment.setDescription("Manas's Pet Visit done");
+		manassAppointment.setStatus("Completed");
+		appointmentService.save(manassAppointment);
+		
+		Appointment nileshsAppointment = new Appointment();
+		cal.set(2021, 06, 15);
+		nileshsAppointment.setDate(cal.getTime());
+		nileshsAppointment.setId(3L);
+		nileshsAppointment.setOwner(nilesh);
+		nileshsAppointment.setPet(nileshsPet);
+		nileshsAppointment.setVet(kunal);
+		nileshsAppointment.setDescription("Nilesh's Pet Visit done");
+		nileshsAppointment.setStatus("Upcoming");
+		appointmentService.save(nileshsAppointment);
+		
+		System.out.println("Loaded appointments .......");
 	}
-
 }

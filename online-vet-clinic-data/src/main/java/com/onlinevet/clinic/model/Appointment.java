@@ -26,18 +26,29 @@ public class Appointment extends BaseEntity implements Serializable{
 	@Column(name = "date")
     private Date date;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "pet_id")
     private Pet pet;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "vet_id")
     private Vet vet;
+    
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "owner_id")
+    private Owner owner;
 
     @NotBlank
     @Size(max = 255 , message = "Invalid description length")
     @Column(name = "description")
     private String description;
+    
+    @Column(name = "mobile_no")
+    private String mobileNo;
+    
+    @NotBlank
+    @Column(name = "status")
+    private String status;
 
     @Builder
 	public Appointment(Long id, Date date, Pet pet, Vet vet, String description) {

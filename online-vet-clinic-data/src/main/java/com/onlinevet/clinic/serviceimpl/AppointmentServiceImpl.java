@@ -67,23 +67,23 @@ public class AppointmentServiceImpl implements AppointmentService {
 	}
 
 	@Override
-	public List<Appointment> findAllForPetById(Long petId) {
+	public List<Appointment> findAllByPetById(Long petId) {
 		return appointmentRepository.findAllByPetIdOrderByDate(petId);
 	}
 
 	@Override
-	public Page<Appointment> findAllForPetById(Long petId, Pageable pageable) {
+	public Page<Appointment> findAllByPetById(Long petId, Pageable pageable) {
 		Page<Appointment> appointments = appointmentRepository.findAllByPetIdOrderByDate(petId, pageable);
 		return new PageImpl<>(appointments.toList(), pageable, appointments.getTotalElements());
 	}
 
 	@Override
-	public List<Appointment> findAllForVetById(Long vetId) {
+	public List<Appointment> findAllByVetById(Long vetId) {
 		return appointmentRepository.findAllByVetIdOrderByDate(vetId);
 	}
 
 	@Override
-	public Page<Appointment> findAllForVetById(Long vetId, Pageable pageable) {
+	public Page<Appointment> findAllByVetById(Long vetId, Pageable pageable) {
 		Page<Appointment> appointments = appointmentRepository.findAllByVetIdOrderByDate(vetId, pageable);
 		return new PageImpl<>(appointments.toList(), pageable, appointments.getTotalElements());
 	}
@@ -91,6 +91,26 @@ public class AppointmentServiceImpl implements AppointmentService {
 	@Override
 	public Appointment findByDateAndVetId(Date date, Long vetId) {
 		return appointmentRepository.findOneByDateAndVetId(date, vetId);
+	}
+
+	@Override
+	public List<Appointment> findAllByOwnerIdOrderByDate(Long ownerId) {
+		return appointmentRepository.findAllByOwnerIdOrderByDate(ownerId);
+	}
+
+	@Override
+	public Page<Appointment> findAllByOwnerIdOrderByDate(Long ownerId, Pageable pageable) {
+		return appointmentRepository.findAllByOwnerIdOrderByDate(ownerId, pageable);
+	}
+
+	@Override
+	public List<Appointment> findAllByMobileNo(String mobileNo) {
+		return appointmentRepository.findAllByMobileNo(mobileNo);
+	}
+
+	@Override
+	public Page<Appointment> findAllByMobileNo(String mobileNo, Pageable pageable) {
+		return appointmentRepository.findAllByMobileNo(mobileNo,pageable);
 	}
 
 }

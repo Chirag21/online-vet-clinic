@@ -10,6 +10,8 @@ import com.onlinevet.clinic.model.Pet;
 public interface PetService extends CrudService<Pet, Long>{
 	Pet findByName(String name);
 	
+	Page<Pet> findAllByOrderByName(Pageable pageable);
+	
 	List<Pet> findAllByVetId(Long vetId);
 
     Page<Pet> findAllByVetIdOrderByBirthDateDesc(Long vetId, Pageable pageable);

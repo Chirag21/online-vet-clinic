@@ -11,13 +11,21 @@ import com.onlinevet.clinic.model.Appointment;
 public interface AppointmentService extends CrudService<Appointment, Long> {
     List<Appointment> findAllForDateAndVet(Date date, Long vetId);
 
-    List<Appointment> findAllForPetById(Long petId);
+    List<Appointment> findAllByOwnerIdOrderByDate(Long ownerId);
 
-    Page<Appointment> findAllForPetById(Long petId, Pageable pageable);
+    Page<Appointment> findAllByOwnerIdOrderByDate(Long ownerId, Pageable pageable);
+    
+    List<Appointment> findAllByPetById(Long petId);
 
-    List<Appointment> findAllForVetById(Long vetId);
+    Page<Appointment> findAllByPetById(Long petId, Pageable pageable);
 
-    Page<Appointment> findAllForVetById(Long vetId, Pageable pageable);
+    List<Appointment> findAllByVetById(Long vetId);
+
+    Page<Appointment> findAllByVetById(Long vetId, Pageable pageable);
 
     Appointment findByDateAndVetId(Date date, Long vetId);
+    
+    List<Appointment> findAllByMobileNo(String mobileNo);
+    
+    Page<Appointment> findAllByMobileNo(String mobileNo, Pageable pageable);
 }

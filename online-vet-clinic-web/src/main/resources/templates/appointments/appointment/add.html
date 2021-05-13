@@ -24,7 +24,6 @@
                 <div>
                     <a href="#"
                        th:text="'Dr. ' + ${vet.firstName} + ' ' + ${vet.lastName}"></a>,
-                    <span class="form-control-label" th:text="${vet.settlePointName}"></span>
                 </div>
             </div>
 
@@ -34,7 +33,7 @@
                     <select class="form-control form-control-danger" id="inputPet" th:field="*{pet}">
                         <option th:each="pet : ${vetPets}"
                                 th:value="${pet.id}"
-                                th:text="${pet.firstName} + ' ' + ${pet.lastName} + ' (' + ${pet.EGN} + ')'"></option>
+                                th:text="${pet.firstName} + ' ' + ${pet.lastName}"></option>
                     </select>
                 </div>
             </span>
@@ -46,11 +45,18 @@
             </div>
 
             <div class="form-group">
-                <label class="form-control-label" for="inputAppointmentType">Appointment Type</label>
+                <!-- <label class="form-control-label" for="inputAppointmentType">Appointment Type</label>
                 <select class="form-control form-control-danger" id="inputAppointmentType" th:field="*{type}">
                     <option th:each="appointmentType : ${appointmentTypes}"
                             th:value="${appointmentType.id}"
                             th:text="${appointmentType.name}"></option>
+                </select>  -->
+                
+                <label class="form-control-label" for="inputPet">Pet</label>
+                <select class="form-control form-control-danger" id="inputPet" th:field="*{pet.name}">
+                    <option th:each="pet : ${pets}"
+                            th:value="${pet.id}"
+                            th:text="${pet.name}"></option>
                 </select>
             </div>
 

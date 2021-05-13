@@ -38,21 +38,24 @@
 
                 <!--VET-->
                 <li sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_VET')" class="nav-item">
-                    <a class="nav-link" href="/appointments/vet">Appointments</a>
+                    <a class="nav-link" href="/appointments/vet/appointments">Appointments</a>
                 </li>
                 <li sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_VET')" class="nav-item">
                     <a class="nav-link" href="/schedule/">Schedule</a>
                 </li>
                 <li sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_VET')" class="nav-item">
-                    <a class="nav-link" href="/vet/pets">Pets</a>
+                    <a class="nav-link" href="/pet/pets">Pets</a>
                 </li>
 
                 <!-- OWNER -->
-                <li sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_OWNER')" class="nav-item">
+                <li sec:authorize="hasAnyRole('ROLE_OWNER')" class="nav-item">
                     <a class="nav-link" href="/mypets">My Pets</a>
                 </li>
-                <li sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_OWNER')" class="nav-item">
-                    <a class="nav-link" href="/appointments/pet">My Appointments</a>
+                <li sec:authorize="hasAnyRole('ROLE_OWNER')" class="nav-item">
+                    <a class="nav-link" href="/appointments/pet/appointments">My Appointments</a>
+                </li>
+                <li sec:authorize="hasAnyRole('ROLE_ADMIN')" class="nav-item">
+                    <a class="nav-link" href="/appointments/appointments">Appointments</a>
                 </li>
                 <li sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_OWNER')" class="nav-item">
                     <a class="nav-link" href="/schedule/">Vet's Schedule</a>

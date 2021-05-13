@@ -22,27 +22,31 @@
                      th:src="${vet.picturePath} ? (|/mm_pics/${vet.picturePath}|) : 'https://thumbs.dreamstime.com/z/cartoon-vet-cat-dog-characters-sign-vet-cartoon-character-pet-cat-dog-animals-above-sign-pointing-giving-120473613.jpg'" alt=""/>
 
                 <h4 class="card-title">
-                    <a th:text="|Dr. ${vet.firstName} ${vet.lastName}|">Dr.
+                    Dr. <a th:text="|${vet.firstName} ${vet.lastName}|">Dr.
                         Name</a>
                 </h4>
-				<span class="text-muted" th:text="|Practice Start Date: ${#dates.format(vet.startPracticeDate, 'dd/MM/yyyy')}|">
+				Practice Start Date: 
+				<span class="text-muted" th:text="|${#dates.format(vet.startPracticeDate, 'dd-MMM-yyyy')}|">
 				Practice Start Date</span>                                                                              
-				<br/>                                                                                
+				<br/>     
+				Experience:                                                                            
                 <span class="text-muted"
-                th:text="|Experience: ${#dates.year(#dates.createNow()) - #dates.year(vet.startPracticeDate) + 1} years|">
+                th:text="|${#dates.year(#dates.createNow()) - #dates.year(vet.startPracticeDate) + 1} years|">
                 Experience : #</span>
-                <br/>
+                <br/>Registration Number: 
                 <span class="text-muted"
-                th:text="|Registration Number: ${vet.registrationNumber?:'Not Specified'}|">
+                th:text="|${vet.registrationNumber?:'Not Specified'}|">
                 Registration Number : #</span>
-                <br/>
-                <span class="text-muted" th:text="|Telephone: ${vet.telephone}|">
+                <br/>Telephone: 
+                <span class="text-muted" th:text="|${vet.telephone}|">
                 Telephone number: #</span>
                 <br/>
-                Specialities: 
                 <span class="text-muted" th:each="speciality : ${vet.specialities}"
-						th:text="${speciality.description + ' '}"></span>
+						th:text="|Specialities: ${speciality.description + ' '}|"></span>
 				<span	th:if="${vet?.specialities?.size() == 0}">Specialities</span>
+				<br/>Description: 
+                <span class="text-muted" th:text="|${vet.description}|">
+                Description:</span>
             </div>
         </div>
     </div>

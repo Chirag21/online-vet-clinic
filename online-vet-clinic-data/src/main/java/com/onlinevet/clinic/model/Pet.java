@@ -11,7 +11,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -51,7 +50,7 @@ public class Pet extends BaseEntity {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pet")
 	private Set<Visit> visits = new HashSet<>();
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "vet_id")
     private Vet vet;
 	

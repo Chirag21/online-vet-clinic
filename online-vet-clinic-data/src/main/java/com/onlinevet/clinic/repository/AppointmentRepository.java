@@ -17,6 +17,10 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
     @Query("select a from Appointment as a where a.date between ?1 and ?2")
     List<Appointment> findAllBetweenDates(Date startDate, Date endDate);
 
+    List<Appointment> findAllByOwnerIdOrderByDate(Long ownerId);
+
+    Page<Appointment> findAllByOwnerIdOrderByDate(Long ownerId, Pageable pageable);
+    
     List<Appointment> findAllByPetIdOrderByDate(Long petId);
 
     Page<Appointment> findAllByPetIdOrderByDate(Long petId, Pageable pageable);
@@ -26,4 +30,8 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
     Page<Appointment> findAllByVetIdOrderByDate(Long vetId, Pageable pageable);
 
     Appointment findOneByDateAndVetId(Date date, Long vetId);
+    
+    List<Appointment> findAllByMobileNo(String mobileNo);
+    
+    Page<Appointment> findAllByMobileNo(String mobileNo, Pageable pageable);
 }

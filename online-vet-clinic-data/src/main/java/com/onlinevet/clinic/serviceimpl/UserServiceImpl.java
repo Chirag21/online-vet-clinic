@@ -18,9 +18,7 @@ import com.onlinevet.clinic.service.RoleService;
 import com.onlinevet.clinic.service.UserService;
 
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
 @AllArgsConstructor
 @Service
 @Profile("springdatajpa")

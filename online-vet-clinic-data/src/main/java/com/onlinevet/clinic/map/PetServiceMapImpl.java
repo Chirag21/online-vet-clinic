@@ -75,4 +75,10 @@ public class PetServiceMapImpl extends AbstractMapService<Pet, Long> implements 
 		return null;
 	}
 
+	@Override
+	public Page<Pet> findAllByOrderByName(Pageable pageable) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

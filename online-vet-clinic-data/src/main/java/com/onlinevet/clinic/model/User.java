@@ -18,6 +18,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Builder.Default;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -65,16 +66,20 @@ public class User extends BaseEntity implements UserDetails, Serializable{
 	private String resetPasswordToken;
 	
 	@Column(name = "is_account_non_expired")
-    private boolean isAccountNonExpired;
+	@Default
+    private boolean isAccountNonExpired = true;
 
 	@Column(name = "is_account_non_locked")
-    private boolean isAccountNonLocked;
+    @Default
+	private boolean isAccountNonLocked = true;
 
 	@Column(name = "is_credentails_non_expired")
-    private boolean isCredentialsNonExpired;
+    @Default
+	private boolean isCredentialsNonExpired = true;
 
 	@Column(name = "is_enabled")
-    private boolean isEnabled;
+    @Default
+	private boolean isEnabled = true;
 	
 	@Override
 	public Set<Role> getAuthorities() {
