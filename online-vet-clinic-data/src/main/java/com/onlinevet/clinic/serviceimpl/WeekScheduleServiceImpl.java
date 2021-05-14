@@ -4,6 +4,7 @@ import java.sql.Time;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.onlinevet.clinic.exceptions.WeekScheduleNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
@@ -30,7 +31,7 @@ public class WeekScheduleServiceImpl implements WeekScheduleService {
 	
 	@Override
 	public WeekSchedule findById(Long id) {
-		return weekScheduleRepository.findById(id).orElseThrow();
+		return weekScheduleRepository.findById(id).orElseThrow(WeekScheduleNotFoundException::new);
 	}
 
 	@Override

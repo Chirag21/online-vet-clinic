@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.onlinevet.clinic.model.UserRegistrationModel;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
@@ -21,20 +23,24 @@ import lombok.AllArgsConstructor;
 @Service
 @Profile("springdatajpa")
 public class OwnerServiceImpl implements OwnerService {
-	private static String DEFAULT_OWNER_ROLE = "ROLE_OWNER";
+	private static final String DEFAULT_OWNER_ROLE = "ROLE_OWNER";
 	
 	@Autowired
 	private final OwnerRepository ownerRepository;
-	
+
 	@Autowired
 	private final UserService userService;
 
+	@Autowired
+	private final ModelMapper modelMapper;
+
 	@Override
 	public void create(Owner owner) {
-		owner.setAdditionalRole(DEFAULT_OWNER_ROLE);
-		User user = userService.register(owner);
+		UserRegistrationModel userRegistrationModel = modelMapper.map(owner, UserRegistrationModel.class);
+		userRegistrationModel.setAdditionalRole(DEFAULT_OWNER_ROLE);
+		User user = this.userService.register(userRegistrationModel);
 		owner.setUser(user);
-		ownerRepository.saveAndFlush(owner);
+		this.ownerRepository.saveAndFlush(owner);
 	}
 	
 	@Override

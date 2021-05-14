@@ -1,9 +1,15 @@
 package com.onlinevet.clinic.serviceimpl;
 
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
-
+import com.onlinevet.clinic.exceptions.RoleNotFoundException;
+import com.onlinevet.clinic.exceptions.UserNotFoundException;
+import com.onlinevet.clinic.model.Role;
+import com.onlinevet.clinic.model.User;
+import com.onlinevet.clinic.model.UserRegistrationModel;
+import com.onlinevet.clinic.repository.UserRepository;
+import com.onlinevet.clinic.service.RoleService;
+import com.onlinevet.clinic.service.UserService;
+import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,13 +17,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.onlinevet.clinic.model.BaseEntity;
-import com.onlinevet.clinic.model.User;
-import com.onlinevet.clinic.repository.UserRepository;
-import com.onlinevet.clinic.service.RoleService;
-import com.onlinevet.clinic.service.UserService;
-
-import lombok.AllArgsConstructor;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
@@ -25,17 +27,20 @@ import lombok.AllArgsConstructor;
 public class UserServiceImpl implements UserService {
 
 	@Autowired
-	private UserRepository userRepository;
+	private final UserRepository userRepository;
 	
 	@Autowired
-	RoleService roleService;
-	
+	private final RoleService roleService;
+
 	@Autowired
-	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+	@Autowired
+	private final ModelMapper modelMapper;
 
 	@Override
 	public User findById(Long id) {
-		return userRepository.findById(id).orElseThrow();
+		return userRepository.findById(id).orElseThrow(UserNotFoundException::new);
 	}
 
 	@Override
@@ -107,23 +112,32 @@ public class UserServiceImpl implements UserService {
     public void updatePassword(User user, String newPassword) {
         user.setPassword(bCryptPasswordEncoder.encode(newPassword));
         user.setResetPasswordToken(null);
+        user.setRole(user.getRole());
         userRepository.saveAndFlush(user);
     }
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-      return userRepository.findByUsernameIgnoreCase(username).orElseThrow();
+      return userRepository.findByUsernameIgnoreCase(username).orElseThrow(UserNotFoundException::new);
 	}
 
 	@Override
-	public User register(BaseEntity baseEntity) {
-		User user = (User) baseEntity;
-		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+	public User register(UserRegistrationModel userRegistrationModel) {
+		User user = modelMapper.map(userRegistrationModel, User.class);
+		String encryptedPassword = this.bCryptPasswordEncoder.encode(userRegistrationModel.getPassword());
+		user.setPassword(encryptedPassword);
 		user.setAccountNonExpired(true);
 		user.setAccountNonLocked(true);
 		user.setCredentialsNonExpired(true);
 		user.setEnabled(true);
-		user.addRole(roleService.getDefaultRole());
-		return userRepository.saveAndFlush(user);
+		user.setActive('Y');
+		//user.addRole(this.roleService.getDefaultRole());
+
+		// Adding role for owner or vet
+/*		if (userRegistrationModel.getAdditionalRole() != null) {
+			Role additionalRole = this.roleService.findByAuthority(userRegistrationModel.getAdditionalRole()).orElseThrow(RoleNotFoundException::new);
+			user.addRole(additionalRole);
+		}*/
+		return this.userRepository.saveAndFlush(user);
 	}
 }

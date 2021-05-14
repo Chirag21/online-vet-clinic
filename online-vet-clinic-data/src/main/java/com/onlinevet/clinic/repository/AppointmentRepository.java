@@ -19,6 +19,8 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
 
     List<Appointment> findAllByOwnerIdOrderByDate(Long ownerId);
 
+    Page<Appointment> findAllByOrderByDate(Pageable pageable);
+
     Page<Appointment> findAllByOwnerIdOrderByDate(Long ownerId, Pageable pageable);
     
     List<Appointment> findAllByPetIdOrderByDate(Long petId);

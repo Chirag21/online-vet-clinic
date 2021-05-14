@@ -1,6 +1,7 @@
 package com.onlinevet.clinic.formatter;
 
 import java.text.ParseException;
+import java.util.Collection;
 import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-@Component
+//@Component
 public class PetTypeFormatter implements Formatter<PetType> {
 
 	@Autowired
@@ -30,15 +31,20 @@ public class PetTypeFormatter implements Formatter<PetType> {
 
 	@Override
 	public PetType parse(String text, Locale locale) throws ParseException {
-		/*
-		 * Collection<PetType> findPetTypes = petTypeService.findAll(); for (PetType
-		 * type : findPetTypes) { if (type.getName().equals(text)) { return type; } }
-		 * throw new ParseException("type not found: " + text, 0);
-		 */
+
+		Collection<PetType> findPetTypes = petTypeService.findAll();
+		for (PetType
+				type : findPetTypes) {
+			if (type.getName().equals(text)) {
+				return type;
+			}
+		}
+		throw new ParseException("type not found: " + text, 0);
+
 		
-		return petTypeService.findAll().parallelStream()
+/*		return petTypeService.findAll().parallelStream()
 					.filter(p -> p.getName().equals(text))
 					.findAny()
-					.orElseThrow(() -> new ParseException("type not found: " + text, 0));
+					.orElseThrow(() -> new ParseException("type not found: " + text, 0));*/
 	}
 }

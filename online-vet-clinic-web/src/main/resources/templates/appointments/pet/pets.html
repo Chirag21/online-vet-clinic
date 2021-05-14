@@ -17,6 +17,10 @@
     <div class="container">
         <div class="table-wrapper">
             <h1 class="h1">My Pets</h1>
+            <div>
+                <a sec:authorize="hasAnyRole('ROLE_OWNER','ROLE_ADMIN')" class="btn btn-primary" th:href="|/pet/add|">
+                    ADD NEW PET</a>
+            </div>
             <table class="table">
                 <thead>
                 <tr>
@@ -35,8 +39,8 @@
                     <td th:text="|*{#dates.format(birthDate, 'dd-MMM-yyyy')}|">date</td>
                     <td th:text="|*{getPetType()}|">Pet Type</td>
                     <td>
-                        <a class="btn btn-secondary" th:href="|/pet/*{id}|">View</a>
-                        <a sec:authorize="hasAnyRole('ROLE_OWNER','ROLE_ADMIN')" class="btn btn-secondary" th:href="|/pet/*{id}/edit|">Edit</a>
+                        <a class="btn btn-primary" th:href="|/pet/*{id}|">View</a>
+                        <a sec:authorize="hasAnyRole('ROLE_OWNER','ROLE_ADMIN')" class="btn btn-primary" th:href="|/pet/*{id}/edit|">Edit</a>
                     </td>
                 </tr>
                 </tbody>
@@ -47,14 +51,14 @@
             <ul class="pagination">
                 <li class="page-item" th:classappend="!${pets.hasPrevious()}? 'disabled'">
                     <a class="page-link"
-                       th:href="${pets.hasPrevious()} ? '/vet/pets?page=' + ${pets.previousPageable().getPageNumber()}" >Previous</a>
+                       th:href="${pets.hasPrevious()} ? '/mypets?page=' + ${pets.previousPageable().getPageNumber()}" >Previous</a>
                 </li>
                 <li class="page-item" th:each="i : ${#numbers.sequence(0, pets.getTotalPages() - 1)}">
-                    <a class="page-link" href="#" th:href="|/vet/pets?page=${i}|" th:text="${i + 1}">1</a>
+                    <a class="page-link" href="#" th:href="|/mypets?page=${i}|" th:text="${i + 1}">1</a>
                 </li>
                 <li class="page-item" th:classappend="!${pets.hasNext()}? 'disabled'">
-                    <a class="page-link"
-                       th:href="${pets.hasNext()} ? '/vet/pets?page=' + ${pets.nextPageable().getPageNumber()}">Next</a>
+                    <a class="page-link" href="#"
+                       th:href="${pets.hasNext()} ? '/mypets?page=' + ${pets.nextPageable().getPageNumber()}">Next</a>
                 </li>
             </ul>
         </nav>

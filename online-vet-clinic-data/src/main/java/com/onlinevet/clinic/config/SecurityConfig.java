@@ -1,5 +1,6 @@
 package com.onlinevet.clinic.config;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -44,6 +45,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return daoAuthenticationProvider;
 	}
 
+	@Bean
+	public ModelMapper modelMapper() {
+		ModelMapper modelMapper = new ModelMapper();
+		return modelMapper;
+	}
+
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.authenticationProvider(getDaoAuthenticationProvider());
@@ -57,12 +64,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                          "/bootstrap/**", "/jquery/**", "/tether/**", "/font-awesome/**", "/select2/**", "/css/**",
                          "/img/**", "/connect/**", "/error/**","/h2/**").permitAll()
 			.antMatchers("/appointments/home","/appointments/vet/appointments","/appointments/appointment/appointment"
-					,"/pet/**","/appointments/appointment/add").hasAnyRole(ADMIN,USER,OWNER,VET)
-			.antMatchers("/appointment/vet/**", "/schedule/edit", "/vet/edit", "/vet/pets, /vet/edit-picture","/pet/pets"
+					,"/appointments/appointment/add","/pet/{\\d+}","/user/change-password").hasAnyRole(ADMIN,USER,OWNER,VET)
+				.antMatchers("/appointments/pet/appointments","/pet/edit","/owners/**","/mypets"
+						,"/appointments/vet/vets","/api/vets","/pet/add","/pet/{\\d+}/edit").hasAnyRole(ADMIN,OWNER)
+			.antMatchers("/pet/pets","/appointment/vet/**", "/schedule/edit", "/vet/edit", "/vet/pets, /vet/edit-picture"
 					,"/appointments/vet/**").hasAnyRole(ADMIN,VET)
-            .antMatchers("/appointments/pet/appointments","/appointment/pet/**", "/pet/edit","/owners/**","/mypets"
-            		,"/appointments/pet/**").hasAnyRole(ADMIN,OWNER)
-			.antMatchers( "/index" ,"/pets/**").hasRole(ADMIN)
+			.antMatchers( "/appointments/all","/index" ,"/pets/**").hasRole(ADMIN)
 			.antMatchers("/**").hasRole(ADMIN)
 			.anyRequest().authenticated()
 			.and().formLogin()

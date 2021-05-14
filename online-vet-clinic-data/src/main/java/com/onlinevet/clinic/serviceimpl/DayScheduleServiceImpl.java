@@ -4,6 +4,7 @@ import java.sql.Time;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.onlinevet.clinic.exceptions.ScheduleNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,7 @@ public class DayScheduleServiceImpl implements DayScheduleService {
 	
 	@Override
 	public DaySchedule findById(Long id) {
-		return dayScheduleRepository.findById(id).orElseThrow();
+		return dayScheduleRepository.findById(id).orElseThrow(ScheduleNotFoundException::new);
 	}
 
 	@Override

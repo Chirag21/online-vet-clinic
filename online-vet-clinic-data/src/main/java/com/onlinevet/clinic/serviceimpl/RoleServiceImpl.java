@@ -4,6 +4,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.onlinevet.clinic.exceptions.RoleNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,7 @@ public class RoleServiceImpl implements RoleService{
 	
 	@Override
 	public Role findById(Long id) {
-		return roleRepository.findById(id).orElseThrow();
+		return roleRepository.findById(id).orElseThrow(RoleNotFoundException::new);
 	}
 
 	@Override
@@ -55,7 +56,7 @@ public class RoleServiceImpl implements RoleService{
 
 	@Override
 	public Role getDefaultRole() {
-		return this.roleRepository.findByAuthorityIgnoreCase(DEFAULT_ROLE).orElseThrow();
+		return this.roleRepository.findByAuthorityIgnoreCase(DEFAULT_ROLE).orElseThrow(RoleNotFoundException::new);
 	}
 
 }

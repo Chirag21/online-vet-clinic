@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>Add Appointment</title>
     <link rel="stylesheet" href="../static/resources/select2/css/select2.min.css"
@@ -18,7 +19,7 @@
     <div class="container">
         <h1 class="h1">Add Appointment</h1>
         <br/>
-        <form method="post" th:object="${appointment}">
+        <form method="post" th:object="${appointment}" action="@{/appointment/add}">
             <div class="form-group">
                 <label class="form-control-label">Appointment For</label>
                 <div>
@@ -70,7 +71,7 @@
                 </div>
             </div>
 
-            <input type="submit" class="btn btn-secondary float-right clickable" value="Add Appointment"/>
+            <input type="submit" class="btn btn-primary float-right clickable" value="Add Appointment"/>
         </form>
         <br/>
         <br/>

@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.onlinevet.clinic.exceptions.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -24,13 +25,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.doctorAppointmentBookingSystem.model.viewModel.AppointmentTypeViewModel;
-import com.doctorAppointmentBookingSystem.model.viewModel.DoctorSelectViewModel;
 import com.onlinevet.clinic.exceptions.AppointmentNotFoundException;
 import com.onlinevet.clinic.exceptions.InvalidAppointmentDateException;
 import com.onlinevet.clinic.model.Appointment;
 import com.onlinevet.clinic.model.Owner;
-import com.onlinevet.clinic.model.Pet;
 import com.onlinevet.clinic.model.User;
 import com.onlinevet.clinic.model.Vet;
 import com.onlinevet.clinic.service.AppointmentService;
@@ -63,7 +61,7 @@ public class AppointmentController {
 	@GetMapping("/pet/appointments")
 	public String getPetAppointmentHomePage(Authentication authentication, Model model, @PageableDefault(size = 8) Pageable pageable) {
 		String name = authentication.getName();
-		Long userId = userService.findByUsername(name).orElseThrow().getId();
+		Long userId = userService.findByUsername(name).orElseThrow(UserNotFoundException::new).getId();
 		Owner owner = ownerService.findByUserId(userId);
 		model.addAttribute("appointments", appointmentService.findAllByOwnerIdOrderByDate(owner.getId(), pageable));
 		return "/appointments/appointment/appointments";
@@ -72,16 +70,22 @@ public class AppointmentController {
     @GetMapping("/vet/appointments")
     public String getVetAppointmentHomePage(Authentication authentication, Model model, @PageableDefault(size = 8) Pageable pageable) {
 		String name = authentication.getName();
-		Long userId = userService.findByUsername(name).orElseThrow().getId();
+		Long userId = userService.findByUsername(name).orElseThrow(UserNotFoundException::new).getId();
 		Vet vet = vetService.findByUserId(userId);
 		model.addAttribute("appointments",appointmentService.findAllByVetById(vet.getId(), pageable));
     	return "/appointments/appointment/appointments";
+    }
+
+    @GetMapping("/all")
+    public String getAllAppointments(Authentication authentication, Model model, @PageableDefault(size = 8) Pageable pageable) {
+        model.addAttribute("appointments",appointmentService.findAllByOrderByDate(pageable));
+        return "/appointments/appointment/appointments";
     }
     
     @GetMapping("/vet/{appointmentId}")
     public String getVetAppointment(@PathVariable Long appointmentId, Authentication authentication, Model model) {
 		String name = authentication.getName();
-		Long userId = userService.findByUsername(name).orElseThrow().getId();
+		Long userId = userService.findByUsername(name).orElseThrow(UserNotFoundException::new).getId();
 		Vet vet = vetService.findByUserId(userId);
 		Appointment appointment = appointmentService.findById(appointmentId);
         
@@ -96,7 +100,7 @@ public class AppointmentController {
     @GetMapping("/pet/{appointmentId}")
     public String getPetAppointment(@PathVariable Long appointmentId, Authentication authentication, Model model) {
 		String name = authentication.getName();
-		Long userId = userService.findByUsername(name).orElseThrow().getId();
+		Long userId = userService.findByUsername(name).orElseThrow(UserNotFoundException::new).getId();
 		Owner owner = ownerService.findByUserId(userId);
 		Appointment appointment = appointmentService.findById(appointmentId);
         
@@ -117,11 +121,17 @@ public class AppointmentController {
     	return "/appointments/appointment/appointment";
     }
 
-    @GetMapping("/pet/add")
+    /*
+    @GetMapping("/appointment/add")
     public String getPetAddAppointment(Principal authentication, @RequestParam("date") @DateTimeFormat(pattern = "MM/dd/yyyy hh:mm:ss a") Date date,
     											@ModelAttribute Appointment appointment, Model model) {
         if (date.before(new Date())) {
-            throw new InvalidAppointmentDateException();
+            try {
+                throw new InvalidAppointmentDateException();
+            } catch (InvalidAppointmentDateException e) {
+
+                e.printStackTrace();
+            }
         }
 
         appointment.setDate(date);
@@ -137,8 +147,9 @@ public class AppointmentController {
     	
     	return "appointments/appointment/add";
     }
+*/
 
-    @PostMapping("/pet/add")
+    @PostMapping("/appointment/add")
     public String petAddAppointment(@RequestParam("date") @DateTimeFormat(pattern = "MM/dd/yyyy hh:mm:ss a") Date date,
                                         @Validated @ModelAttribute Appointment appointment,
                                         BindingResult bindingResult, Authentication authentication, Model model) {

@@ -13,6 +13,8 @@ public interface AppointmentService extends CrudService<Appointment, Long> {
 
     List<Appointment> findAllByOwnerIdOrderByDate(Long ownerId);
 
+    Page<Appointment> findAllByOrderByDate(Pageable pageable);
+
     Page<Appointment> findAllByOwnerIdOrderByDate(Long ownerId, Pageable pageable);
     
     List<Appointment> findAllByPetById(Long petId);

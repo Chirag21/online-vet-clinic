@@ -21,5 +21,4 @@ public interface PetService extends CrudService<Pet, Long>{
     List<Pet> findAllByOwnerId(Long ownerId);
 
     Page<Pet> findAllByOwnerIdOrderByBirthDateDesc(Long ownerId, Pageable pageable);
-  
 }

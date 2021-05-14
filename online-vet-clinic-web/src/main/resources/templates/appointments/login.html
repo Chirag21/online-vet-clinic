@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+                xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>Login - Vet Appointment System</title>
 </head>
@@ -10,6 +11,8 @@
 </header>
 <main>
     <div class="container" sec:authorize="isAnonymous()">
+        <div style="color: green" th:if="${confirmationMessage} != null" th:text="${confirmationMessage}" class="alert alert-success">
+        </div>
         <h1 class="h1">Login Page</h1>
         <div style="color: red" th:if="${error} != null" th:text="${error}"></div>
         <form method="post" action="/login">

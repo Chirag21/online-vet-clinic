@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.onlinevet.clinic.model.UserRegistrationModel;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
@@ -34,8 +36,11 @@ public class VetServiceImpl implements VetService {
 	private final UserService userService;
 	
 	@Autowired
-	 private WeekScheduleService weekScheduleService;
-	
+	 private final WeekScheduleService weekScheduleService;
+
+	@Autowired
+	private final ModelMapper modelMapper;
+
 	@Override
 	public Vet findById(Long id) {
 		return vetRepository.findById(id).orElse(null);
@@ -90,6 +95,12 @@ public class VetServiceImpl implements VetService {
 		vetRepository.saveAndFlush(vet);
 	}
 
+	public User createVetUser(Vet vet) {
+		UserRegistrationModel userRegistrationModel = modelMapper.map(vet, UserRegistrationModel.class);
+		userRegistrationModel.setAdditionalRole(DEFAULT_VET_ROLE);
+		return userService.register(userRegistrationModel);
+	}
+
 	@Override
 	public void savePicture(Vet vet) {
 		vetRepository.saveAndFlush(vet);
@@ -110,10 +121,5 @@ public class VetServiceImpl implements VetService {
 	public Page<Vet> findAll(Pageable pageable) {
         Page<Vet> vets = vetRepository.findAll(pageable);
         return new PageImpl<>(vets.toList(), pageable, vets.getTotalElements());
-	}
-
-	public User createVetUser(Vet vet) {
-        vet.setAdditionalRole(DEFAULT_VET_ROLE);
-        return userService.register(vet);
 	}
 }

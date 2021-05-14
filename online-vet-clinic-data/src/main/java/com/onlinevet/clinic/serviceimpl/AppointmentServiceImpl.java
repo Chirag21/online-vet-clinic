@@ -89,6 +89,18 @@ public class AppointmentServiceImpl implements AppointmentService {
 	}
 
 	@Override
+	public Page<Appointment> findAllByOrderByDate(Pageable pageable) {
+		Page<Appointment> appointments = appointmentRepository.findAllByOrderByDate(pageable);
+		return new PageImpl<>(appointments.toList(), pageable, appointments.getTotalElements());
+	}
+
+	@Override
+	public Page<Appointment> findAllByMobileNo(String mobileNo, Pageable pageable) {
+		return appointmentRepository.findAllByMobileNo(mobileNo,pageable);
+	}
+
+
+	@Override
 	public Appointment findByDateAndVetId(Date date, Long vetId) {
 		return appointmentRepository.findOneByDateAndVetId(date, vetId);
 	}
@@ -106,11 +118,6 @@ public class AppointmentServiceImpl implements AppointmentService {
 	@Override
 	public List<Appointment> findAllByMobileNo(String mobileNo) {
 		return appointmentRepository.findAllByMobileNo(mobileNo);
-	}
-
-	@Override
-	public Page<Appointment> findAllByMobileNo(String mobileNo, Pageable pageable) {
-		return appointmentRepository.findAllByMobileNo(mobileNo,pageable);
 	}
 
 }

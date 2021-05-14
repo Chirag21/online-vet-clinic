@@ -36,7 +36,7 @@ public class PetServiceImpl implements PetService{
 
 	@Override
 	public Pet save(Pet pet) {
-		return petRepository.saveAndFlush(pet);
+		return petRepository.save(pet);
 	}
 
 	@Override

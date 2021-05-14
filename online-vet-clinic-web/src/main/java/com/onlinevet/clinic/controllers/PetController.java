@@ -1,7 +1,10 @@
 package com.onlinevet.clinic.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
+import com.onlinevet.clinic.exceptions.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -60,7 +63,7 @@ public class PetController {
 	public String getMyPetsPage(Model model, @PageableDefault(size = 8) Pageable pageable,
 			Authentication authentication) {
 		String name = authentication.getName();
-		Long userId = userService.findByUsername(name).orElseThrow().getId();
+		Long userId = userService.findByUsername(name).orElseThrow(UserNotFoundException::new).getId();
 		Owner owner = ownerService.findById(userId);
 		Page<Pet> pets = petService.findAllByOwnerIdOrderByBirthDateDesc(owner.getId(), pageable);
 		model.addAttribute("pets", pets);
@@ -96,11 +99,58 @@ public class PetController {
 		return "/pets/petList";
 	}
 
-	/*
-	 * @GetMapping("/owners/{ownerId}/pets/new") public String
-	 * initCreationForm(Owner owner, Model model) { Pet pet = new Pet();
-	 * owner.getPets().add(pet); pet.setOwner(owner); model.addAttribute("pet",
-	 * pet); return VIEWS_PETS_CREATE_OR_UPDATE_FORM; }
+	@GetMapping("/pet/add")
+	public String initCreationForm(Owner owner,Pet pet,Model model,Authentication authentication) {
+		String name = authentication.getName();
+		Long userId = userService.findByUsername(name).orElseThrow(UserNotFoundException::new).getId();
+		owner = ownerService.findByUserId(userId);
+		pet = new Pet();
+		owner.getPets().add(pet);
+		pet.setOwner(owner);
+		model.addAttribute("petTypes", new ArrayList<>(petTypeService.findAll()));
+		model.addAttribute(	"pet",pet);
+		System.out.println(pet.getOwner().getId());
+		return "appointments/pet/add";
+	}
+
+	@PostMapping("/pet/add")
+	public String processCreationForm(Owner owner, @Validated Pet pet, BindingResult bindingResult,Model model){
+		if (StringUtils.hasLength(pet.getName()) && pet.isNew() && owner.getPet(pet.getName(), true) != null) {
+			bindingResult.rejectValue("name", "duplicate", "already exists");
+		}
+		owner.getPets().add(pet);
+		pet.setOwner(owner);
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("pet", pet);
+			return "redirect:/appointments/pet/add";
+		} else {
+			petService.save(pet);
+			return "redirect:/mypets";
+		}
+	}
+
+	@GetMapping("/pet/{petId}/edit")
+	public String initUpdateForm(@PathVariable Long petId, Model model) {
+		model.addAttribute("pet", petService.findById(petId));
+		model.addAttribute("petTypes", new ArrayList<>(petTypeService.findAll()));
+		return "appointments/pet/add";
+	}
+
+	@PostMapping("/pet/{petId}/edit")
+	public String processUpdateForm(@Validated Pet pet,BindingResult bindingResult,Owner owner, Model model) {
+		if (bindingResult.hasErrors()) {
+			pet.setOwner(owner);
+			model.addAttribute("pet", pet);
+			return "appointments/pet/add";
+		} else {
+			//owner.getPets().add(pet);
+			pet.setOwner(owner);
+			petService.save(pet);
+			return "redirect:/mypets";
+		}
+	}
+
+	 /*
 	 * 
 	 * @PostMapping("/owners/{ownerId}/pets/new") public String
 	 * processCreationForm(Owner owner, @Validated Pet pet, BindingResult result,

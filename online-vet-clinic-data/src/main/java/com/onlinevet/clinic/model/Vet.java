@@ -1,32 +1,14 @@
 package com.onlinevet.clinic.model;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -37,9 +19,6 @@ import lombok.Setter;
 @Table(name = "vets")
 public class Vet extends Person {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -5215521992612167205L;
 
 	@ManyToMany(fetch = FetchType.EAGER)
@@ -59,14 +38,14 @@ public class Vet extends Person {
     @Column(name = "telephone")
     private String telephone;
 
+    @Nullable
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @Column(name = "birth_date")
     private Date birthDate;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy", timezone = "IST")
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
-    //@NotNull(message = "Invalid start practice date")
+    @NotNull(message = "Invalid start practice date")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @Column(name = "start_practice_date")
-    @Nullable
     private Date startPracticeDate;
     
     private String description;

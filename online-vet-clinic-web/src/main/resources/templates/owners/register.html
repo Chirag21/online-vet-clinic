@@ -17,9 +17,9 @@
 	<main>
 		<div class="container">
 			<h1 class="h1">Owner Registration Page</h1>
-			<span class="float-right">
+			<span class="float-right" style="font-size: larger;">
 				<a class="pr-2" href="/register-vet">Click here to register as Vet</a>
-			</span> 
+			</span>
 			<form method="post" th:object="${owner}" th:action="@{register-owner}">
 
 				<div class="form-group"
@@ -110,7 +110,7 @@
 						Number</label> <input type="number" class="form-control form-control-danger"
 						id="inputTelephoneNumber" th:field="*{telephone}" th:required="required" 
 						minlength="10"/>
-					<div class="form-control-feedback"
+					<div class="form-control-feedback" onfocusout="validateTelephone()"
 						th:each="error : ${#fields.errors('telephone')}"
 						th:text="${error}">Sorry, that telephone number is
 						incorrect.</div>
@@ -118,7 +118,7 @@
 
 				<div>
 					<span class="float-left">
-						<input type="submit" class="btn btn-primary clickable" value="Register" />
+						<input type="submit" class="btn btn-primary clickable" value="Register"/>
 					</span>
 				</div>
 			</form>
@@ -135,11 +135,11 @@
 		});
 
 		$('#inputEmail').focusout(function() {
-			$('#inputUsername').val($(this).val());
+			$('#inputUsername').val($(this).val().split('@')[0]);
 		});
 		
-		var password = document.getElementById("inputPassword");
-		var confirmpassword = document.getElementById("inputConfirmPassword");
+		let password = document.getElementById("inputPassword");
+		let confirmpassword = document.getElementById("inputConfirmPassword");
 		function validatePassword(){
 		  if(password.value != confirmpassword.value) {
 			  confirmpassword.setCustomValidity("Passwords don't Match");
@@ -149,10 +149,13 @@
 		}
 		password.onchange = validatePassword;
 		confirmpassword.onkeyup = validatePassword;
-		
-		var telephone = document.getElementById("inputTelephoneNumber");
-		if(telephone.length != 10)
-			telephone.setCustomValidity('Telephone number should be of 10 digits');
+	</script>
+	<script>
+		function validateTelephone(){
+			let telephone = document.getElementById("inputTelephoneNumber");
+			if(telephone.length != 10)
+				telephone.setCustomValidity('Telephone number should be of 10 digits');
+		}
 	</script>
 </body>
 </html>

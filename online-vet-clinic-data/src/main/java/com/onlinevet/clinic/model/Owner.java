@@ -26,10 +26,7 @@ import lombok.Setter;
 @Table(name = "owners")
 public class Owner extends Person {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -7746215795670026362L;
+    private static final long serialVersionUID = -7746215795670026362L;
 
 	@Column(name = "address")
 	private String address;
@@ -52,8 +49,8 @@ public class Owner extends Person {
     private Character isProfileComplete;
     
     private String additionalRole;
-	
-	@Builder
+
+    @Builder
 	public Owner(Long id, String firstName, String lastName, String email , String address, String city, String telephone,
 			Set<Pet> pets) {
 		super(id, firstName, lastName,email);
@@ -86,5 +83,4 @@ public class Owner extends Person {
         }
         return null;
     }
-
 }

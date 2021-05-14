@@ -40,10 +40,8 @@ public class Pet extends BaseEntity {
 	@JoinColumn(name = "owner_id")
 	private Owner owner;
 
-	
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy", timezone = "IST")
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
-    @NotNull(message = "Invalid date of birth")
+	@NotNull(message = "Invalid birth date")
+	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
 	@Column(name = "birth_date")
 	private Date birthDate;
 

@@ -4,6 +4,7 @@ import java.security.Principal;
 
 import javax.servlet.http.HttpSession;
 
+import com.onlinevet.clinic.exceptions.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -90,12 +91,12 @@ public class UserController {
     }
     
     @PostMapping("/user/change-password")
-    public String registerUser(@Validated @ModelAttribute User user, BindingResult bindingResult, Principal principal) {
+    public String registerUser(@Validated @ModelAttribute User user, BindingResult bindingResult, Principal principal, Authentication authentication) {
         if (bindingResult.hasErrors()) {
             return "/appointments/change-password";
         }
-
-        Long userId = ((User)((Authentication) principal).getPrincipal()).getId(); 
+		String name = authentication.getName();
+		Long userId = userService.findByUsername(name).orElseThrow(UserNotFoundException::new).getId();
         boolean oldPasswordEqualsNew = bCryptPasswordEncoder.encode(user.getPassword()).equals(userService.findById(userId).getPassword());
         if (oldPasswordEqualsNew) {
             FieldError fieldError = new FieldError("user", "password", "New password cannot be same as old password.");

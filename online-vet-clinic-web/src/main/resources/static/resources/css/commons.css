@@ -29,3 +29,10 @@ span.select2-container span.select2-selection__arrow {
 .clickable:hover {
     cursor: pointer;
 }
+
+.btn-primary {
+    color: #fff;
+    background-color: #337ab7;
+    border-color: #2e6da4;
+    font-weight: bold;
+}

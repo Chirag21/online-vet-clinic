@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Add pet</title>
+    <link rel="stylesheet" href="../static/resources/select2/css/select2.min.css"
+          th:href="@{/resources/select2/css/select2.min.css}"/>
+    <link rel="stylesheet" href="../static/resources/css/commons.css"
+          th:href="@{/resources/css/commons.css}"/>
+</head>
+<head th:replace="fragments/parts::head">
+    <link rel="stylesheet" href="../static/resources/bootstrap/css/bootstrap.min.css"
+          th:href="@{/resources/bootstrap/css/bootstrap.min.css}"/>
+</head>
+<body>
+<header th:replace="fragments/parts::menu">
+</header>
+<main>
+    <div class="container">
+        <h1 class="h1">Add pet</h1>
+        <br/>
+        <h2>
+            <th:block th:if="${pet['new']}">New </th:block>
+            Pet
+        </h2>
+        <form method="post" action="#" th:action="@{/pet/add}" th:object="${pet}">
+            <div class="form-group">
+                <label class="form-control-label" style="font-size: larger;">Owner: </label>
+                <div>
+                    <a href="#"
+                       th:text="${pet.owner.firstName + ' ' + pet.owner.lastName}" style="font-size: larger;"></a>,
+                </div>
+            </div>
+
+            <div class="form-group" th:classappend="${#fields.hasErrors('name')} ? 'has-danger'">
+                <label class="form-control-label" for="inputPet">Pet Name: </label>
+                <input type="text" class="form-control form-control-danger" id="inputName" th:field="*{name}"
+                       th:required="required" />
+                <div class="form-control-feedback" th:each="error : ${#fields.errors('name')}" th:text="${error}">
+                    Sorry, that name is incorrect. Try another?
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-control-label" for="inputpetType">pet Type</label>
+                <select class="form-control form-control-danger" id="inputpetType" th:field="*{petType}" th:required="required">
+                    <option th:each="petType : ${petTypes}"
+                            th:value="${petType.id}"
+                            th:text="${petType.name}"></option>
+                </select>
+                <div class="form-control-feedback" th:each="error : ${#fields.errors('petType')}" th:text="${error}">
+                    Sorry, pet type is required.
+                </div>
+            </div>
+
+            <div class="form-group" th:classappend="${#fields.hasErrors('birthDate')} ? 'has-danger'">
+                <label class="form-control-label" for="inputbirthDate">Date Of Birth: </label>
+                <input type="date" class="form-control form-control-danger" id="inputbirthDate"
+                       th:field="*{birthDate}" th:value="${#dates.format(#dates.createNow(), 'dd-MM-yyyy')}"
+                       th:required="required" />
+                <div class="form-control-feedback" th:each="error : ${#fields.errors('birthDate')}"
+                     th:text="${error}">
+                    Sorry, that date is incorrect.
+                </div>
+            </div>
+
+            <!-- <input type="submit" class="btn btn-primary float-left clickable" value="Add pet"/> -->
+
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button
+                            th:with="text=${pet['new']} ? 'Add Pet' : 'Update Pet'"
+                            class="btn btn-primary float-left clickable" type="submit" th:text="${text}">Add
+                        Pet</button>
+                </div>
+            </div>
+        </form>
+        <br/>
+        <br/>
+    </div>
+</main>
+
+<div th:replace="fragments/parts::scripts">
+</div>
+<script th:src="@{/resources/select2/js/select2.min.js}"></script>
+<script type="text/javascript" th:inline="javascript">
+    $(document).ready(function () {
+        $("#inputpetType").select2();
+    });
+</script>
+</body>
+</html>

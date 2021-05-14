@@ -24,6 +24,7 @@ import com.onlinevet.clinic.service.VetService;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @Slf4j
@@ -56,6 +57,18 @@ public class OwnerController {
         model.addAttribute("vets", vets);
         return "owners/register";
     }
+
+	@PostMapping("/register-owner")
+	public String registerOwner(@Validated @ModelAttribute Owner owner, BindingResult bindingResult, Model model
+				, RedirectAttributes redirectAttributes) {
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("owner", owner);
+			return "owners/register";
+		}
+		ownerService.create(owner);
+		redirectAttributes.addFlashAttribute("confirmationMessage","Successfully Registered. You can login now.");
+		return "redirect:/";
+	}
 	
 	@GetMapping("/owners/{ownerId}")
 	public ModelAndView showOwner(@PathVariable Long ownerId) { // if not working out("ownerId")

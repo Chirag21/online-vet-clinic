@@ -16,6 +16,9 @@
 <main>
     <div class="container">
         <h1 class="h1">Vet Register Page</h1>
+        <span class="float-right" style="font-size: larger;">
+            <a class="pr-2" href="/register-owner">Register as owner</a>
+        </span>
         <form method="post" th:object="${vet}" th:action="@{register-vet}">
 
             <div class="form-group" th:classappend="${#fields.hasErrors('email')} ? 'has-danger'">
@@ -94,7 +97,7 @@
             <div class="form-group" th:classappend="${#fields.hasErrors('birthDate')} ? 'has-danger'">
                 <label class="form-control-label" for="inputbirthDate">Date Of Birth</label>
                 <input type="date" class="form-control form-control-danger" id="inputbirthDate"
-                       th:field="*{birthDate}" th:value="${#dates.format(#dates.createNow(), 'dd-MMM-yyyy')}" 
+                       th:field="*{birthDate}" th:value="${#dates.format(#dates.createNow(), 'dd-MM-yyyy')}"
                         th:required="required" />
                 <div class="form-control-feedback" th:each="error : ${#fields.errors('birthDate')}"
                      th:text="${error}">
@@ -142,10 +145,10 @@
                     Sorry, that description is incorrect.
                 </div>
             </div>
-
-            <div class="float-right">
-                <a class="pr-2" href="/register-owner">Register as owner</a>
-                <input type="submit" class="btn btn-secondary clickable" value="Register"/>
+            <div>
+					<span class="float-left">
+						<input type="submit" class="btn btn-primary clickable" value="Register"/>
+					</span>
             </div>
         </form>
         <br/>
@@ -163,7 +166,7 @@
     });
 
     $('#inputEmail').focusout(function () {
-        $('#inputUsername').val($(this).val());
+        $('#inputUsername').val($(this).val().split('@')[0]);
     });
     
 	var password = document.getElementById("inputPassword");
@@ -179,8 +182,15 @@
 	confirmpassword.onkeyup = validatePassword;
 	
 	var telephone = document.getElementById("inputTelephoneNumber");
-	if(telephone.length != 10)
+	if(telephone.length 1= 10)
 		telephone.setCustomValidity('Telephone number should be of 10 digits');
+</script>
+<script>
+    function validateTelephone(){
+		let telephone = document.getElementById("inputTelephoneNumber");
+		if(telephone.length != 10)
+			telephone.setCustomValidity('Telephone number should be of 10 digits');
+	}
 </script>
 </body>
 </html>
