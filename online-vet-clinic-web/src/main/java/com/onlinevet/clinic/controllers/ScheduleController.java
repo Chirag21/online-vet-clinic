@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.onlinevet.clinic.model.Owner;
 import com.onlinevet.clinic.model.User;
 import com.onlinevet.clinic.model.Vet;
+import com.onlinevet.clinic.exceptions.ScheduleNotFoundException;
 import com.onlinevet.clinic.service.OwnerService;
 import com.onlinevet.clinic.service.PetService;
 import com.onlinevet.clinic.service.UserService;
@@ -58,7 +59,7 @@ public class ScheduleController {
     @GetMapping
     public String getSchedule(Authentication authentication, Model model, HttpServletRequest request) {
         String name = authentication.getName();
-        User user = userService.findByUsername(name).orElseThrow();
+        User user = userService.findByUsername(name).orElseThrow(ScheduleNotFoundException::new);
         if (request.isUserInRole(ROLE_VET)) {
             Vet vet = this.vetService.findByUserId(user.getId());
             model.addAttribute("vet", vet);

@@ -26,6 +26,7 @@
 	<description>Spring Online Vet Clinic Project</description>
 	<properties>
 		<java.version>1.8</java.version>
+		<start-class>com.onlinevet.clinic.OnlineVetClinicApplication</start-class>
 	</properties>
 
 	<dependencies>
@@ -38,6 +39,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<classifier>exec</classifier>
+					<mainClass>com.onlinevet.clinic.OnlineVetClinicApplication</mainClass>
 				</configuration>
 			</plugin>
 			<plugin>
