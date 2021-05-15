@@ -87,8 +87,8 @@
 				<div class="form-group"
 					th:classappend="${#fields.hasErrors('address')} ? 'has-danger'">
 					<label class="form-control-label" for="inputAddress">Address</label>
-					<input type="tel" class="form-control form-control-danger"
-						id="inputAddress" th:field="*{address}" th:required="required" style="height: 116px;width: 1110px;"/>
+					<textarea type="tel" class="form-control form-control-danger"
+						id="inputAddress" th:field="*{address}" th:required="required" style="height: 116px;width: 1110px;"></textarea>
 					<div class="form-control-feedback"
 						th:each="error : ${#fields.errors('address')}" th:text="${error}">
 						Please enter address.</div>

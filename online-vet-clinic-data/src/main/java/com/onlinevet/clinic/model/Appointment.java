@@ -2,7 +2,11 @@ package com.onlinevet.clinic.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.lang.Nullable;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -23,17 +27,19 @@ public class Appointment extends BaseEntity implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@Column(name = "date")
-    private Date date;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "pet_id")
-    private Pet pet;
-
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "vet_id")
     private Vet vet;
+	
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "pet_id")
+    private Pet pet;
     
+	@NotNull(message = "Invalid birth date")
+	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @Column(name = "date")
+    private Date date;
+
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "owner_id")
     private Owner owner;
@@ -46,7 +52,8 @@ public class Appointment extends BaseEntity implements Serializable{
     @Column(name = "mobile_no")
     private String mobileNo;
     
-    @NotBlank
+    //@NotBlank
+    @Nullable
     @Column(name = "status")
     private String status;
 

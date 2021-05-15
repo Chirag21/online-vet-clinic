@@ -1,21 +1,28 @@
 package com.onlinevet.clinic.model;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.beans.support.MutableSortDefinition;
+import org.springframework.beans.support.PropertyComparator;
 import org.springframework.format.annotation.DateTimeFormat;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -27,7 +34,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @Table(name = "pets")
-public class Pet extends BaseEntity {
+public class Pet extends BaseEntity implements Serializable{
 	private static final long serialVersionUID = -4401687880835935591L;
 	@Column(name = "name")
 	private String name;
@@ -36,7 +43,7 @@ public class Pet extends BaseEntity {
 	@JoinColumn(name = "type_id")
 	private PetType petType;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "owner_id")
 	private Owner owner;
 
@@ -45,7 +52,7 @@ public class Pet extends BaseEntity {
 	@Column(name = "birth_date")
 	private Date birthDate;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pet")
+	@Transient
 	private Set<Visit> visits = new HashSet<>();
 
     @ManyToOne(cascade = CascadeType.ALL)
@@ -60,5 +67,27 @@ public class Pet extends BaseEntity {
 		this.owner = owner;
 		this.birthDate = birthDate;
 		this.visits = visits;
+	}
+	
+	protected Set<Visit> getVisitsInternal() {
+		if (this.visits == null) {
+			this.visits = new HashSet<>();
+		}
+		return this.visits;
+	}
+
+	protected void setVisitsInternal(Collection<Visit> visits) {
+		this.visits = new LinkedHashSet<>(visits);
+	}
+
+	public List<Visit> getVisits() {
+		List<Visit> sortedVisits = new ArrayList<>(getVisitsInternal());
+		PropertyComparator.sort(sortedVisits, new MutableSortDefinition("date", false, false));
+		return Collections.unmodifiableList(sortedVisits);
+	}
+
+	public void addVisit(Visit visit) {
+		getVisitsInternal().add(visit);
+		visit.setPetId(this.getId());
 	}
 }

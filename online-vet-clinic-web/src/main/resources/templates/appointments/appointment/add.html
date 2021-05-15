@@ -7,6 +7,11 @@
           th:href="@{/resources/select2/css/select2.min.css}"/>
     <link rel="stylesheet" href="../static/resources/css/commons.css"
           th:href="@{/resources/css/commons.css}"/>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css">
+    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </head>
 <head th:replace="fragments/parts::head">
     <link rel="stylesheet" href="../static/resources/bootstrap/css/bootstrap.min.css"
@@ -17,61 +22,83 @@
 </header>
 <main>
     <div class="container">
+        <div style="color: green" th:if="${confirmationMessage} != null" th:text="${confirmationMessage}" class="alert alert-success">
+        </div>
         <h1 class="h1">Add Appointment</h1>
         <br/>
-        <form method="post" th:object="${appointment}" action="@{/appointment/add}">
-            <div class="form-group">
-                <label class="form-control-label">Appointment For</label>
-                <div>
-                    <a href="#"
-                       th:text="'Dr. ' + ${vet.firstName} + ' ' + ${vet.lastName}"></a>,
-                </div>
+        <form method="post" th:object="${appointment}" th:action="@{/appointments/pet/add}">
+			<div class="form-group">
+                <label class="form-control-label" for="inputPet">Owner : </label>
+                <a class="form-control-label" for="inputPet" th:href="|#|" href="#"
+                			th:text="*{owner.firstName} + ' ' + *{owner.lastName}" 
+                			style="font-size: larger;">Owner</a>
             </div>
-
-            <span sec:authorize="hasRole('ROLE_VET')">
+            <div style="display: none;" ></div>
+            <span sec:authorize="hasRole('ROLE_OWNER')">
                 <div class="form-group">
-                    <label class="form-control-label" for="inputPet">For Pet</label>
-                    <select class="form-control form-control-danger" id="inputPet" th:field="*{pet}">
-                        <option th:each="pet : ${vetPets}"
-                                th:value="${pet.id}"
-                                th:text="${pet.firstName} + ' ' + ${pet.lastName}"></option>
+                    <label class="form-control-label" for="inputVet">Appointment With</label>
+                    <select class="form-control form-control-danger" id="inputVet" th:field="*{vet}" th:required="required">
+                        <option th:each="vet : ${vets}"
+                                th:value="${vet.id}"
+                                th:text="'Dr. ' + ${vet.firstName} + ' ' + ${vet.lastName}"></option>
                     </select>
                 </div>
             </span>
 
-            <div class="form-group">
-                <label class="form-control-label" for="inputDate">Appointment Date</label>
-                <input type="text" class="form-control form-control-danger" id="inputDate" readonly="readonly"
-                       th:value="${#dates.format(appointment.date, 'dd-MMM-yyyy HH:mm')}"/>
-            </div>
+            <span sec:authorize="hasRole('ROLE_VET')">
+                <div class="form-group">
+                    <label class="form-control-label" for="inputPet">For Pet</label>
+                    <select class="form-control form-control-danger" id="inputPet" th:field="*{pet}" th:required="required">
+                        <option th:each="pet : ${vetPets}"
+                                th:value="${pet.id}"
+                                th:text="${pet.name}"></option>
+                    </select>
+                </div>
+            </span>
+            
+             <span sec:authorize="hasRole('ROLE_OWNER')">
+                <div class="form-group">
+                    <label class="form-control-label" for="inputPet">For Pet</label>
+                    <select class="form-control form-control-danger" id="inputPet" th:field="*{pet}" th:required="required">
+                        <option th:each="pet : ${pets}"
+                                th:value="${pet.id}"
+                                th:text="${pet.name}"></option>
+                    </select>
+                </div>
+            </span>
 
-            <div class="form-group">
-                <!-- <label class="form-control-label" for="inputAppointmentType">Appointment Type</label>
-                <select class="form-control form-control-danger" id="inputAppointmentType" th:field="*{type}">
-                    <option th:each="appointmentType : ${appointmentTypes}"
-                            th:value="${appointmentType.id}"
-                            th:text="${appointmentType.name}"></option>
-                </select>  -->
-                
-                <label class="form-control-label" for="inputPet">Pet</label>
-                <select class="form-control form-control-danger" id="inputPet" th:field="*{pet.name}">
-                    <option th:each="pet : ${pets}"
-                            th:value="${pet.id}"
-                            th:text="${pet.name}"></option>
-                </select>
+            <div class="form-group" th:classappend="${#fields.hasErrors('date')} ? 'has-danger'">
+                <label class="form-control-label" for="inputDate">Appointment Date</label>
+                <input type="date" class="form-control form-control-danger" id="inputDate"
+                       th:field="*{date}" value="2000-01-01" th:required="required" />
+                <div class="form-control-feedback" th:each="error : ${#fields.errors('date')}"
+                     th:text="${error}">
+                    Sorry, that date is incorrect.
+                </div>
             </div>
 
             <div class="form-group" th:classappend="${#fields.hasErrors('description')} ? 'has-danger'">
                 <label class="form-control-label" for="inputDescription">Description</label>
                 <textarea class="form-control form-control-danger" rows="3" id="inputDescription"
-                          th:field="*{description}"></textarea>
+                          th:field="*{description}" th:required="required"></textarea>
                 <div class="form-control-feedback" th:each="error : ${#fields.errors('description')}"
                      th:text="${error}">
                     Sorry, that description is incorrect.
                 </div>
             </div>
+            
+            <div class="form-group" th:classappend="${#fields.hasErrors('mobileNo')} ? 'has-danger'">
+                <label class="form-control-label" for="inputMobileNo">Mobile Number</label>
+                <input class="form-control form-control-danger" type="number" id="inputMobileNo"
+                          th:field="*{mobileNo}" th:required="required"
+                          th:value="*{owner.telephone}"></input>
+                <div class="form-control-feedback" th:each="error : ${#fields.errors('mobileNo')}"
+                     th:text="${error}">
+                    Sorry, that mobile number is incorrect.
+                </div>
+            </div>
 
-            <input type="submit" class="btn btn-primary float-right clickable" value="Add Appointment"/>
+            <input type="submit" class="btn btn-primary float-left clickable" value="Add Appointment"/>
         </form>
         <br/>
         <br/>
@@ -81,10 +108,10 @@
 <div th:replace="fragments/parts::scripts">
 </div>
 <script th:src="@{/resources/select2/js/select2.min.js}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script type="text/javascript" th:inline="javascript">
-    $(document).ready(function () {
-        $("#inputAppointmentType").select2();
-    });
+	var today = new Date().toISOString().split('T')[0];
+	document.findElementById("inputDate")[0].setAttribute('min', today);
 </script>
 </body>
 </html>

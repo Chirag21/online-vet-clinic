@@ -42,7 +42,7 @@
             </div>
 
             <div class="form-group">
-                <label class="form-control-label" for="inputpetType">pet Type</label>
+                <label class="form-control-label" for="inputpetType">Pet Type</label>
                 <select class="form-control form-control-danger" id="inputpetType" th:field="*{petType}" th:required="required">
                     <option th:each="petType : ${petTypes}"
                             th:value="${petType.id}"

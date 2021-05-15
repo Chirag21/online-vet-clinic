@@ -125,13 +125,23 @@ public class DataLoader implements CommandLineRunner {
 		aquib.setEmail("aquib@gmail.com");
 		aquib.setUser(userAquib);
 		ownerService.save(aquib);
+		
 		Pet aquibsPet = new Pet();
 		aquibsPet.setPetType(cat);
 		aquibsPet.setName("Aquib's Pet");
 		aquibsPet.setOwner(aquib);
 		aquibsPet.setBirthDate(new Date());
-		aquib.getPets().add(aquibsPet);
+		//aquib.getPets().add(aquibsPet);
+		//aquib.addPet(aquibsPet);
 		//ownerService.save(aquib);
+		
+		Pet aquibsPetGigi = new Pet();
+		aquibsPetGigi.setPetType(dog);
+		aquibsPetGigi.setName("Aquib's Pet Gigi");
+		aquibsPetGigi.setOwner(aquib);
+		aquibsPetGigi.setBirthDate(new Date());
+		//aquib.getPets().add(aquibsPet);
+		//aquib.addPet(aquibsPetGigi);
 
 		Owner manas = new Owner();
 		manas.setId(2L);
@@ -143,12 +153,14 @@ public class DataLoader implements CommandLineRunner {
 		manas.setEmail("manas@gmail.com");
 		manas.setUser(userManas);
 		ownerService.save(manas);	// why saving this owner here works?
+		
 		Pet manassPet = new Pet();
 		manassPet.setPetType(dog);
 		manassPet.setName("Manas's Pet");
 		manassPet.setOwner(manas);
 		manassPet.setBirthDate(new Date());
-		manas.getPets().add(manassPet);
+		//manas.getPets().add(manassPet);
+		//manas.addPet(manassPet);
 		//ownerService.save(manas);		why saving this owner here does not work?
 				
 		Owner nilesh = new Owner();
@@ -160,16 +172,18 @@ public class DataLoader implements CommandLineRunner {
 		nilesh.setTelephone("7777777777");
 		nilesh.setEmail("nilesh@gmail.com");
 		nilesh.setUser(userNilesh);
+		
 		Pet nileshsPet = new Pet();
 		nileshsPet.setPetType(dog);
 		nileshsPet.setName("Nilesh's Pet");
 		nileshsPet.setOwner(nilesh);
 		nileshsPet.setBirthDate(new Date());
-		nilesh.getPets().add(nileshsPet);
+		//nilesh.getPets().add(nileshsPet);
+		//nilesh.addPet(nileshsPet);
 		ownerService.save(nilesh);
 
 		Visit catVisit = new Visit();
-		catVisit.setPet(manassPet);
+		catVisit.setPetId(manassPet.getId());
 		catVisit.setDate(new Date());
 		catVisit.setDescription("Cat Visit Done");
 		visitService.save(catVisit);
@@ -250,8 +264,19 @@ public class DataLoader implements CommandLineRunner {
 		aquibsAppointment.setPet(aquibsPet);
 		aquibsAppointment.setVet(sagar);
 		aquibsAppointment.setDescription("Aquib's Pet Visit done");
-		aquibsAppointment.setStatus("Completed");
+		aquibsAppointment.setStatus("C");
 		appointmentService.save(aquibsAppointment);
+		
+		Appointment gigisAppointment = new Appointment();
+		cal.set(2021, 01, 18);
+		gigisAppointment.setDate(cal.getTime());
+		gigisAppointment.setId(4L);
+		gigisAppointment.setOwner(aquib);
+		gigisAppointment.setPet(aquibsPetGigi);
+		gigisAppointment.setVet(gautam);
+		gigisAppointment.setDescription("Aquib's Pet Gigi's Visit done");
+		gigisAppointment.setStatus("O");
+		appointmentService.save(gigisAppointment);
 		
 		Appointment manassAppointment = new Appointment();
 		cal.set(2021, 02, 07);
@@ -261,7 +286,7 @@ public class DataLoader implements CommandLineRunner {
 		manassAppointment.setPet(manassPet);
 		manassAppointment.setVet(gautam);
 		manassAppointment.setDescription("Manas's Pet Visit done");
-		manassAppointment.setStatus("Completed");
+		manassAppointment.setStatus("C");
 		appointmentService.save(manassAppointment);
 		
 		Appointment nileshsAppointment = new Appointment();
@@ -272,7 +297,7 @@ public class DataLoader implements CommandLineRunner {
 		nileshsAppointment.setPet(nileshsPet);
 		nileshsAppointment.setVet(kunal);
 		nileshsAppointment.setDescription("Nilesh's Pet Visit done");
-		nileshsAppointment.setStatus("Upcoming");
+		nileshsAppointment.setStatus("O");
 		appointmentService.save(nileshsAppointment);
 		
 		System.out.println("Loaded appointments .......");

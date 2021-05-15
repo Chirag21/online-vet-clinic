@@ -1,10 +1,8 @@
 package com.onlinevet.clinic.controllers;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
-import com.onlinevet.clinic.exceptions.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.onlinevet.clinic.exceptions.UserNotFoundException;
 import com.onlinevet.clinic.model.Owner;
 import com.onlinevet.clinic.model.Pet;
 import com.onlinevet.clinic.model.PetType;
@@ -62,9 +61,14 @@ public class PetController {
 	@GetMapping("/mypets")
 	public String getMyPetsPage(Model model, @PageableDefault(size = 8) Pageable pageable,
 			Authentication authentication) {
+		
 		String name = authentication.getName();
 		Long userId = userService.findByUsername(name).orElseThrow(UserNotFoundException::new).getId();
-		Owner owner = ownerService.findById(userId);
+		Owner owner = ownerService.findByUserId(userId);
+		
+		System.out.println("OwnerId = " + owner.getId());
+		System.out.println("UserId = " + userId);
+		
 		Page<Pet> pets = petService.findAllByOwnerIdOrderByBirthDateDesc(owner.getId(), pageable);
 		model.addAttribute("pets", pets);
 		return "/appointments/pet/pets";
@@ -83,7 +87,7 @@ public class PetController {
 	}
 
 	@ModelAttribute(name = "types")
-	public Set<PetType> populatePetTypes() {
+	public Set<PetType> 	populatePetTypes() {
 		return petTypeService.findAll();
 	}
 
@@ -100,12 +104,15 @@ public class PetController {
 	}
 
 	@GetMapping("/pet/add")
-	public String initCreationForm(Owner owner,Pet pet,Model model,Authentication authentication) {
+	public String initCreationForm(Model model,Authentication authentication) {
 		String name = authentication.getName();
 		Long userId = userService.findByUsername(name).orElseThrow(UserNotFoundException::new).getId();
-		owner = ownerService.findByUserId(userId);
-		pet = new Pet();
-		owner.getPets().add(pet);
+		Owner owner = ownerService.findByUserId(userId);
+		
+
+		
+		Pet pet = new Pet();
+		owner.addPet(pet);
 		pet.setOwner(owner);
 		model.addAttribute("petTypes", new ArrayList<>(petTypeService.findAll()));
 		model.addAttribute(	"pet",pet);
@@ -114,12 +121,17 @@ public class PetController {
 	}
 
 	@PostMapping("/pet/add")
-	public String processCreationForm(Owner owner, @Validated Pet pet, BindingResult bindingResult,Model model){
+	public String processCreationForm(@Validated Pet pet, BindingResult bindingResult,Model model,Authentication authentication){
+		String name = authentication.getName();
+		Long userId = userService.findByUsername(name).orElseThrow(UserNotFoundException::new).getId();
+		Owner owner = ownerService.findByUserId(userId);
 		if (StringUtils.hasLength(pet.getName()) && pet.isNew() && owner.getPet(pet.getName(), true) != null) {
 			bindingResult.rejectValue("name", "duplicate", "already exists");
 		}
-		owner.getPets().add(pet);
+		
+		owner.setUser(userService.findByUsername(name).orElseThrow(RuntimeException::new));
 		pet.setOwner(owner);
+		
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("pet", pet);
 			return "redirect:/appointments/pet/add";
@@ -143,7 +155,7 @@ public class PetController {
 			model.addAttribute("pet", pet);
 			return "appointments/pet/add";
 		} else {
-			//owner.getPets().add(pet);
+			//owner.addPet(pet);
 			pet.setOwner(owner);
 			petService.save(pet);
 			return "redirect:/mypets";
@@ -156,7 +168,7 @@ public class PetController {
 	 * processCreationForm(Owner owner, @Validated Pet pet, BindingResult result,
 	 * Model model) { if (StringUtils.hasLength(pet.getName()) && pet.isNew() &&
 	 * owner.getPet(pet.getName(), true) != null) { result.rejectValue("name",
-	 * "duplicate", "already exists"); } owner.getPets().add(pet);
+	 * "duplicate", "already exists"); } owner.addPet(pet);
 	 * pet.setOwner(owner); if (result.hasErrors()) {
 	 * System.out.println(result.getFieldError()); result.getAllErrors().forEach(e
 	 * -> System.out.println(e)); result.getFieldErrors().forEach(e ->
@@ -175,7 +187,7 @@ public class PetController {
 	 * processUpdateForm(@Validated Pet pet, BindingResult result, Owner owner,
 	 * Model model) { if (result.hasErrors()) { pet.setOwner(owner);
 	 * model.addAttribute("pet", pet); return VIEWS_PETS_CREATE_OR_UPDATE_FORM; }
-	 * else { // owner.getPets().add(pet); pet.setOwner(owner);
+	 * else { // owner.addPet(pet); pet.setOwner(owner);
 	 * petService.save(pet); return "redirect:/owners/" + owner.getId(); } }
 	 */
 

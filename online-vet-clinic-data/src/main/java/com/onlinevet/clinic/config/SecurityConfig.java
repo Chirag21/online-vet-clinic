@@ -47,8 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Bean
 	public ModelMapper modelMapper() {
-		ModelMapper modelMapper = new ModelMapper();
-		return modelMapper;
+		return new ModelMapper();
 	}
 
 	@Override
@@ -58,25 +57,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests()
-			.antMatchers(LOGIN, "/register-owner", "/forgotPassword",
+		http
+			.authorizeRequests()
+			.antMatchers(LOGIN,"/accessDenied", "/register-owner", "/forgotPassword",
 						 "/register-vet", "/vets/**", "/mm_pics/**",
                          "/bootstrap/**", "/jquery/**", "/tether/**", "/font-awesome/**", "/select2/**", "/css/**",
                          "/img/**", "/connect/**", "/error/**","/h2/**").permitAll()
 			.antMatchers("/appointments/home","/appointments/vet/appointments","/appointments/appointment/appointment"
-					,"/appointments/appointment/add","/pet/{\\d+}","/user/change-password").hasAnyRole(ADMIN,USER,OWNER,VET)
+					,"/appointments/appointment/add","/appointments/pet/{\\d+}","/user/change-password"
+					,"/schedule","/schedule/","/schedule/week").hasAnyRole(ADMIN,USER,OWNER,VET)
 				.antMatchers("/appointments/pet/appointments","/pet/edit","/owners/**","/mypets"
-						,"/appointments/vet/vets","/api/vets","/pet/add","/pet/{\\d+}/edit").hasAnyRole(ADMIN,OWNER)
-			.antMatchers("/pet/pets","/appointment/vet/**", "/schedule/edit", "/vet/edit", "/vet/pets, /vet/edit-picture"
-					,"/appointments/vet/**").hasAnyRole(ADMIN,VET)
+						,"/appointments/vet/vets","/api/vets","/pet/add","/pet/{\\d+}/**"
+						,"/apointments/pet/add").hasAnyRole(ADMIN,OWNER)
+			.antMatchers("/pet/{\\d+}","/pet/pets","/appointment/vet/**", "/schedule/edit", "/vet/edit", "/vet/pets, /vet/edit-picture"
+					,"/appointments/vet/**","/apointments/vet/add","/schedule/edit").hasAnyRole(ADMIN,VET)
 			.antMatchers( "/appointments/all","/index" ,"/pets/**").hasRole(ADMIN)
 			.antMatchers("/**").hasRole(ADMIN)
 			.anyRequest().authenticated()
 			.and().formLogin()
 			.loginPage(LOGIN).loginProcessingUrl("/login").defaultSuccessUrl("/appointments/home", false)
-			// .failureUrl("/loginSignup?failure")
-			.and().csrf().disable().logout().logoutSuccessUrl(LOGIN).and().exceptionHandling()
-			.accessDeniedPage("/accessDenied");
+			.and().logout().logoutSuccessUrl(LOGIN).and().exceptionHandling()
+			.accessDeniedPage("/accessDenied")
+			.and().csrf().disable();
 		http.headers().frameOptions().disable();
 	}
 

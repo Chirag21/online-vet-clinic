@@ -1,13 +1,9 @@
 package com.onlinevet.clinic.model;
 
-import java.time.LocalDate;
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -38,8 +34,7 @@ public class Visit extends BaseEntity {
 	@Column(name = "description")
 	private String description;
 
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "pet_id")
-	private Pet pet;
+	@Column(name = "pet_id")
+	private Long petId;
 
 }

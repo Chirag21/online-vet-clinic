@@ -1,12 +1,12 @@
 package com.onlinevet.clinic.controllers;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.onlinevet.clinic.exceptions.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -24,9 +24,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.onlinevet.clinic.exceptions.AppointmentNotFoundException;
 import com.onlinevet.clinic.exceptions.InvalidAppointmentDateException;
+import com.onlinevet.clinic.exceptions.UserNotFoundException;
 import com.onlinevet.clinic.model.Appointment;
 import com.onlinevet.clinic.model.Owner;
 import com.onlinevet.clinic.model.User;
@@ -121,40 +123,57 @@ public class AppointmentController {
     	return "/appointments/appointment/appointment";
     }
 
-    /*
-    @GetMapping("/appointment/add")
-    public String getPetAddAppointment(Principal authentication, @RequestParam("date") @DateTimeFormat(pattern = "MM/dd/yyyy hh:mm:ss a") Date date,
-    											@ModelAttribute Appointment appointment, Model model) {
-        if (date.before(new Date())) {
-            try {
-                throw new InvalidAppointmentDateException();
-            } catch (InvalidAppointmentDateException e) {
-
-                e.printStackTrace();
-            }
-        }
-
-        appointment.setDate(date);
+    
+    @GetMapping("/pet/add")
+    public String getAddAppointmentpage(Authentication authentication, Model model) {
 		String name = authentication.getName();
-		Long userId = userService.findByUsername(name).orElseThrow().getId();
+		Long userId = userService.findByUsername(name).orElseThrow(UserNotFoundException::new).getId();
 		Owner owner = ownerService.findByUserId(userId);
-        List<Pet> pets = petService.findAllByOwnerId(owner.getId());
-        DoctorSelectViewModel doctorSelectViewModel = this.doctorService.getModelByUserId(patient.getDoctor().getUser().getId());
-        model.addAttribute("doctorSelectViewModel", doctorSelectViewModel);
-
-        List<AppointmentTypeViewModel> appointmentTypes = this.appointmentTypeService.getAll();
-        model.addAttribute("pets", pets);
-    	
+		Appointment appointment = Appointment.builder().build();
+		appointment.setStatus("O");
+		appointment.setOwner(owner);
+		model.addAttribute("pets", owner.getPets());
+    	model.addAttribute("vets", new ArrayList<>(vetService.findAll()));
+    	model.addAttribute("appointment", appointment);
+    	System.out.println("Status = " + appointment.getStatus());
     	return "appointments/appointment/add";
     }
-*/
+    
+    @PostMapping("/pet/add")
+    public String petAddAppointment(@Validated Appointment appointment,
+                          BindingResult bindingResult, Authentication authentication, Model model
+                          ,RedirectAttributes redirectAttributes) throws InvalidAppointmentDateException {
+    		
+        /*if (appointment.getDate().before(new Date())) {
+            throw new InvalidAppointmentDateException();
+        }*/    	
+    	
+		String name = authentication.getName();
+		Long userId = userService.findByUsername(name).orElseThrow(UserNotFoundException::new).getId();
+        Owner owner = ownerService.findByUserId(userId);
+		appointment.setOwner(owner);
+        appointment.setStatus("O");
+		
+    	System.out.println("Status = " + appointment.getStatus());
 
-    @PostMapping("/appointment/add")
-    public String petAddAppointment(@RequestParam("date") @DateTimeFormat(pattern = "MM/dd/yyyy hh:mm:ss a") Date date,
-                                        @Validated @ModelAttribute Appointment appointment,
-                                        BindingResult bindingResult, Authentication authentication, Model model) {
-    		return "/appointments/appointment/add";
-    		//return "redirect:/schedule/";
+    	bindingResult.getAllErrors().forEach(System.out::println);
+    	
+        if (bindingResult.hasErrors()) {
+    		
+    		System.out.println("UserID = " + userId + " " + name);
+    		System.out.println("OwnerID = " + owner.getId() + " " + owner.getFirstName());
+    		
+    		model.addAttribute("pets", ownerService.findByUserId(userId));
+        	model.addAttribute("vets", new ArrayList<>(vetService.findAll()));
+        	model.addAttribute("appointment", appointment);
+        	redirectAttributes.addFlashAttribute("confirmationMessage","Please resolve the errors.");
+            return "redirect:/appointments/pet/add";
+        }
+        
+        this.appointmentService.save(appointment);
+        redirectAttributes.addFlashAttribute("confirmationMessage","Appointment added.");
+        return "redirect:/appointments/pet/appointments";
+        //return "redirect:/schedule/";
     }
 
     @GetMapping("/vet/add")

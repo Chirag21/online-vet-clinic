@@ -1,6 +1,10 @@
 package com.onlinevet.clinic.model;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -12,6 +16,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.springframework.beans.support.MutableSortDefinition;
+import org.springframework.beans.support.PropertyComparator;
 import org.springframework.lang.Nullable;
 
 import lombok.Builder;
@@ -24,7 +30,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @Table(name = "owners")
-public class Owner extends Person {
+public class Owner extends Person implements Serializable{
 
     private static final long serialVersionUID = -7746215795670026362L;
 
@@ -37,7 +43,7 @@ public class Owner extends Person {
 	@Column(name = "telephone")
 	private String telephone;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
+	@OneToMany(cascade = CascadeType.ALL,mappedBy = "owner")
 	private Set<Pet> pets = new HashSet<>();
 	
     @OneToOne(optional = false)
@@ -60,27 +66,56 @@ public class Owner extends Person {
 		if(Objects.nonNull(pets))
 			this.pets = pets;
 	}
-	
-    /**
-     * Return the Pet with the given name, or null if none found for this Owner.
-     */
-    public Pet getPet(String name) {
-        return getPet(name, false);
-    }
+    
+	protected Set<Pet> getPetsInternal() {
+		if (this.pets == null) {
+			this.pets = new HashSet<>();
+		}
+		return this.pets;
+	}
 
-    /**
-     * Return the Pet with the given name, or null if none found for this Owner.
-     */
-    public Pet getPet(String name, boolean ignoreNew) {
-        name = name.toLowerCase();
-        for (Pet pet : pets) {
-            if (!ignoreNew || !pet.isNew()) {
-                String compName = pet.getName().toLowerCase();
-                if (compName.equals(name)) {
-                    return pet;
-                }
-            }
-        }
-        return null;
-    }
+	protected void setPetsInternal(Set<Pet> pets) {
+		this.pets = pets;
+	}
+
+	public List<Pet> getPets() {
+		List<Pet> sortedPets = new ArrayList<>(getPetsInternal());
+		PropertyComparator.sort(sortedPets, new MutableSortDefinition("name", true, true));
+		return Collections.unmodifiableList(sortedPets);
+	}
+
+	public void addPet(Pet pet) {
+		if (pet.isNew()) {
+			getPetsInternal().add(pet);
+		}
+		pet.setOwner(this);
+	}
+    
+	/**
+	 * Return the Pet with the given name, or null if none found for this Owner.
+	 * @param name to test
+	 * @return true if pet name is already in use
+	 */
+	public Pet getPet(String name) {
+		return getPet(name, false);
+	}
+
+	/**
+	 * Return the Pet with the given name, or null if none found for this Owner.
+	 * @param name to test
+	 * @return true if pet name is already in use
+	 */
+	public Pet getPet(String name, boolean ignoreNew) {
+		name = name.toLowerCase();
+		for (Pet pet : getPetsInternal()) {
+			if (!ignoreNew || !pet.isNew()) {
+				String compName = pet.getName();
+				compName = compName.toLowerCase();
+				if (compName.equals(name)) {
+					return pet;
+				}
+			}
+		}
+		return null;
+	}
 }

@@ -18,7 +18,11 @@
         <div class="table-wrapper">
             <h1 class="h1">My Appointments</h1>
             <div>
-            	<a sec:authorize="hasAnyRole('ROLE_OWNER','ROLE_ADMIN')" class="btn btn-primary" th:href="|/appointment/add|">
+            	<a sec:authorize="hasAnyRole('ROLE_OWNER','ROLE_ADMIN')" class="btn btn-primary" th:href="|/appointments/pet/add|">
+            	BOOK NEW APPOINTMENT</a>
+            </div>
+            <div>
+            	<a sec:authorize="hasAnyRole('ROLE_VET','ROLE_ADMIN')" class="btn btn-primary" th:href="|/appointments/vet/add|">
             	BOOK NEW APPOINTMENT</a>
             </div>
             <table class="table">
