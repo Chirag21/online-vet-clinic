@@ -1,9 +1,11 @@
 package com.onlinevet.clinic.controllers;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.bind.validation.ValidationErrors;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.onlinevet.clinic.exceptions.InvalidAppointmentDateException;
 import com.onlinevet.clinic.exceptions.UserNotFoundException;
 import com.onlinevet.clinic.model.Owner;
 import com.onlinevet.clinic.model.Pet;
@@ -108,33 +112,40 @@ public class PetController {
 		String name = authentication.getName();
 		Long userId = userService.findByUsername(name).orElseThrow(UserNotFoundException::new).getId();
 		Owner owner = ownerService.findByUserId(userId);
-		
-
-		
 		Pet pet = new Pet();
 		owner.addPet(pet);
 		pet.setOwner(owner);
 		model.addAttribute("petTypes", new ArrayList<>(petTypeService.findAll()));
 		model.addAttribute(	"pet",pet);
-		System.out.println(pet.getOwner().getId());
 		return "appointments/pet/add";
 	}
 
 	@PostMapping("/pet/add")
-	public String processCreationForm(@Validated Pet pet, BindingResult bindingResult,Model model,Authentication authentication){
+	public String processCreationForm(@Validated Pet pet, BindingResult bindingResult,Model model,Authentication authentication) throws InvalidAppointmentDateException{
 		String name = authentication.getName();
 		Long userId = userService.findByUsername(name).orElseThrow(UserNotFoundException::new).getId();
 		Owner owner = ownerService.findByUserId(userId);
+		
+		if(bindingResult.hasErrors())
+			return "/";
+		
+		
 		if (StringUtils.hasLength(pet.getName()) && pet.isNew() && owner.getPet(pet.getName(), true) != null) {
 			bindingResult.rejectValue("name", "duplicate", "already exists");
 		}
+		
+        if (pet.getBirthDate().after(new Date())) {
+        	bindingResult.rejectValue("birthDate", "dateError" , "Invalid Date!!!");
+        	model.addAttribute("dateError", "Invalid Date!!!");
+        	return "redirect:/pet/add";
+        }
 		
 		owner.setUser(userService.findByUsername(name).orElseThrow(RuntimeException::new));
 		pet.setOwner(owner);
 		
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("pet", pet);
-			return "redirect:/appointments/pet/add";
+			return "redirect:/pet/add";
 		} else {
 			petService.save(pet);
 			return "redirect:/mypets";

@@ -182,15 +182,18 @@
 	confirmpassword.onkeyup = validatePassword;
 	
 	var telephone = document.getElementById("inputTelephoneNumber");
-	if(telephone.length 1= 10)
+	if(telephone.length != 10)
 		telephone.setCustomValidity('Telephone number should be of 10 digits');
-</script>
-<script>
-    function validateTelephone(){
+
+	function validateTelephone(){
 		let telephone = document.getElementById("inputTelephoneNumber");
 		if(telephone.length != 10)
 			telephone.setCustomValidity('Telephone number should be of 10 digits');
 	}
+	
+    var today = new Date().toISOString().split('T')[0];
+    document.getElementById("inputbirthDate").setAttribute('max', today)
+    document.getElementById("inputStartPracticeDate").setAttribute('max', today);
 </script>
 </body>
 </html>

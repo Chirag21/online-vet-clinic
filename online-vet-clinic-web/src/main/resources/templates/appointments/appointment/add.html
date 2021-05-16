@@ -111,7 +111,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script type="text/javascript" th:inline="javascript">
 	var today = new Date().toISOString().split('T')[0];
-	document.findElementById("inputDate")[0].setAttribute('min', today);
+	document.getElementById("inputDate").setAttribute('min', today);
 </script>
 </body>
 </html>

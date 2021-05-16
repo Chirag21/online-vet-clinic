@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head>
+<head th:replace="fragments/parts::head">
     <title>Add pet</title>
     <link rel="stylesheet" href="../static/resources/select2/css/select2.min.css"
           th:href="@{/resources/select2/css/select2.min.css}"/>
     <link rel="stylesheet" href="../static/resources/css/commons.css"
           th:href="@{/resources/css/commons.css}"/>
-</head>
-<head th:replace="fragments/parts::head">
     <link rel="stylesheet" href="../static/resources/bootstrap/css/bootstrap.min.css"
           th:href="@{/resources/bootstrap/css/bootstrap.min.css}"/>
+      <script src="http://code.jquery.com/jquery-1.10.2.js">
+
+ </script>
 </head>
 <body>
 <header th:replace="fragments/parts::menu">
@@ -21,7 +22,7 @@
         <br/>
         <h2>
             <th:block th:if="${pet['new']}">New </th:block>
-            Pet
+            Edit Pet
         </h2>
         <form method="post" action="#" th:action="@{/pet/add}" th:object="${pet}">
             <div class="form-group">
@@ -54,6 +55,7 @@
             </div>
 
             <div class="form-group" th:classappend="${#fields.hasErrors('birthDate')} ? 'has-danger'">
+            	<span style="color: red" th:text="${dateError}">Invalid Date!!!</span>
                 <label class="form-control-label" for="inputbirthDate">Date Of Birth: </label>
                 <input type="date" class="form-control form-control-danger" id="inputbirthDate"
                        th:field="*{birthDate}" th:value="${#dates.format(#dates.createNow(), 'dd-MM-yyyy')}"
@@ -87,6 +89,10 @@
     $(document).ready(function () {
         $("#inputpetType").select2();
     });
+    
+    var today = new Date().toISOString().split('T')[0];
+    document.getElementById("inputbirthDate").setAttribute('max', today);
+
 </script>
 </body>
 </html>
