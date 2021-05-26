@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,9 +18,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.onlinevet.clinic.exceptions.UserNotFoundException;
 import com.onlinevet.clinic.model.Owner;
+import com.onlinevet.clinic.model.User;
 import com.onlinevet.clinic.model.Vet;
 import com.onlinevet.clinic.service.OwnerService;
+import com.onlinevet.clinic.service.UserService;
 import com.onlinevet.clinic.service.VetService;
 
 import lombok.AllArgsConstructor;
@@ -39,6 +43,9 @@ public class OwnerController {
 
 	@Autowired
 	private final VetService vetService;
+	
+	@Autowired
+	private UserService userService;
 
 	@InitBinder
 	public void setAllowedFields(WebDataBinder webDataBinder) {
@@ -158,5 +165,28 @@ public class OwnerController {
 		ownerService.deleteById(ownerId);
 		// model.addAttribute(OWNER,Owner.builder().build());
 		return "redirect:owners/findOwners";
+	}
+	
+	@GetMapping("/owner/profile/edit")
+	public String getEditProfilePage(Model model, Authentication authentication) {
+		String name = authentication.getName();
+		Long userId = userService.findByUsername(name).orElseThrow(UserNotFoundException::new).getId();
+		Owner owner = ownerService.findByUserId(userId);
+		model.addAttribute("owner",owner);
+		return "/owners/edit";
+	}
+	
+	@PostMapping("/owner/profile/edit")
+	public String saveProfile(@Validated @ModelAttribute Owner owner, BindingResult bindingResult ,Authentication authentication) {
+		System.out.println("Owner ======= " + owner.toString());
+		if(bindingResult.hasErrors()){
+            return "patient/edit";
+        }
+		String name = authentication.getName();
+		User user = userService.findByUsername(name).orElseThrow(UserNotFoundException::new);
+		owner.setUser(user);
+		System.out.println("Owner ======= " + owner.toString());
+        ownerService.save(owner);        
+        return "redirect:/";
 	}
 }

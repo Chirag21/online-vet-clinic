@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.bind.validation.ValidationErrors;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,7 +31,6 @@ import com.onlinevet.clinic.service.OwnerService;
 import com.onlinevet.clinic.service.PetService;
 import com.onlinevet.clinic.service.PetTypeService;
 import com.onlinevet.clinic.service.UserService;
-import com.onlinevet.clinic.service.VetService;
 
 import lombok.AllArgsConstructor;
 
@@ -50,9 +47,6 @@ public class PetController {
 
 	@Autowired
 	private PetTypeService petTypeService;
-
-	@Autowired
-	private VetService vetService;
 
 	@Autowired
 	private UserService userService;
@@ -128,7 +122,6 @@ public class PetController {
 		
 		if(bindingResult.hasErrors())
 			return "/";
-		
 		
 		if (StringUtils.hasLength(pet.getName()) && pet.isNew() && owner.getPet(pet.getName(), true) != null) {
 			bindingResult.rejectValue("name", "duplicate", "already exists");

@@ -118,4 +118,11 @@ public class Owner extends Person implements Serializable{
 		}
 		return null;
 	}
+
+	@Override
+	public String toString() {
+		return "Owner [address=" + address + ", city=" + city + ", telephone=" + telephone + ", pets=" + pets
+				+ ", user=" + user + ", isProfileComplete=" + isProfileComplete + ", additionalRole=" + additionalRole
+				+ "]";
+	}
 }

@@ -66,10 +66,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/appointments/home","/appointments/vet/appointments","/appointments/appointment/appointment"
 					,"/appointments/appointment/add","/appointments/pet/{\\d+}","/user/change-password"
 					,"/schedule","/schedule/","/schedule/week").hasAnyRole(ADMIN,USER,OWNER,VET)
-				.antMatchers("/appointments/pet/appointments","/pet/edit","/owners/**","/mypets"
+				.antMatchers("/owner/profile/edit","/appointments/pet/appointments","/pet/edit","/owners/**","/mypets"
 						,"/appointments/vet/vets","/api/vets","/pet/add","/pet/{\\d+}/**"
 						,"/apointments/pet/add").hasAnyRole(ADMIN,OWNER)
-			.antMatchers("/pet/{\\d+}","/pet/pets","/appointment/vet/**", "/schedule/edit", "/vet/edit", "/vet/pets, /vet/edit-picture"
+			.antMatchers("/vet/profile/edit","/pet/pets","/pet/{\\d+}","/appointment/vet/**", "/schedule/edit", "/vet/edit", "/vet/pets, /vet/edit-picture"
 					,"/appointments/vet/**","/apointments/vet/add","/schedule/edit").hasAnyRole(ADMIN,VET)
 			.antMatchers( "/appointments/all","/index" ,"/pets/**").hasRole(ADMIN)
 			.antMatchers("/**").hasRole(ADMIN)

@@ -80,8 +80,8 @@
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="user-actions-menu">
                         <a sec:authorize="hasRole('ROLE_VET')" class="dropdown-item" href="/schedule/edit">Edit Week Schedule</a>
 
-                        <a sec:authorize="hasRole('ROLE_OWNER')" class="dropdown-item" href="/pet/edit">Edit Profile</a>
-                        <a sec:authorize="hasRole('ROLE_VET')" class="dropdown-item" href="/vet/edit">Edit Profile</a>
+                        <a sec:authorize="hasRole('ROLE_OWNER')" class="dropdown-item" href="/owner/profile/edit">Edit Profile</a>
+                        <a sec:authorize="hasRole('ROLE_VET')" class="dropdown-item" href="/vet/profile/edit">Edit Profile</a>
 
                         <a class="dropdown-item" href="/user/change-password">Change Password</a>
                         <a class="dropdown-item" href="/logout">Logout</a>

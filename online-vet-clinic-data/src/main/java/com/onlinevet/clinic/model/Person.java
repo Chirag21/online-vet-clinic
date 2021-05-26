@@ -33,7 +33,7 @@ public class Person extends BaseEntity {
     private String username;
 
     @Size(min = 5, message = "Password too short")
-    @Column(name="passowrd")
+    @Column(name="password")
     private String password;
     
     @Size(min = 5, message = "Password too short")

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Profile</title>
+    <link rel="stylesheet" href="../static/resources/select2/css/select2.min.css"
+          th:href="@{/resources/select2/css/select2.min.css}"/>
+    <link rel="stylesheet" href="../static/resources/css/commons.css"
+          th:href="@{/resources/css/commons.css}"/>
+</head>
+<head th:replace="fragments/parts::head">
+</head>
+<body>
+<header th:replace="fragments/parts::menu">
+</header>
+<main>
+    <div class="container">
+        <h1 class="h1">Edit Profile</h1>
+        <form method="post" th:object="${owner}" th:action="@{/owner/profile/edit}">
+
+            <div class="form-group" th:classappend="${#fields.hasErrors('firstName')} ? 'has-danger'">
+                <label class="form-control-label" for="inputFirstName">First Name</label>
+                <input type="text" class="form-control form-control-danger" id="inputFirstName"
+                       th:field="*{firstName}" th:required="required"/>
+                <div class="form-control-feedback" th:each="error : ${#fields.errors('firstName')}" th:text="${error}">
+                    Sorry, that First name is incorrect. Try another?
+                </div>
+            </div>
+            <div class="form-group" th:classappend="${#fields.hasErrors('lastName')} ? 'has-danger'">
+                <label class="form-control-label" for="inputLastName">Last Name</label>
+                <input type="text" class="form-control form-control-danger" id="inputLastName" th:field="*{lastName}"
+                	 th:required="required"/>
+                <div class="form-control-feedback" th:each="error : ${#fields.errors('lastName')}" th:text="${error}">
+                    Sorry, that Last name is incorrect. Try another?
+                </div>
+            </div>
+            <div class="form-group" th:classappend="${#fields.hasErrors('telephone')} ? 'has-danger'">
+                <label class="form-control-label" for="inputTelephoneNumber">Telephone Number</label>
+                <input type="tel" class="form-control form-control-danger" id="inputTelephoneNumber"
+                       th:field="*{telephone}"  th:required="required"/>
+                <div class="form-control-feedback" th:each="error : ${#fields.errors('telephone')}"
+                     th:text="${error}">
+                    Sorry, that telephone number is incorrect.
+                </div>
+            </div>
+            <div class="form-group" th:classappend="${#fields.hasErrors('address')} ? 'has-danger'">
+                <label class="form-control-label" for="inputAddress">Address</label>
+                <textarea type="text" class="form-control form-control-danger" id="inputAddress" th:field="*{address}"
+                	 th:required="required"></textarea>
+                <div class="form-control-feedback" th:each="error : ${#fields.errors('address')}" th:text="${error}">
+                    Sorry, that address is incorrect. Try another?
+                </div>
+            </div>
+            <div class="form-group" th:classappend="${#fields.hasErrors('city')} ? 'has-danger'">
+                <label class="form-control-label" for="inputCity">City</label>
+                <input type="text" class="form-control form-control-danger" id="inputCity" th:field="*{city}"
+                	 th:required="required"/>
+                <div class="form-control-feedback" th:each="error : ${#fields.errors('city')}" th:text="${error}">
+                    Sorry, that City is incorrect. Try another?
+                </div>
+            </div>
+
+            <input type="submit" class="btn btn-primary clickable float-left" value="Update"/>
+        </form>
+        <br/>
+        <br/>
+    </div>
+</main>
+<div th:replace="fragments/parts::scripts">
+</div>
+<script th:src="@{/resources/select2/js/select2.min.js}"></script>
+<script type="text/javascript" th:inline="javascript">
+    $(document).ready(function () {
+        $("#inputVet").select2();
+    });
+</script>
+</body>
+</html>
