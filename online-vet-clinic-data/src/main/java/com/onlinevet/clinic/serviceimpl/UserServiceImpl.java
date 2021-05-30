@@ -1,12 +1,9 @@
 package com.onlinevet.clinic.serviceimpl;
 
-import com.onlinevet.clinic.exceptions.RoleNotFoundException;
 import com.onlinevet.clinic.exceptions.UserNotFoundException;
-import com.onlinevet.clinic.model.Role;
 import com.onlinevet.clinic.model.User;
 import com.onlinevet.clinic.model.UserRegistrationModel;
 import com.onlinevet.clinic.repository.UserRepository;
-import com.onlinevet.clinic.service.RoleService;
 import com.onlinevet.clinic.service.UserService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -28,9 +25,6 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private final UserRepository userRepository;
-	
-	@Autowired
-	private final RoleService roleService;
 
 	@Autowired
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;

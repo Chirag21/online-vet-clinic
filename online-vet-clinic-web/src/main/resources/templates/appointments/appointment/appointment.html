@@ -16,10 +16,14 @@
 <header th:replace="fragments/parts::menu">
 </header>
 <main>
+        <div style="color: green" th:if="${confirmationMessage} != null" th:text="${confirmationMessage}" 
+        	class="alert alert-success text-center">
+        </div>
+        <div class="alert alert-danger text-center" th:if="${error} != null" th:text="${error}"></div>
     <div class="container">
         <h1 class="h1">Appointment</h1>
         <div class="form-group">
-            <label class="form-control-label">Appointment For</label>
+            <label class="form-control-label">Appointment With</label>
             <div>
                 <a th:href="|/vets/${appointment.vet.id}|"
                    th:text="'Dr. ' + ${appointment.vet.firstName} + ' ' + ${appointment.vet.lastName}"></a>,
@@ -27,10 +31,22 @@
         </div>
 
         <div class="form-group" sec:authorize="hasRole('ROLE_VET')">
-            <label class="form-control-label">For Pet</label>
+            <label class="form-control-label">For Pet :</label>
             <div>
                 <a th:href="|/pet/${appointment.pet.id}|"
                    th:text="${appointment.pet.name}"></a>
+                <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;Date of birth: 
+                <span class="text-muted"
+                       th:text="|${#dates.format(appointment.pet.birthDate, 'dd-MMM-yyyy')}"></span>
+                <br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;Age: 
+                <span class="text-muted"
+                               th:text="|${#dates.year(#dates.createNow()) - #dates.year(appointment.pet.birthDate) + 1} year(s)|"></span>
+                <br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;Pet Type: 
+                <span class="text-muted" th:text="|${appointment.pet.getPetType()}|">Pet Type</span>
+                <br/>
             </div>
         </div>
         
@@ -47,7 +63,8 @@
         <div class="form-group">
             <label class="form-control-label" for="inputDate">Appointment Date</label>
             <input type="text" class="form-control form-control-danger" id="inputDate" readonly="readonly"
-                   th:value="${#dates.format(appointment.date, 'dd-MMM-yyyy HH:mm')}"/>
+                   th:value="${#dates.format(appointment.date, 'dd-MMM-yyyy HH:mm')}"
+                   th:field="${appointment.date}"/>
         </div>
 
         <div class="form-group">
@@ -55,12 +72,21 @@
             <textarea class="form-control form-control-danger" rows="3" id="inputDescription" readonly="readonly"
                       th:field="${appointment.description}"></textarea>
         </div>
-        <div class="form-group">
+        <div class="form-group" sec:authorize="hasRole('ROLE_OWNER')">
             <label class="form-control-label" for="inputStatus">Status</label>
-            <textarea class="form-control form-control-danger" rows="3" id="inputStatus" readonly="readonly"
+            <textarea class="form-control form-control-danger" id="inputStatus" readonly="readonly"
                       th:field="${appointment.status}"></textarea>
         </div>
-        <br/>
+        <form class="sign-up-form" method="post" th:action="@{'/appointments/update/{id}'(id=${appointment.id})}">
+        	<div class="form-group" sec:authorize="hasRole('ROLE_VET')">
+            	<label class="form-control-label" for="inputStatus">Status</label>
+            	<textarea class="form-control form-control-danger" id="inputStatus"
+                      th:field="${appointment.status}" th:required="required"></textarea>
+        	</div>
+        	<br/>
+        	<input sec:authorize="hasRole('ROLE_VET')" type="submit" class="btn btn-primary clickable float-left" 
+        		value="Update"/>
+        </form>
     </div>
 </main>
 

@@ -16,9 +16,10 @@
 <main>
     <div class="container">
         <div class="table-wrapper">
-            <h1 class="h1">My Pets</h1>
+            <h1 sec:authorize="hasAnyRole('ROLE_VET','ROLE_ADMIN')" class="h1">Pets</h1>
+            <h1 sec:authorize="hasAnyRole('ROLE_OWNER')" class="h1">My Pets</h1>
             <div>
-                <a sec:authorize="hasAnyRole('ROLE_OWNER','ROLE_ADMIN')" class="btn btn-primary" th:href="|/pet/add|">
+                <a sec:authorize="hasAnyRole('ROLE_OWNER')" class="btn btn-primary" th:href="|/pet/add|">
                     ADD NEW PET</a>
             </div>
             <table class="table">
@@ -26,6 +27,7 @@
                 <tr>
                     <th colspan="1">#</th>
                     <th colspan="1">Pet Name</th>
+                    <th colspan="1">Owner</th>
                     <th colspan="1">Date Of Birth</th>
                     <th colspan="1">Pet Type</th>
                     <th></th>
@@ -36,6 +38,7 @@
                     <td th:if="${param.page != null}" th:text="${param.page[0]} * 8 + ${iter.index + 1}">index</td>
                     <td th:if="${param.page == null}" th:text="${iter.index + 1}">index</td>
                     <td th:text="|*{name}|">name</td>
+                    <td sec:authorize="hasAnyRole('ROLE_VET','ROLE_ADMIN')" th:text="|*{owner.firstName} *{owner.lastName}|">name</td>
                     <td th:text="|*{#dates.format(birthDate, 'dd-MMM-yyyy')}|">date</td>
                     <td th:text="|*{getPetType()}|">Pet Type</td>
                     <td>

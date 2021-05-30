@@ -10,12 +10,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-import org.hamcrest.Matchers;
 import org.hamcrest.beans.HasPropertyWithValue;
 import org.hamcrest.core.Is;
 import org.junit.jupiter.api.BeforeEach;

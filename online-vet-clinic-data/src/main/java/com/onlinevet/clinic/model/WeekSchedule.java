@@ -15,6 +15,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -30,14 +32,15 @@ public class WeekSchedule implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 	
     @Column(name = "duration_minutes")
     private int appointmentDuration;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "weekSchedule")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "weekSchedule")
     @OrderBy("id")
     @Column(name = "day_schedules")
+    @JsonManagedReference
     private Set<DaySchedule> daySchedules;
 
     public WeekSchedule() {

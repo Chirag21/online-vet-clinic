@@ -15,11 +15,10 @@
 <main>
     <div class="container">
         <h1 class="h1">Edit Profile</h1>
-
         <div>
             <div class="form-group">
                 <img id="vet-picture" height="250px" style="margin-bottom: 5px; border: 1px solid black;"
-                     src="" alt=""/>
+                     src="" alt="vet-image"/>
                 <br/>
                 <label class="form-control-label" for="img-1">Picture</label>
                 <input type="file" class="form-control form-control-danger" id="img-1"/>
@@ -28,16 +27,14 @@
             <button disabled="disabled" id="update-picture-btn" class="btn btn-primary float-right">Change Picture</button>
             <br/>
         </div>
-
         <br/>
         <hr/>
-
         <form method="post" th:object="${vet}">
 
             <div class="form-group" th:classappend="${#fields.hasErrors('firstName')} ? 'has-danger'">
                 <label class="form-control-label" for="inputFirstName">First Name</label>
                 <input type="text" class="form-control form-control-danger" id="inputFirstName"
-                       th:field="*{firstName}"/>
+                       th:field="*{firstName}" th:required="required"/>
                 <div class="form-control-feedback" th:each="error : ${#fields.errors('firstName')}" th:text="${error}">
                     Sorry, that First name is incorrect. Try another?
                 </div>
@@ -45,25 +42,36 @@
 
             <div class="form-group" th:classappend="${#fields.hasErrors('lastName')} ? 'has-danger'">
                 <label class="form-control-label" for="inputLastName">Last Name</label>
-                <input type="text" class="form-control form-control-danger" id="inputLastName" th:field="*{lastName}"/>
+                <input type="text" class="form-control form-control-danger" id="inputLastName" th:field="*{lastName}"
+                	 th:required="required"/>
                 <div class="form-control-feedback" th:each="error : ${#fields.errors('lastName')}" th:text="${error}">
                     Sorry, that Last name is incorrect. Try another?
                 </div>
             </div>
 
-            <div class="form-group" th:classappend="${#fields.hasErrors('EGN')} ? 'has-danger'">
-                <label class="form-control-label" for="inputEGN">EGN</label>
-                <input type="text" class="form-control form-control-danger" id="inputEGN" th:field="*{EGN}"/>
-                <div class="form-control-feedback" th:each="error : ${#fields.errors('EGN')}" th:text="${error}">
-                    Sorry, that EGN is incorrect.
+            <div class="form-group" th:classappend="${#fields.hasErrors('email')} ? 'has-danger'">
+                <label class="form-control-label" for="inputEmail">Email</label>
+                <input type="email" class="form-control form-control-danger" id="inputEmail" th:field="*{email}"
+                	 th:required="required"/>
+                <div class="form-control-feedback" th:each="error : ${#fields.errors('email')}" th:text="${error}">
+                    Sorry, that Last name is incorrect. Try another?
                 </div>
             </div>
 
-            <div class="form-group" th:classappend="${#fields.hasErrors('telephoneNumber')} ? 'has-danger'">
-                <label class="form-control-label" for="inputTelephoneNumber">Telephone Number</label>
-                <input type="tel" class="form-control form-control-danger" id="inputTelephoneNumber"
-                       th:field="*{telephoneNumber}"/>
-                <div class="form-control-feedback" th:each="error : ${#fields.errors('telephoneNumber')}"
+            <div class="form-group" th:classappend="${#fields.hasErrors('registrationNumber')} ? 'has-danger'">
+                <label class="form-control-label" for="inputRegistrationNumber">Registration Number</label>
+                <input type="text" class="form-control form-control-danger" id="inputRegistrationNumber" th:field="*{registrationNumber}"
+                	 th:required="required"/>
+                <div class="form-control-feedback" th:each="error : ${#fields.errors('registrationNumber')}" th:text="${error}">
+                    Sorry, that Registration Number is incorrect.
+                </div>
+            </div>
+
+            <div class="form-group" th:classappend="${#fields.hasErrors('telephone')} ? 'has-danger'">
+                <label class="form-control-label" for="inputTelephon">Telephone Number</label>
+                <input type="tel" class="form-control form-control-danger" id="inputTelephone"
+                       th:field="*{telephone}" th:required="required"/>
+                <div class="form-control-feedback" th:each="error : ${#fields.errors('telephone')}"
                      th:text="${error}">
                     Sorry, that telephone number is incorrect.
                 </div>
@@ -72,7 +80,8 @@
             <div class="form-group" th:classappend="${#fields.hasErrors('birthDate')} ? 'has-danger'">
                 <label class="form-control-label" for="inputbirthDate">Date Of Birth</label>
                 <input type="date" class="form-control form-control-danger" id="inputbirthDate"
-                       th:field="*{birthDate}" th:value="${#dates.format(#dates.createNow(), 'dd-MMM-yyyy')}"/>
+                       th:field="*{birthDate}" th:value="${#dates.format(#dates.createNow(), 'dd-MMM-yyyy')}"
+                        th:required="required"/>
                 <div class="form-control-feedback" th:each="error : ${#fields.errors('birthDate')}"
                      th:text="${error}">
                     Sorry, that date is incorrect.
@@ -84,7 +93,7 @@
                 <br/>
                 <label class="custom-control custom-radio">
                     <input id="gender-male" name="gender" type="radio" checked="checked" class="custom-control-input"
-                           th:field="*{gender}" th:value="MALE"/>
+                           th:field="*{gender}" th:value="MALE" />
                     <span class="custom-control-indicator"></span>
                     <span class="custom-control-description">Male</span>
                 </label>
@@ -103,50 +112,24 @@
             <div class="form-group" th:classappend="${#fields.hasErrors('startPracticeDate')} ? 'has-danger'">
                 <label class="form-control-label" for="inputStartPracticeDate">Start Practice Date</label>
                 <input type="date" class="form-control form-control-danger" id="inputStartPracticeDate"
-                       th:field="*{startPracticeDate}" value="2000-01-01"/>
+                       th:field="*{startPracticeDate}" value="2000-01-01" th:required="required"/>
                 <div class="form-control-feedback" th:each="error : ${#fields.errors('startPracticeDate')}"
                      th:text="${error}">
                     Sorry, that date is incorrect.
                 </div>
             </div>
 
-            <div class="form-group">
-                <label class="form-control-label" for="inputSettlePoint">Settle point</label>
-                <select class="form-control form-control-danger" id="inputSettlePoint" th:field="*{settlePointId}">
-                    <option th:each="settlePoint : ${settlePoints}"
-                            th:value="${settlePoint.id}"
-                            th:text="${settlePoint.name} + ' (' + ${settlePoint.ekatte} + ')'"></option>
-                </select>
-            </div>
-
-            <div class="form-group" th:classappend="${#fields.hasErrors('address')} ? 'has-danger'">
-                <label class="form-control-label" for="inputAddress">Address</label>
-                <textarea class="form-control form-control-danger" rows="3" id="inputAddress"
-                          th:field="*{address}"></textarea>
-                <div class="form-control-feedback" th:each="error : ${#fields.errors('address')}" th:text="${error}">
-                    Sorry, that address is incorrect.
-                </div>
-            </div>
-
             <div class="form-group" th:classappend="${#fields.hasErrors('description')} ? 'has-danger'">
                 <label class="form-control-label" for="inputDescription">Description</label>
                 <textarea class="form-control form-control-danger" rows="3" id="inputDescription"
-                          th:field="*{description}"></textarea>
+                          th:field="*{description}" th:required="required"></textarea>
                 <div class="form-control-feedback" th:each="error : ${#fields.errors('description')}"
                      th:text="${error}">
                     Sorry, that description is incorrect.
                 </div>
             </div>
 
-            <div class="form-group" th:classappend="${#fields.hasErrors('worksWithNZOK')} ? 'has-danger'">
-                <label class="custom-control custom-checkbox form-control-label">
-                    <input type="checkbox" class="custom-control-input" th:field="*{worksWithNZOK}"/>
-                    <span class="custom-control-indicator"></span>
-                    <span class="custom-control-description">I work with NZOK</span>
-                </label>
-            </div>
-
-            <input type="submit" class="btn btn-primary clickable float-right" value="Edit Profile"/>
+            <input type="submit" class="btn btn-primary clickable float-left" value="Update"/>
         </form>
         <br/>
         <br/>

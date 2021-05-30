@@ -2,6 +2,8 @@ package com.onlinevet.clinic.model;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -33,6 +35,7 @@ public class DaySchedule extends BaseEntity implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "week_schedule_id")
+    @JsonBackReference
     private WeekSchedule weekSchedule;
 
 	public DaySchedule(Long id, DayOfWeek dayOfWeek, Time startTime, Time endTime, WeekSchedule weekSchedule) {

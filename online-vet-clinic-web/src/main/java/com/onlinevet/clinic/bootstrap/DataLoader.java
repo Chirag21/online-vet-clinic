@@ -1,13 +1,18 @@
 package com.onlinevet.clinic.bootstrap;
 
+import java.sql.Time;
+import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import com.onlinevet.clinic.model.Appointment;
+import com.onlinevet.clinic.model.DayOfWeek;
+import com.onlinevet.clinic.model.DaySchedule;
 import com.onlinevet.clinic.model.Owner;
 import com.onlinevet.clinic.model.Pet;
 import com.onlinevet.clinic.model.PetType;
@@ -15,13 +20,16 @@ import com.onlinevet.clinic.model.Speciality;
 import com.onlinevet.clinic.model.User;
 import com.onlinevet.clinic.model.Vet;
 import com.onlinevet.clinic.model.Visit;
+import com.onlinevet.clinic.model.WeekSchedule;
 import com.onlinevet.clinic.service.AppointmentService;
+import com.onlinevet.clinic.service.DayScheduleService;
 import com.onlinevet.clinic.service.OwnerService;
 import com.onlinevet.clinic.service.PetTypeService;
 import com.onlinevet.clinic.service.SpecialityService;
 import com.onlinevet.clinic.service.UserService;
 import com.onlinevet.clinic.service.VetService;
 import com.onlinevet.clinic.service.VisitService;
+import com.onlinevet.clinic.service.WeekScheduleService;
 
 @Component
 @Profile(value = "test")
@@ -30,19 +38,32 @@ public class DataLoader implements CommandLineRunner {
 	private static final String ROLE_VET = "ROLE_VET";
 	private static final String ROLE_ADMIN = "ROLE_ADMIN";
 	private static final String ROLE_OWNER = "ROLE_OWNER";
+	@Autowired
 	private OwnerService ownerService;
+	@Autowired
 	private VetService vetService;
+	@Autowired
 	private PetTypeService petTypeService;
+	@Autowired
 	private SpecialityService specialityService;
+	@Autowired
 	private VisitService visitService;
+	@Autowired
 	private UserService userService;
+	@Autowired
 	private AppointmentService appointmentService;
-	private static Calendar cal = Calendar.getInstance();
+	@Autowired
+	private WeekScheduleService weekScheduleService;
+	@Autowired
+	private DayScheduleService dayScheduleService;
 
-	// no need for @Autowired after Spring 4.2 if there is only 1 constructor
+	private Calendar cal = Calendar.getInstance();
+
 	public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService,
 			SpecialityService specialityService, VisitService visitService, UserService userService,
-			AppointmentService appointmentService) {
+			AppointmentService appointmentService, WeekScheduleService weekScheduleService,
+			DayScheduleService dayScheduleService) {
+		super();
 		this.ownerService = ownerService;
 		this.vetService = vetService;
 		this.petTypeService = petTypeService;
@@ -50,8 +71,10 @@ public class DataLoader implements CommandLineRunner {
 		this.visitService = visitService;
 		this.userService = userService;
 		this.appointmentService = appointmentService;
+		this.weekScheduleService = weekScheduleService;
+		this.dayScheduleService = dayScheduleService;
 	}
-
+	
 	@Override
 	public void run(String... args) throws Exception {
 		if (petTypeService.findAll().isEmpty())
@@ -210,6 +233,16 @@ public class DataLoader implements CommandLineRunner {
 		sagar.setStartPracticeDate(cal.getTime());
 		sagar.setRegistrationNumber("ABCD12345");
 		sagar.setUser(userSagar);
+		WeekSchedule sagarsWeekSchedule = weekScheduleService.createDefault();
+		DaySchedule sagarsDaySchedule = new DaySchedule();
+		sagarsDaySchedule.setDayOfWeek(DayOfWeek.MONDAY);
+		sagarsDaySchedule.setStartTime(Time.valueOf(LocalTime.now()));
+		sagarsDaySchedule.setEndTime(Time.valueOf(LocalTime.of(23,30)));
+		sagarsDaySchedule.setWeekSchedule(sagarsWeekSchedule);
+		dayScheduleService.save(sagarsDaySchedule);
+		sagarsWeekSchedule.setAppointmentDuration(3);
+		sagar.setWeekSchedule(sagarsWeekSchedule);
+		weekScheduleService.save(sagarsWeekSchedule);
 		vetService.save(sagar);
 
 		
@@ -302,4 +335,5 @@ public class DataLoader implements CommandLineRunner {
 		
 		System.out.println("Loaded appointments .......");
 	}
+
 }

@@ -57,6 +57,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+	    http.httpBasic();
 		http
 			.authorizeRequests()
 			.antMatchers(LOGIN,"/accessDenied", "/register-owner", "/forgotPassword",
@@ -65,12 +66,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                          "/img/**", "/connect/**", "/error/**","/h2/**").permitAll()
 			.antMatchers("/appointments/home","/appointments/vet/appointments","/appointments/appointment/appointment"
 					,"/appointments/appointment/add","/appointments/pet/{\\d+}","/user/change-password"
-					,"/schedule","/schedule/","/schedule/week").hasAnyRole(ADMIN,USER,OWNER,VET)
+					,"/pet/pets","/pet/{\\d+}","/schedule/**"
+					,"/appointments/schedule/schedule").hasAnyRole(ADMIN,USER,OWNER,VET)
 				.antMatchers("/owner/profile/edit","/appointments/pet/appointments","/pet/edit","/owners/**","/mypets"
 						,"/appointments/vet/vets","/api/vets","/pet/add","/pet/{\\d+}/**"
 						,"/apointments/pet/add").hasAnyRole(ADMIN,OWNER)
-			.antMatchers("/vet/profile/edit","/pet/pets","/pet/{\\d+}","/appointment/vet/**", "/schedule/edit", "/vet/edit", "/vet/pets, /vet/edit-picture"
-					,"/appointments/vet/**","/apointments/vet/add","/schedule/edit").hasAnyRole(ADMIN,VET)
+			.antMatchers("/appointments/pet/pet","/appointments/update/{\\d+}","/vet/profile/edit","/appointment/vet/**"
+					, "/vet/edit", "/vet/pets, /vet/edit-picture"
+					,"/appointments/vet/**","/apointments/vet/add","/vet/pets").hasAnyRole(ADMIN,VET)
 			.antMatchers( "/appointments/all","/index" ,"/pets/**").hasRole(ADMIN)
 			.antMatchers("/**").hasRole(ADMIN)
 			.anyRequest().authenticated()

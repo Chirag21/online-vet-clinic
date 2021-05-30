@@ -2,11 +2,10 @@ package com.onlinevet.clinic.service;
 
 import java.util.Optional;
 
-import com.onlinevet.clinic.model.UserRegistrationModel;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
-import com.onlinevet.clinic.model.BaseEntity;
 import com.onlinevet.clinic.model.User;
+import com.onlinevet.clinic.model.UserRegistrationModel;
 
 public interface UserService extends CrudService<User, Long>,UserDetailsService {
     User register(UserRegistrationModel userRegistrationModel);

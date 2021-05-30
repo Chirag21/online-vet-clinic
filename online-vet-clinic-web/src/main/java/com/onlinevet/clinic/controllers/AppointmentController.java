@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -220,4 +221,12 @@ public class AppointmentController {
     public String catchInvalidAppointment() {
         return "error/invalid-appointment-date";
     }
+    
+	@PostMapping("/update/{id}")
+	public String updateAppointment(@Valid Appointment appointment,@PathVariable Long id, Model model
+					, RedirectAttributes redirectAttributes) {
+		appointmentService.save(appointment);
+		redirectAttributes.addFlashAttribute("confirmationMessage","Appointment updated.");
+		return "redirect:/appointments/vet/{id}";
+	}
 }
